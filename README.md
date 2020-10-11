@@ -1,7 +1,9 @@
 # EveHolder
-This is the online event registeration web apllication for ISP project
 
-**Links to docs** <br>
+This is the online event registration web application for ISP project
+
+## Links to docs
+
 - [Home](../../wiki)
 - [Requirements](../../wiki/Requirements)
 - [Vision](../../wiki/Vision)
