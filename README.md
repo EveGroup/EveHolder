@@ -6,4 +6,4 @@ This is the online event registration web application for ISP project
 
 - [Home](../../wiki)
 - [Requirements](../../wiki/Requirements)
-- [Vision](../../wiki/Vision)
+- [Vision Statements](../../wiki/Vision-Statement)
