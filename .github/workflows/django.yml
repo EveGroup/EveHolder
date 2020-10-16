@@ -27,4 +27,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        coverage run manage.py test
+    - name: Coverage Report
+      run: |
+        bash <(curl -s https://codecov.io/bash)
