@@ -5,6 +5,7 @@ TODO: implement the models class is this can be better with separate file.
 
 from django.db import models
 from django.utils import timezone
+from django import forms
 
 
 class Host(models.Model):
@@ -20,6 +21,7 @@ class Host(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=200)
     phone_num = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
 
     class Meta:
         """TODO: Search info about Meta class."""
@@ -97,7 +99,7 @@ class InformationVisitor(models.Model):
     optional = models.IntegerField()
 
 
-class Visitors(models.Model):
+class Visitors(models.Model):  #forms
     """Create visitors' table in database.
 
     Collect name, phone_num, email,
@@ -113,8 +115,8 @@ class Visitors(models.Model):
     name = models.CharField(max_length=150)
     phone_num = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
-    event_already_regis = models.ForeignKey(InformationVisitor, on_delete=models.CASCADE)
     event_history = models.ForeignKey(Event, on_delete=models.CASCADE)
+    # password = models.CharField(widget=forms.PasswordInput)
 
     def has_regis(self):
         """TODO: Please fill this."""
