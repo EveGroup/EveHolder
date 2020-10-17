@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eve Holder Homepage</title>
+</head>
+THIS IS HOMEPAGE --> delete this line 14 @homepage.html <br>
+
+<button type="button">login as host</button>
+<button type="button">login as visitor</button>
+
+<h1>Active Events</h1>
+
+    {% if event_list %}
+    <ul>
+        {% for event in event_list %}
+        <li><a href="{% url 'eve_holder:event_detail' event.id %}">{{event.event_name}}</a></li>
+        {% endfor %}
+        </ul>
+
+    {% else %}
+<p>There is no event.</p>
+{% endif %}
+
+
+</html>
