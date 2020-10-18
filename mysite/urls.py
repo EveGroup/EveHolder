@@ -19,7 +19,6 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    path('eve_holder/', include('eve_holder.urls')),
+    path('', include('eve_holder.urls')),
     path('admin/', admin.site.urls),
-    path('', include('accounts.urls')),
 ]
