@@ -1,0 +1,5 @@
+# Requirement for run CI/CD
+coverage
+Django
+django-environ
+psycopg2
