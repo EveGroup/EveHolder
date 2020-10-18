@@ -16,6 +16,7 @@ Examples:
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import TemplateView
 
 from eve_holder import views
 
@@ -23,4 +24,6 @@ urlpatterns = [
     path('eve_holder/', include('eve_holder.urls')),
     path('admin/', admin.site.urls),
     path('', views.HomepageView.as_view()),
+    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
