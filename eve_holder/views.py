@@ -1,7 +1,14 @@
 """This module contains views of the website."""
-from django.http import HttpResponse
+from django.shortcuts import render
 
 
-def index(request):
-    """Class that handle the index page in html."""
-    return HttpResponse("Hello, world. You're at the polls index.")
+def home(request):
+    return render(request, 'accounts/dashboard.html')
+
+
+def event(request):
+    return render(request, 'accounts/event.html')
+
+
+def visitor(request):
+    return render(request, 'accounts/visitor.html')

@@ -1,0 +1,46 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+
+    {% include 'accounts/status.html' %}
+
+    <br>
+
+    <div class="row">
+        <div class="col-md-5">
+            <h5>VISITORS:</h5>
+            <hr>
+            <div class="card card-body">
+                <a class="btn btn-primary btn-sm btn-block" href="">Create Visitor</a>
+                <table class="table table-sm">
+                    <tr>
+                        <th></th>
+                        <th>Visitor</th>
+                        <th>Event List</th>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <h5>LAST 5 EVENTS</h5>
+            <hr>
+            <div class="card card-body">
+                <a class="btn btn-primary btn-sm btn-block" href="">Create Events</a>
+                <table class="table table-sm">
+                    <tr>
+                        <th>Event</th>
+                        <th>Date Published</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                        <th>Cancel</th>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

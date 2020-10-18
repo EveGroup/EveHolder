@@ -1,8 +1,8 @@
-"""This module is control about url pattern for using in website."""
 from django.urls import path
 
 from . import views
-
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.home, name='home'),
+    path('event/', views.event, name='event'),
+    path('visitor/', views.visitor, name='Visitor')
 ]

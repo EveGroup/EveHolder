@@ -25,6 +25,10 @@ class Host(models.Model):
         """TODO: Search info about Meta class."""
         ordering = ['name']
 
+    def __str__(self):
+        """Display host's name."""
+        return self.name
+
 
 class Event(models.Model):
     """Create event table in database.
@@ -40,7 +44,7 @@ class Event(models.Model):
         end_date: ending date of the event.
     """
     event_name = models.CharField(max_length=500)
-    description = models.CharField(max_length=500)
+    description = models.CharField(max_length=500, null=True)
     host = models.ManyToManyField(Host)
     pub_date = models.DateTimeField('published date')
     end_date = models.DateTimeField('ending date')
@@ -48,10 +52,6 @@ class Event(models.Model):
     class Meta:
         """TODO: Search info about Meta class."""
         ordering = ['event_name']
-
-    def __str__(self):
-        """Display the event's name."""
-        return self.event_name
 
     def can_register(self):
         """Check the event that can registration or not.
@@ -78,6 +78,10 @@ class Event(models.Model):
     def is_full(self):
         """TODO: Please fill this."""
         pass
+
+    def __str__(self):
+        """Display the event's name."""
+        return self.event_name
 
 
 class InformationVisitor(models.Model):
@@ -110,9 +114,10 @@ class Visitors(models.Model):
         event_already_regis: visitor's registration event.
         event_history: history of event from each visitor.
     """
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=200)
     phone_num = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
+    email = models.EmailField(max_length=200)
+    date_created = models.DateTimeField(auto_now_add=True)
     event_already_regis = models.ForeignKey(InformationVisitor, on_delete=models.CASCADE)
     event_history = models.ForeignKey(Event, on_delete=models.CASCADE)
 
@@ -123,3 +128,7 @@ class Visitors(models.Model):
     def regis_event(self):
         """TODO: Please fill this."""
         pass
+
+    def __str__(self):
+        """Display visitor's name."""
+        return self.name
