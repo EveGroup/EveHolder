@@ -21,7 +21,7 @@ class Host(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=200)
     phone_num = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
+    password = models.CharField(max_length=50)
 
     class Meta:
         """TODO: Search info about Meta class."""
@@ -99,7 +99,7 @@ class InformationVisitor(models.Model):
     optional = models.IntegerField()
 
 
-class Visitors(models.Model):  #forms
+class Visitors(models.Model):
     """Create visitors' table in database.
 
     Collect name, phone_num, email,
@@ -115,8 +115,8 @@ class Visitors(models.Model):  #forms
     name = models.CharField(max_length=150)
     phone_num = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
-    event_history = models.ForeignKey(Event, on_delete=models.CASCADE)
-    # password = models.CharField(widget=forms.PasswordInput)
+    event_already_regis = models.ForeignKey(InformationVisitor, on_delete=models.CASCADE)
+    password = models.CharField(max_length=50)
 
     def has_regis(self):
         """TODO: Please fill this."""
