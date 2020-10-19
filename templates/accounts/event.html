@@ -15,6 +15,23 @@
                         <th>Host</th>
                     </tr>
 
+                    {% for i in events %}
+                        <tr>
+                            <td>{{ i.event_name }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for i in events %}
+                        <tr>
+                            <td>{{ i.event_pub_date }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for i in events %}
+                        <tr>
+                            <td>{{ i.event_host }}</td>
+                        </tr>
+                    {% endfor %}
+
+
                 </table>
             </div>
         </div>
