@@ -27,10 +27,9 @@ class Tag(models.Model):
         return self.name
 
 class Event(models.Model):
-    STATUS = (
-            ('Upcoming', 'Upcoming'),
-            ('Ended', 'Ended'),
-            )
+    STATUS = (('Upcoming', 'Upcoming'),
+              ('Ended', 'Ended'),
+              )
     name = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=255, null=True)
     status = models.CharField(max_length=100, null=True, choices=STATUS)
@@ -42,13 +41,12 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 class Ticket(models.Model):
-    STATUS = (
-            ('Available', 'Available'),
-            ('Reserved', 'Reserved'),
-            ('Expired', 'Expired'),
-            )
+    STATUS = (('Available', 'Available'),
+              ('Reserved', 'Reserved'),
+              ('Expired', 'Expired'),
+              )
     event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL)
     visitor = models.ForeignKey(Visitor, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)

@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 # Create your views here.
-from .models import *
-from .forms import *
+from .models import Visitor, Event, Ticket
+from .forms import TicketForm
 
 
 def home(request):
@@ -13,22 +12,22 @@ def home(request):
     available_count = tickets.filter(status='Available').count()
     reserved_count = tickets.filter(status='Reserved').count()
 
-    context = {'visitors':visitors, 'tickets':tickets, 
-                'total_tickets':total_tickets, 'available_count':available_count, 
-                'reserved_count':reserved_count }
+    context = {'visitors': visitors, 'tickets': tickets,
+               'total_tickets': total_tickets, 'available_count': available_count,
+               'reserved_count': reserved_count}
     return render(request, 'accounts/home.html', context)
 
 def events(request):
     events = Event.objects.all()
 
-    return render(request, 'accounts/events.html', {'events':events})
+    return render(request, 'accounts/events.html', {'events': events})
 
 def visitors(request, pk_test):
     visitors = Visitor.objects.get(id=pk_test)
     tickets = visitors.ticket_set.all()
     tickets_count = tickets.count()
 
-    context = {'visitors':visitors, 'tickets':tickets, 'tickets_count':tickets_count}
+    context = {'visitors': visitors, 'tickets': tickets, 'tickets_count': tickets_count}
     return render(request, 'accounts/visitors.html', context)
 
 def createTicket(request):
@@ -39,7 +38,7 @@ def createTicket(request):
             form.save()
             return redirect('home')
 
-    context = {'form':form}
+    context = {'form': form}
     return render(request, 'accounts/ticket_form.html', context)
 
 def updateTicket(request, pk):
@@ -51,7 +50,7 @@ def updateTicket(request, pk):
             form.save()
             return redirect('home')
 
-    context = {'form':form}
+    context = {'form': form}
     return render(request, 'accounts/ticket_form.html', context)
 
 
@@ -60,6 +59,6 @@ def deleteTicket(request, pk):
     if request.method == 'POST':
         ticket.delete()
         return redirect('home')
-        
+
     context = {'item': ticket}
     return render(request, 'accounts/delete.html', context)
