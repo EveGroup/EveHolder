@@ -1,9 +1,65 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views import generic
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+# Create your views here.
+from .models import *
+from .forms import *
 
 
-class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'registration/signup.html'
+def home(request):
+    visitors = Visitor.objects.all()
+    tickets = Ticket.objects.all()
+
+    total_tickets = tickets.count()
+    available_count = tickets.filter(status='Available').count()
+    reserved_count = tickets.filter(status='Reserved').count()
+
+    context = {'visitors':visitors, 'tickets':tickets, 
+                'total_tickets':total_tickets, 'available_count':available_count, 
+                'reserved_count':reserved_count }
+    return render(request, 'accounts/home.html', context)
+
+def events(request):
+    events = Event.objects.all()
+
+    return render(request, 'accounts/events.html', {'events':events})
+
+def visitors(request, pk_test):
+    visitors = Visitor.objects.get(id=pk_test)
+    tickets = visitors.ticket_set.all()
+    tickets_count = tickets.count()
+
+    context = {'visitors':visitors, 'tickets':tickets, 'tickets_count':tickets_count}
+    return render(request, 'accounts/visitors.html', context)
+
+def createTicket(request):
+    form = TicketForm()
+    if request.method == 'POST':
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form':form}
+    return render(request, 'accounts/ticket_form.html', context)
+
+def updateTicket(request, pk):
+    ticket = Ticket.objects.get(id=pk)
+    form = TicketForm(instance=ticket)
+    if request.method == 'POST':
+        form = TicketForm(request.POST, instance=ticket)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form':form}
+    return render(request, 'accounts/ticket_form.html', context)
+
+
+def deleteTicket(request, pk):
+    ticket = Ticket.objects.get(id=pk)
+    if request.method == 'POST':
+        ticket.delete()
+        return redirect('home')
+        
+    context = {'item': ticket}
+    return render(request, 'accounts/delete.html', context)
