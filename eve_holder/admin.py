@@ -2,9 +2,9 @@
 
 from django.contrib import admin
 
-from .models import Host, Event, Visitors
+from .models import Host, Event, Visitor
 
 
 admin.site.register(Host)
 admin.site.register(Event)
-admin.site.register(Visitors)
+admin.site.register(Visitor)

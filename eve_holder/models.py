@@ -18,14 +18,13 @@ class Host(models.Model):
         email: host's email.
         phone_num: host's phone number.
     """
-    name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=200)
-    phone_num = models.CharField(max_length=100)
-    password = models.CharField(max_length=50)
+    host_name = models.CharField(max_length=100, null=True)
+    host_email = models.EmailField(max_length=200, null=True)
+    host_phone_num = models.CharField(max_length=100, null=True)
+    host_password = models.CharField(max_length=50, null=True)
 
-    class Meta:
-        """TODO: Search info about Meta class."""
-        ordering = ['name']
+    def __str__(self):
+        return self.host_name
 
 
 class Event(models.Model):
@@ -41,15 +40,11 @@ class Event(models.Model):
         pub_date: date that let the visitors registration into the event.
         end_date: ending date of the event.
     """
-    event_name = models.CharField(max_length=500)
-    description = models.CharField(max_length=500)
-    host = models.ManyToManyField(Host)
-    pub_date = models.DateTimeField('published date')
-    end_date = models.DateTimeField('ending date')
-
-    class Meta:
-        """TODO: Search info about Meta class."""
-        ordering = ['event_name']
+    event_name = models.CharField(max_length=500, null=True)
+    event_description = models.CharField(max_length=500, null=True)
+    event_host = models.ManyToManyField(Host)
+    event_pub_date = models.DateTimeField('published date', null=True)
+    event_end_date = models.DateTimeField('ending date', null=True)
 
     def __str__(self):
         """Display the event's name."""
@@ -62,7 +57,7 @@ class Event(models.Model):
              bool: true if now was between pub_date and end_date.
         """
         now = timezone.now()
-        return self.pub_date <= now <= self.end_date
+        return self.event_pub_date <= now <= self.event_end_date
 
     def is_expired(self):
         """Check the expiration date or end date of the event.
@@ -71,35 +66,9 @@ class Event(models.Model):
              bool: true if now was more than end_date.
         """
         now = timezone.now()
-        return now > self.end_date
+        return now > self.event_end_date
 
-    def is_visitor_register(self):
-        """TODO: Please fill this."""
-        pass
-
-    def is_full(self):
-        """TODO: Please fill this."""
-        pass
-
-
-class InformationVisitor(models.Model):
-    """Create table in database for information visitor.
-
-    Collect event, name, phone_num,
-    and optional into database.
-
-    Notes:
-        event: collect that event when user input the information.
-        name: visitor's name.
-        phone_num: visitor's phone number.
-    """
-    event = models.OneToOneField(Event, on_delete=models.CASCADE, primary_key=True, )
-    name = models.CharField(max_length=150)  # visitor name
-    phone_num = models.CharField(max_length=100)
-    optional = models.IntegerField()
-
-
-class Visitors(models.Model):
+class Visitor(models.Model):
     """Create visitors' table in database.
 
     Collect name, phone_num, email,
@@ -112,16 +81,8 @@ class Visitors(models.Model):
         event_already_regis: visitor's registration event.
         event_history: history of event from each visitor.
     """
-    name = models.CharField(max_length=150)
-    phone_num = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
-    event_already_regis = models.ForeignKey(InformationVisitor, on_delete=models.CASCADE)
-    password = models.CharField(max_length=50)
-
-    def has_regis(self):
-        """TODO: Please fill this."""
-        pass
-
-    def regis_event(self):
-        """TODO: Please fill this."""
-        pass
+    visitor_name = models.CharField(max_length=150, null=True)
+    visitor_phone_num = models.CharField(max_length=100, null=True)
+    visitor_email = models.EmailField(max_length=100, null=True)
+    visitor_password = models.CharField(max_length=50, null=True)
+    event = models.ManyToManyField(Event)

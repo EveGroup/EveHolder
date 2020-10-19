@@ -15,11 +15,11 @@ class Host_forms(forms.ModelForm):
 
 class Visitor_forms(forms.ModelForm):
     class Meta:
-        model = Visitors
+        model = Visitor
         fields = [
             'name',
             'password'
         ]
         widgets = {
-            'password': forms.PasswordInput()
+            'password': forms.PasswordInput(),
         }
