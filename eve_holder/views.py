@@ -12,12 +12,12 @@ def home(request):
 
     context = {'events': event_list, 'visitors': visitor_list, 'total_events': total_events}
 
-    return render(request, 'accounts/dashboard.html', context)
+    return render(request, 'eve_holder/dashboard.html', context)
 
 
 def events(request):
     event_list = Event.objects.all()
-    return render(request, 'accounts/event.html', {'events': event_list})
+    return render(request, 'eve_holder/event.html', {'events': event_list})
 
 
 def visitor(request, pk):
@@ -27,4 +27,4 @@ def visitor(request, pk):
     event_count = event_list.count()
 
     context = {'visitors': visitors_list, 'events': event_list, 'event_count': event_count}
-    return render(request, 'accounts/visitor.html', context)
+    return render(request, 'eve_holder/visitor.html', context)
