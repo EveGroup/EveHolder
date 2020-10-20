@@ -1,0 +1,33 @@
+{% extends 'eve_holder/main.html' %}
+
+{% block content %}
+
+    <br>
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Events</h5>
+            </div>
+            <div class="card card-body">
+                <table class="table">
+                    <tr>
+                        <th>Events</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                    </tr>
+
+                    {% for i in events %}
+                        <tr>
+                            <td>{{ i.event_name }}</td>
+                            <td>{{ i.event_description }}</td>
+                            <td>{{ i.event_status }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
