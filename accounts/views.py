@@ -4,9 +4,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-from .models import Visitor, Event, Ticket
-from .forms import TicketForm, CreateUserForm
-from .filters import TicketFilter
+from .models import Visitor, Event
+from .forms import EventForm, CreateUserForm
+from .filters import EventFilter
 
 
 def register_page(request):
@@ -51,15 +51,11 @@ def logout_page(request):
 @login_required(login_url='login')
 def home(request):
     visitors = Visitor.objects.all()
-    tickets = Ticket.objects.all()
+    events = Event.objects.all()
 
-    total_tickets = tickets.count()
-    available_count = tickets.filter(status='Available').count()
-    reserved_count = tickets.filter(status='Reserved').count()
+    total_events = events.count()
 
-    context = {'visitors': visitors, 'tickets': tickets,
-               'total_tickets': total_tickets, 'available_count': available_count,
-               'reserved_count': reserved_count}
+    context = {'visitors': visitors, 'events': events, 'total_events': total_events}
     return render(request, 'accounts/home.html', context)
 
 
@@ -72,52 +68,51 @@ def events(request):
 @login_required(login_url='login')
 def visitors(request, pk):
     visitors = Visitor.objects.get(id=pk)
-    tickets = visitors.ticket_set.all()
-    tickets_count = tickets.count()
+    events = visitors.event_set.all()
+    events_count = events.count()
 
-    my_filter = TicketFilter(request.GET, queryset=tickets)
-    tickets = my_filter.qs
+    my_filter = EventFilter(request.GET, queryset=events)
+    events = my_filter.qs
 
-    context = {'visitors': visitors, 'tickets': tickets,
-               'tickets_count': tickets_count, 'my_filter': my_filter
+    context = {'visitors': visitors, 'events': events,
+               'events_count': events_count, 'my_filter': my_filter
                }
     return render(request, 'accounts/visitors.html', context)
 
 
 @login_required(login_url='login')
-def create_ticket(request, pk):
+def create_event(request, pk):
     visitors = Visitor.objects.get(id=pk)
-    form = TicketForm(initial={'visitor': visitors})
+    form = EventForm(initial={'visitor': visitors})
     if request.method == 'POST':
-        form = TicketForm(request.POST)
+        form = EventForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('home')
 
     context = {'form': form}
-    return render(request, 'accounts/ticket_form.html', context)
+    return render(request, 'accounts/event_form.html', context)
 
 
 @login_required(login_url='login')
-def update_ticket(request, pk):
-    ticket = Ticket.objects.get(id=pk)
-    form = TicketForm(instance=ticket)
+def edit_event(request, pk):
+    event = Event.objects.get(id=pk)
+    form = EventForm(instance=event)
     if request.method == 'POST':
-        form = TicketForm(request.POST, instance=ticket)
+        form = EventForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
             return redirect('home')
 
     context = {'form': form}
-    return render(request, 'accounts/ticket_form.html', context)
+    return render(request, 'accounts/event_form.html', context)
 
 
 @login_required(login_url='login')
-def delete_ticket(request, pk):
-    ticket = Ticket.objects.get(id=pk)
+def delete_event(request, pk):
+    event = Event.objects.get(id=pk)
     if request.method == 'POST':
-        ticket.delete()
+        event.delete()
         return redirect('home')
-
-    context = {'item': ticket}
+    context = {'item': event}
     return render(request, 'accounts/delete.html', context)

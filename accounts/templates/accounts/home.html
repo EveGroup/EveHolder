@@ -21,37 +21,35 @@
 				{% for visitor in visitors %}
 					<tr>
 						<td><a class="btn btn-sm btn-info" href="{% url 'visitors' visitor.id %}">View</a></td>
-						<td>{{visitor.name}}</td>
-						<td>{{visitor.phone}}</td>
+						<td>{{visitor.visitor_name}}</td>
+						<td>{{visitor.visitor_phone}}</td>
 					</tr>
 				{% endfor %}
 
 			</table>
 		</div>
 	</div>
-
+	
 	<div class="col-md-7">
-		<h5>TICKETS:</h5>
+		<h5>Events:</h5>
 		<hr>
 		<div class="card card-body">
 			<table class="table table-sm">
 				<tr>
                     <th>Events</th>
-					<th>Visitor</th>
-					<th>User ID</th>
-                    <th>Status</th>
+					<th>Event ID</th>
+                    <th>Description</th>
                     <th>Update</th>
                     <th>Remove</th>
                 </tr>
 
-                {% for ticket in tickets %}
+                {% for event in events %}
                     <tr>
-                        <td>{{ticket.event.name}}</td>
-						<td>{{ticket.visitor.name}}</td>
-						<td>{{ticket.visitor.id}}</td>
-                        <td>{{ticket.status}}</td>
-						<td><a class="btn btn-sm btn-info" href="{% url 'update_ticket' ticket.id %}">Update</a></td>
-						<td><a class="btn btn-sm btn-danger"href="{% url 'delete_ticket' ticket.id %}">Delete</a></td>
+                        <td>{{event.event_name}}</td>
+						<td>{{event.id}}</td>
+                        <td>{{event.event_description}}</td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'edit_event' event.id %}">Edit</a></td>
+						<td><a class="btn btn-sm btn-danger"href="{% url 'delete_event' event.id %}">Delete</a></td>
 
 					</tr>
 				{% endfor %}

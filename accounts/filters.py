@@ -2,8 +2,8 @@ from django_filters import FilterSet, DateFilter
 
 from .models import *
 
-class TicketFilter(FilterSet):
+class EventFilter(FilterSet):
     class Meta:
-        model = Ticket
+        model = Event
         fields = '__all__'
-        exclude = ['visitor', 'date_created']
+        exclude = ['event_description', 'date_created', 'host', 'visitor', 'tag']

@@ -6,9 +6,9 @@ from django import forms
 from .models import *
 
 
-class TicketForm(ModelForm):
+class EventForm(ModelForm):
     class Meta:
-        model = Ticket
+        model = Event
         fields = '__all__'
 
 
