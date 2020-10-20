@@ -20,18 +20,18 @@
 
             <div class="right-side">
                 <div class="nav-link-wrapper">
-                    <a href="https://www.google.com">host login</a>
+                    <a href="https://www.google.com">login</a>
                 </div>
-                <div class="nav-link-wrapper">
+                <!-- <div class="nav-link-wrapper">
                     <a href="https://www.google.com">visitor login</a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 
     <div class="middle">
         <div class="active_events">
-            <h1>Active Events</h1>
+            <h1>Popular Events</h1>
         </div>
 
         <div class="events-txt">
@@ -40,6 +40,9 @@
                     {% for event in event_list %}
                     <div class="event-txt">
                         <a href="{% url 'eve_holder:event_detail' event.id %}">{{event.event_name}}</a>
+                    </div>
+                    <div class="end-date-container">
+                        {{ event.end_date }}
                     </div>
                     {% endfor %}
                     </ul>
@@ -96,12 +99,12 @@
                     start now
                 </div>
                 <div class="login-button-bottom">
-                    <div class="host-login-button">
-                        <a href="https://www.google.com" type="button" class="btn btn-outline-warning">host login</a>
+                    <div class="login-button">
+                        <a href="https://www.google.com" type="button" class="btn btn-outline-warning">login</a>
                     </div>
-                    <div class="visitor-login-button">
+                    <!-- <div class="visitor-login-button">
                         <a href="https://www.google.com" type="button" class="btn btn-outline-warning">visitor login</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
