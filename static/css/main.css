@@ -17,3 +17,7 @@ body {
     background-color: #7cd1c0;
 }
 
+#recent-event-table {
+    margin-right: auto;
+    margin-left: auto;
+}

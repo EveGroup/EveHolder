@@ -5,7 +5,14 @@ from .models import *
 
 
 def home(request):
-    return render(request, 'accounts/dashboard.html')
+    visitor_list = Visitor.objects.all()
+    event_list = Event.objects.all()
+
+    total_events = event_list.count()
+
+    context = {'events': event_list, 'visitors': visitor_list, 'total_events': total_events}
+
+    return render(request, 'accounts/dashboard.html', context)
 
 
 def events(request):
@@ -13,5 +20,11 @@ def events(request):
     return render(request, 'accounts/event.html', {'events': event_list})
 
 
-def visitor(request):
-    return render(request, 'accounts/visitor.html')
+def visitor(request, pk):
+    visitors_list = Visitor.objects.get(id=pk)
+
+    event_list = visitors_list.visitor_event.all()
+    event_count = event_list.count()
+
+    context = {'visitors': visitors_list, 'events': event_list, 'event_count': event_count}
+    return render(request, 'accounts/visitor.html', context)

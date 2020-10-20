@@ -17,16 +17,16 @@
             <div class="card card-body">
                 <h5>Contact Information</h5>
                 <hr>
-                <p>Email: </p>
-                <p>Phone: </p>
+                <p>Email: {{ visitors.visitor_email }}</p>
+                <p>Phone: {{ visitors.visitor_phone_num }}</p>
             </div>
         </div>
 
         <div class="col-md">
             <div class="card card-body">
-                <h5>Total Orders</h5>
+                <h5>Total Events</h5>
                 <hr>
-                <h1 style="text-align: center;padding: 10px"></h1>
+                <h1 style="text-align: center;padding: 10px">{{ event_count }}</h1>
             </div>
         </div>
     </div>
@@ -51,12 +51,22 @@
                 <table class="table table-sm">
                     <tr>
                         <th>Event</th>
-                        <th>Published Date</th>
-                        <th>Register Date</th>
+                        <th>Description</th>
                         <th>Status</th>
-                        <th>Update</th>
+                        <th>Edit</th>
                         <th>Remove</th>
                     </tr>
+
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.event_name }}</td>
+                            <td>{{ event.event_description }}</td>
+                            <td>{{ event.can_register }}</td>
+                            <td><a class="btn btn-sm btn-info" href="">Edit</a></td>
+                            <td><a class="btn btn-sm btn-danger" href="">Remove</a></td>
+                        </tr>
+                    {% endfor %}
+
 
                 </table>
             </div>

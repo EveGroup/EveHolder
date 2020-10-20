@@ -10,17 +10,17 @@ class Host(models.Model):
     """Create host table in database.
     Collect name, email, phone_num of Host into database.
     Notes:
-        name: host's name.
-        email: host's email.
-        phone_num: host's phone number.
+        host_name: host's name.
+        host_email: host's email.
+        host_phone_num: host's phone number.
     """
-    name = models.CharField(max_length=100, null=True)
-    email = models.EmailField(max_length=200, null=True)
-    phone_num = models.CharField(max_length=100, null=True)
-    password = models.CharField(max_length=50, null=True)
+    host_name = models.CharField(max_length=100, null=True)
+    host_email = models.EmailField(max_length=200, null=True)
+    host_phone_num = models.CharField(max_length=100, null=True)
+    host_password = models.CharField(max_length=50, null=True)
 
     def __str__(self):
-        return self.name
+        return self.host_name
 
 
 class Event(models.Model):
@@ -28,21 +28,17 @@ class Event(models.Model):
     Collect event_name, description, host
     pub_date, and end_date detail into database
     Notes:
-        name: name of that event.
-        description: explain about event.
-        host: defined who create that event.
+        event_name: name of that event.
+        event_description: explain about event.
+        event_host: defined who create that event.
         pub_date: date that let the visitors registration into the event.
         end_date: ending date of the event.
     """
-    name = models.CharField(max_length=500, null=True)
-    description = models.CharField(max_length=500, null=True)
-    host = models.ManyToManyField(Host)
+    event_name = models.CharField(max_length=500, null=True)
+    event_description = models.CharField(max_length=500, null=True, blank=True)
+    event_host = models.ManyToManyField(Host)
     pub_date = models.DateTimeField('published date', null=True)
     end_date = models.DateTimeField('ending date', null=True)
-
-    def __str__(self):
-        """Display the event's name."""
-        return self.name
 
     def can_register(self):
         """Check the event that can registration or not.
@@ -60,20 +56,29 @@ class Event(models.Model):
         now = timezone.now()
         return now > self.end_date
 
+    def __str__(self):
+        """Display the event's name."""
+        return self.event_name
+
+    can_register.boolean = True
+
 
 class Visitor(models.Model):
     """Create visitors' table in database.
     Collect name, phone_num, email,
     event_already_regis, and event_history into database.
     Notes:
-        name: visitor's name.
-        phone_num: visitor's phone number.
-        email: visitor's email.
-        event_already_regis: visitor's registration event.
-        event_history: history of event from each visitor.
+        visitor_name: visitor's name.
+        visitor_phone_num: visitor's phone number.
+        visitor_email: visitor's email.
+        visitor_event_already_regis: visitor's registration event.
+        visitor_event_history: history of event from each visitor.
     """
-    name = models.CharField(max_length=150, null=True)
-    phone_num = models.CharField(max_length=100, null=True)
-    email = models.EmailField(max_length=100, null=True)
-    password = models.CharField(max_length=50, null=True)
-    event = models.ManyToManyField(Event)
+    visitor_name = models.CharField(max_length=150, null=True)
+    visitor_phone_num = models.CharField(max_length=100, null=True)
+    visitor_email = models.EmailField(max_length=100, null=True)
+    visitor_password = models.CharField(max_length=50, null=True)
+    visitor_event = models.ManyToManyField(Event, blank=True)
+
+    def __str__(self):
+        return self.visitor_name
