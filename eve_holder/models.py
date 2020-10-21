@@ -19,6 +19,7 @@ class Host(models.Model):
     host_phone_num = models.CharField(max_length=100, null=True)
 
     def __str__(self):
+        """Display host's name."""
         return self.host_name
 
 
@@ -58,7 +59,7 @@ class Event(models.Model):
     def __str__(self):
         """Display the event's name."""
         return self.event_name
-
+      
     can_register.boolean = True
 
 
@@ -79,4 +80,5 @@ class Visitor(models.Model):
     visitor_event = models.ManyToManyField(Event, blank=True)
 
     def __str__(self):
+        """Display visitor's name"""
         return self.visitor_name
