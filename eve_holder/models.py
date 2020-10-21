@@ -5,7 +5,6 @@ TODO: implement the models class is this can be better with separate file.
 
 from django.db import models
 from django.utils import timezone
-from django import forms
 
 
 class Host(models.Model):
@@ -14,16 +13,16 @@ class Host(models.Model):
     Collect name, email, phone_num of Host into database.
 
     Notes:
-        name: host's name.
-        email: host's email.
-        phone_num: host's phone number.
+        host_name: host's name.
+        host_email: host's email.
+        host_phone_num: host's phone number.
     """
     host_name = models.CharField(max_length=100, null=True)
     host_email = models.EmailField(max_length=200, null=True)
     host_phone_num = models.CharField(max_length=100, null=True)
-    host_password = models.CharField(max_length=50, null=True)
 
     def __str__(self):
+        """Display host's name."""
         return self.host_name
 
 
@@ -35,20 +34,16 @@ class Event(models.Model):
 
     Notes:
         event_name: name of that event.
-        description: explain about event.
-        host: defined who create that event.
+        event_description: explain about event.
+        event_host: defined who create that event.
         pub_date: date that let the visitors registration into the event.
         end_date: ending date of the event.
     """
     event_name = models.CharField(max_length=500, null=True)
-    event_description = models.CharField(max_length=500, null=True)
+    event_description = models.CharField(max_length=500, null=True, blank=True)
     event_host = models.ManyToManyField(Host)
-    event_pub_date = models.DateTimeField('published date', null=True)
-    event_end_date = models.DateTimeField('ending date', null=True)
-
-    def __str__(self):
-        """Display the event's name."""
-        return self.event_name
+    pub_date = models.DateTimeField('published date', null=True)
+    end_date = models.DateTimeField('ending date', null=True)
 
     def can_register(self):
         """Check the event that can registration or not.
@@ -57,7 +52,7 @@ class Event(models.Model):
              bool: true if now was between pub_date and end_date.
         """
         now = timezone.now()
-        return self.event_pub_date <= now <= self.event_end_date
+        return self.pub_date <= now <= self.end_date
 
     def is_expired(self):
         """Check the expiration date or end date of the event.
@@ -66,7 +61,14 @@ class Event(models.Model):
              bool: true if now was more than end_date.
         """
         now = timezone.now()
-        return now > self.event_end_date
+        return now > self.end_date
+
+    def __str__(self):
+        """Display the event's name."""
+        return self.event_name
+
+    can_register.boolean = True
+
 
 class Visitor(models.Model):
     """Create visitors' table in database.
@@ -75,14 +77,17 @@ class Visitor(models.Model):
     event_already_regis, and event_history into database.
 
     Notes:
-        name: visitor's name.
-        phone_num: visitor's phone number.
-        email: visitor's email.
-        event_already_regis: visitor's registration event.
-        event_history: history of event from each visitor.
+        visitor_name: visitor's name.
+        visitor_phone_num: visitor's phone number.
+        visitor_email: visitor's email.
+        visitor_event_already_regis: visitor's registration event.
+        visitor_event_history: history of event from each visitor.
     """
     visitor_name = models.CharField(max_length=150, null=True)
     visitor_phone_num = models.CharField(max_length=100, null=True)
     visitor_email = models.EmailField(max_length=100, null=True)
-    visitor_password = models.CharField(max_length=50, null=True)
-    event = models.ManyToManyField(Event)
+    visitor_event = models.ManyToManyField(Event, blank=True)
+
+    def __str__(self):
+        """Display visitor's name"""
+        return self.visitor_name
