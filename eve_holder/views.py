@@ -3,7 +3,6 @@ from django.shortcuts import render
 
 from .models import Event
 
-
 def homepage(request):
     event_list = Event.objects.all()
     context = {'events': event_list}
