@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,20 +8,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 
 </head>
 <body>
 {% include 'eve_holder/navbar.html' %}
+<div class="container-fluid">
+    {% block content %}
 
-{% block content %}
 
-
-
-{% endblock %}
-
+    {% endblock %}
+</div>
 <hr>
 <h5>Our footer</h5>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
