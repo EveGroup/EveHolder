@@ -1,10 +1,11 @@
 """This module is control about url pattern for using in website."""
 from django.urls import path
+from django.contrib import admin
 
 from . import views
 
+app_name = 'eve_holder'
 urlpatterns = [
-    path('', views.home, name='index'),
-    path('event/', views.signup, name='event'),
-    path('visitor/', views.login, name='visitor'),
+    path('', views.homepage, name='homepage'),
+    path('<int:pk>/', views.event_detail, name='event_detail'),
 ]

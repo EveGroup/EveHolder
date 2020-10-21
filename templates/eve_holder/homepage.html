@@ -1,0 +1,104 @@
+{% extends 'eve_holder/main.html' %}
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+
+{% block content %}
+
+    {% include 'eve_holder/navbar.html' %}
+
+<div class="middle">
+    <div class="active_events">
+        <h1>Popular Events</h1>
+    </div>
+
+    <div class="events-txt">
+        {% if events %}
+
+            <ul>
+                {% for event in events %}
+                    <div class="event-txt">
+                        <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a>
+                    </div>
+                    <div class="end-date-container">
+                        {{ event.end_date }}
+                    </div>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            <p>There is no event.</p>
+        {% endif %}
+    </div>
+
+    <div class="content-wrapper">
+        <div class="items-wrapper">
+            <div class="item-wrapper">
+                <div class="img-deco">
+                    <div class="pic1-container">
+                        <img src="{% static 'eve_holder/../../static/images/pic1.jpg' %}">
+                    </div>
+                </div>
+                <div class="img-text-wrapper">
+                    <div class="subtitle">
+                        create your own event
+                    </div>
+                </div>
+            </div>
+            <div class="text-information-wrapper">
+                <div class="text-information">
+                    here are the information
+                </div>
+            </div>
+
+            <div class="text-information-wrapper">
+                <div class="text-information">
+                    here are the information
+                </div>
+            </div>
+            <div class="item-wrapper">
+                <div class="img-deco">
+                    <div class="pic2-container">
+                        <img src="{% static 'eve_holder/../../static/images/pic2.jpg' %}">
+                    </div>
+                </div>
+                <div class="img-text-wrapper">
+                    <div class="subtitle">
+                        join event
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bottom-container">
+    <div class="bottom-content">
+        <div class="bottom-text-container">
+            <div class="bottom-msg">
+                start now
+            </div>
+            <div class="login-button-bottom">
+                <div class="login-button">
+                    <a href="https://www.google.com" type="button" class="btn btn-outline-warning">login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <script>
+    const items = document.querySelectorAll('.img-deco')
+    items.forEach(item => {
+        item.addEventListener('mouseover', () => {
+            console.log(item.childNodes[1].classList)
+            item.childNodes[1].classList.add('img-darken');
+
+        })
+
+        item.addEventListener('mouseout', () => {
+            item.childNodes[1].classList.remove('img-darken');
+
+        })
+    })
+</script> -->
+{% endblock %}

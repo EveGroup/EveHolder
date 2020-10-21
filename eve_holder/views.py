@@ -1,17 +1,14 @@
 """This module contains views of the website."""
-from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Host, Event, Visitor
+
+from .models import Event
+
+def homepage(request):
+    event_list = Event.objects.all()
+    context = {'events': event_list}
+
+    return render(request, 'eve_holder/homepage.html', context)
 
 
-def home(request):
-    """Class that handle the index page in html."""
-    return render(request, 'home.html')
-
-def login(request):
-    """Class that handle the index page in html."""
-    return render(request, 'registration/login.html')
-
-def signup(request):
-    """Class that handle the index page in html."""
-    return render(request, 'signup.html')
+def event_detail(request):
+    return render(request, 'eve_holder/event_detail.html')
