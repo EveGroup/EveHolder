@@ -1,5 +1,4 @@
 """This module contain models to set layout for database.
-
 TODO: implement the models class is this can be better with separate file.
 """
 
@@ -9,9 +8,7 @@ from django.utils import timezone
 
 class Host(models.Model):
     """Create host table in database.
-
     Collect name, email, phone_num of Host into database.
-
     Notes:
         host_name: host's name.
         host_email: host's email.
@@ -28,10 +25,8 @@ class Host(models.Model):
 
 class Event(models.Model):
     """Create event table in database.
-
     Collect event_name, description, host
     pub_date, and end_date detail into database
-
     Notes:
         event_name: name of that event.
         event_description: explain about event.
@@ -47,7 +42,6 @@ class Event(models.Model):
 
     def can_register(self):
         """Check the event that can registration or not.
-
         Returns:
              bool: true if now was between pub_date and end_date.
         """
@@ -56,7 +50,6 @@ class Event(models.Model):
 
     def is_expired(self):
         """Check the expiration date or end date of the event.
-
         Returns:
              bool: true if now was more than end_date.
         """
@@ -70,12 +63,11 @@ class Event(models.Model):
     can_register.boolean = True
 
 
+
 class Visitor(models.Model):
     """Create visitors' table in database.
-
     Collect name, phone_num, email,
     event_already_regis, and event_history into database.
-
     Notes:
         visitor_name: visitor's name.
         visitor_phone_num: visitor's phone number.

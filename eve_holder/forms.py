@@ -1,25 +1,18 @@
+from django.forms import ModelForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django import forms
+
 from .models import *
 
-class Host_forms(forms.ModelForm):
+
+class EventForm(ModelForm):
     class Meta:
-        model = Host
-        fields = [
-            'name',
-            'password'
-        ]
-        widgets = {
-            'password': forms.PasswordInput()
-        }
+        model = Event
+        fields = '__all__'
 
 
-class Visitor_forms(forms.ModelForm):
+class CreateUserForm(UserCreationForm):
     class Meta:
-        model = Visitor
-        fields = [
-            'name',
-            'password'
-        ]
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
