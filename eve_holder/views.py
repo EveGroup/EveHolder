@@ -1,3 +1,4 @@
+"""This module contains views of the website."""
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,17 @@ from .forms import EventForm, CreateUserForm
 from .models import Visitor, Event
 
 
+def homepage(request):
+    event_list = Event.objects.all()
+    context = {'events': event_list}
+
+    return render(request, 'eve_holder/homepage.html', context)
+
+
+def event_detail(request):
+    return render(request, 'eve_holder/event_detail.html')
+
+  
 def register_page(request):
     if request.user.is_authenticated:
         return redirect('home')

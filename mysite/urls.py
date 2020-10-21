@@ -17,7 +17,9 @@ Examples:
 from django.contrib import admin
 from django.urls import path, include
 
+from eve_holder import views
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('eve_holder.urls')),
+    path('admin/', admin.site.urls),
 ]

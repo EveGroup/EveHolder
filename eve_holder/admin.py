@@ -1,7 +1,8 @@
+"""Display admin page for Host to create an event."""
+
 from django.contrib import admin
 
-# Register your models here.
-from .models import Host, Visitor, Event
+from .models import Host, Event, Visitor
 
 
 admin.site.register(Event)
