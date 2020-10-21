@@ -1,6 +1,6 @@
 # EveHolder
 
-This is the online event registration web application for ISP project
+This is the online events registration web application for ISP project
 
 ## Links to docs
 

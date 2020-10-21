@@ -59,9 +59,8 @@ class Event(models.Model):
     def __str__(self):
         """Display the event's name."""
         return self.event_name
-
+      
     can_register.boolean = True
-
 
 
 class Visitor(models.Model):
