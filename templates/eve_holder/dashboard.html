@@ -12,7 +12,7 @@
             <h5>LAST 5 EVENTS</h5>
             <hr>
             <div class="card card-body">
-                <a class="btn btn-primary btn-sm btn-block" href="{% url 'eve_holder:create_event' %}">Create Events</a>
+{#                <a class="btn btn-primary btn-sm btn-block" href="{% url 'eve_holder:create_event' %}">Create Events</a>#}
                 <table class="table table-sm" id="recent-event-table">
 
                     <tr>
@@ -28,8 +28,10 @@
                             <td>{{ event.event_name }}</td>
                             <td>{{ event.event_description }}</td>
                             <td>{{ event.can_register }} </td>
-                            <td><a class="btn btn-sm btn-info" href="{% url 'eve_holder:edit_event' event.id %}">Edit</a></td>
-                            <td><a class="btn btn-sm btn-danger" href="{% url 'eve_holder:delete_event' event.id %}">Delete</a></td>
+                            <td><a class="btn btn-sm btn-info"
+                                   href="{% url 'eve_holder:edit_event' event.id %}">Edit</a></td>
+                            <td><a class="btn btn-sm btn-danger" href="{% url 'eve_holder:delete_event' event.id %}">Delete</a>
+                            </td>
                         </tr>
                     {% endfor %}
 

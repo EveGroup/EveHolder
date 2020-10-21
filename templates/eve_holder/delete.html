@@ -8,14 +8,14 @@
             <div class="card card-body">
 
                 <p>Are you sure you want to delete "{{ item }}?"</p>
-              
+
                 <form action="{% url 'eve_holder:delete_event' item.id %}" method="post">
-                  
+
                     {% csrf_token %}
-                    <a class="btn btn-warning" href="{% url 'eve_holder:home' %}">Cancel</a>
-                  
+                    <a class="btn btn-warning" href="{% url 'eve_holder:dashboard' %}">Cancel</a>
+
                     <input class="btn btn-danger" type="submit" name="Confirm">
-                  
+
                 </form>
 
             </div>
