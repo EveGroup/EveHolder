@@ -17,7 +17,6 @@ class Host(models.Model):
     host_name = models.CharField(max_length=100, null=True)
     host_email = models.EmailField(max_length=200, null=True)
     host_phone_num = models.CharField(max_length=100, null=True)
-    host_password = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return self.host_name
@@ -77,7 +76,6 @@ class Visitor(models.Model):
     visitor_name = models.CharField(max_length=150, null=True)
     visitor_phone_num = models.CharField(max_length=100, null=True)
     visitor_email = models.EmailField(max_length=100, null=True)
-    visitor_password = models.CharField(max_length=50, null=True)
     visitor_event = models.ManyToManyField(Event, blank=True)
 
     def __str__(self):
