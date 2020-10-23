@@ -18,13 +18,12 @@ def homepage(request):
 
 
 def event_detail(request):
-  
     return render(request, 'eve_holder/event_detail.html')
 
-  
+
 def register_page(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('eve_holder:dashboard')
     else:
         form = CreateUserForm()
         if request.method == 'POST':
@@ -33,15 +32,15 @@ def register_page(request):
                 form.save()
                 user = form.cleaned_data.get('username')
                 messages.success(request, 'Account was created for ' + user)
-                return redirect('login')
+                return redirect('eve_holder:login')
         context = {'form': form}
-        
+
         return render(request, 'eve_holder/register.html', context)
 
 
 def login_page(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('eve_holder:dashboard')
     else:
         if request.method == 'POST':
             username = request.POST.get('username')
@@ -49,41 +48,41 @@ def login_page(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('eve_holder:dashboard')
             else:
                 messages.info(request, 'Username or Password is incorrect')
 
         context = {}
-        
+
         return render(request, 'eve_holder/login.html', context)
 
 
 def logout_page(request):
     logout(request)
-    
-    return redirect('login')
+
+    return redirect('eve_holder:login')
 
 
-@login_required(login_url='login')
-def home(request):
+@login_required(login_url='eve_holder:login')
+def dashboard(request):
     visitors_list = Visitor.objects.all()
     events_list = Event.objects.all()
 
     total_events = events_list.count()
 
     context = {'visitors': visitors_list, 'events': events_list, 'total_events': total_events}
-    
-    return render(request, 'eve_holder/home.html', context)
+
+    return render(request, 'eve_holder/dashboard.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='eve_holder:login')
 def events(request):
     events_list = Event.objects.all()
-    
+
     return render(request, 'eve_holder/events.html', {'events': events_list})
 
 
-@login_required(login_url='login')
+@login_required(login_url='eve_holder:login')
 def visitors(request, pk):
     visitors_list = Visitor.objects.get(id=pk)
     events_list = visitors_list.event_set.all()
@@ -95,11 +94,11 @@ def visitors(request, pk):
     context = {'visitors': visitors_list, 'events': events_list,
                'events_count': events_count, 'my_filter': my_filter
                }
-    
-    return render(request, 'eve_holder/visitors.html', context)
+
+    return render(request, 'eve_holder/visitor.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='eve_holder:login')
 def create_event(request, pk):
     visitors_list = Visitor.objects.get(id=pk)
     form = EventForm(initial={'visitor': visitors_list})
@@ -107,14 +106,14 @@ def create_event(request, pk):
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('eve_holder:dashboard')
 
     context = {'form': form}
-    
+
     return render(request, 'eve_holder/event_form.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='eve_holder:login')
 def edit_event(request, pk):
     events_list = Event.objects.get(id=pk)
     form = EventForm(instance=events_list)
@@ -122,20 +121,20 @@ def edit_event(request, pk):
         form = EventForm(request.POST, instance=events_list)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('eve_holder:dashboard')
 
     context = {'form': form}
-    
+
     return render(request, 'eve_holder/event_form.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='eve_holder:login')
 def delete_event(request, pk):
     events_list = Event.objects.get(id=pk)
     if request.method == 'POST':
         events_list.delete()
-        return redirect('home')
-      
+        return redirect('eve_holder:dashboard')
+
     context = {'item': events_list}
-    
+
     return render(request, 'eve_holder/delete.html', context)

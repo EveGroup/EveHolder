@@ -1,12 +1,31 @@
-{% extends 'eve_holder/main.html' %}
-
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/homepage.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Eve Holder Homepage</title>
+</head>
+<body>
 
-{% block content %}
+<div class="container">
+    <div class="nav-wrapper">
+        <div class="left-side">
+            <div class="brand">
+                <div>EVEHOLDER</div>
+            </div>
+        </div>
 
-    {% include 'eve_holder/navbar.html' %}
+        <div class="right-side">
+            <div class="nav-link-wrapper">
+                <a href="{% url 'eve_holder:login' %}">login</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="middle">
     <div class="active_events">
@@ -80,12 +99,13 @@
             </div>
             <div class="login-button-bottom">
                 <div class="login-button">
-                    <a href="https://www.google.com" type="button" class="btn btn-outline-warning">login</a>
+                    <a href="{% url 'eve_holder:login' %}" type="button" class="btn btn-outline-warning">login</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</body>
 <!-- <script>
     const items = document.querySelectorAll('.img-deco')
     items.forEach(item => {
@@ -101,4 +121,5 @@
         })
     })
 </script> -->
-{% endblock %}
+
+</html>
