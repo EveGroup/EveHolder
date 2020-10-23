@@ -1,0 +1,81 @@
+{% extends 'eve_holder/main.html' %}
+
+{% block content %}
+
+    <br>
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Visitor: {{ visitors.visitor_name }}</h5>
+                <hr>
+                <a class="btn btn-outline-info  btn-sm btn-block" href="">Update Visitor</a>
+                <a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Visitor</a>
+
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Contact Information</h5>
+                <hr>
+                <p>Email: {{ visitors.visitor_email }}</p>
+                <p>Phone: {{ visitors.visitor_phone_num }}</p>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Total Events</h5>
+                <hr>
+                <h1 style="text-align: center;padding: 10px">{{ event_count }}</h1>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col">
+            <div class="card card-body">
+                <form method="get">
+
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th>Event</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Edit</th>
+                        <th>Remove</th>
+                    </tr>
+
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.event_name }}</td>
+                            <td>{{ event.event_description }}</td>
+                            <td>{{ event.can_register }}</td>
+                            <td><a class="btn btn-sm btn-info"
+                                   href="{% url 'eve_holder:edit_event' event.id %}">Edit</a></td>
+                            <td><a class="btn btn-sm btn-danger"
+                                   href="{% url 'eve_holder:delete_event' event.id %}">Remove</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
