@@ -3,3 +3,4 @@ coverage
 Django
 django-environ
 psycopg2
+django-crispy-forms
