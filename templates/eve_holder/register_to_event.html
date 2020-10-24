@@ -1,0 +1,26 @@
+{% extends 'eve_holder/main.html' %}
+{% load static %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Register</title>
+</head>
+<body>
+    <h1>Event Register</h1>
+    <h2>Register for {{ events.event_name }}</h2>
+    <h3>Event Detail</h3>
+    <p>
+        {{ events.event_description }}
+    </p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-info" type="submit" name="Register">
+    </form>
+
+</body>
+</html>
+
+{% endblock %}
