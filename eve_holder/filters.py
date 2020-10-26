@@ -6,5 +6,5 @@ from .models import *
 class EventFilter(FilterSet):
     class Meta:
         model = Event
-        fields = '__all__'
-        exclude = ['event_description', 'date_created', 'host', 'visitor', 'tag']
+        fields = ['event_name', 'event_description']
+        exclude = ['event_description', 'date_created', 'host', 'visitor']

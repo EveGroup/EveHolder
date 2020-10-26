@@ -132,3 +132,6 @@ dmypy.json
 # IDE folder
 .idea
 .vscode
+
+# test for codecov
+.coveragerc
