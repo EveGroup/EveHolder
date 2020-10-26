@@ -1,5 +1,8 @@
 # EveHolder
 
+[![Actions Status](https://github.com/EveGroup/EveHolder/workflows/Django%20CI/badge.svg)](https://github.com/EveGroup/EveHolder/actions)
+[![codecov](https://codecov.io/gh/EveGroup/EveHolder/branch/master/graph/badge.svg?token=IYHFBSLOV7)](https://codecov.io/gh/EveGroup/EveHolder/)
+
 This is the online events registration web application for ISP project
 
 ## Links to docs
