@@ -132,3 +132,6 @@ dmypy.json
 # IDE folder
 .idea
 .vscode
+
+# codecov because we use in setup.cfg
+.coveragerc
