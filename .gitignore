@@ -133,5 +133,5 @@ dmypy.json
 .idea
 .vscode
 
-# test for codecov
+# codecov because we use in setup.cfg
 .coveragerc
