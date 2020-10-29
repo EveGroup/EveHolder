@@ -1,0 +1,46 @@
+{% extends 'eve_holder/main.html' %}
+
+{% block content %}
+    <br>
+
+    <!-- Event Card -->
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Event: {{ event.event_name }}</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>All Participants/Visitors</h5>
+            </div>
+            <div class="card card-body">
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Emial</th>
+                        <th>PhoneNumber</th>
+                        <th>Views</th>
+                    </tr>
+
+                    {% for visitor in visitors %}
+                        <tr>
+                            <td>{{ visitor.visitor_name }}</td>
+                            <td>{{ visitor.visitor_email }}</td>
+                            <td>{{ visitor.visitor.phone }}</td>
+                            <td><a class="btn btn-sm btn-info"
+                                   href="{% url 'eve_holder:visitors' visitor.id %}">Views</a></td>
+                        </tr>
+                    {% endfor %}
+
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -17,8 +17,10 @@ def homepage(request):
     return render(request, 'eve_holder/homepage.html', context)
 
 
-def event_detail(request):
-    return render(request, 'eve_holder/event_detail.html')
+def event_detail(request, pk):
+    event = Event.objects.get(id=pk)
+    context = {'event': event}
+    return render(request, 'eve_holder/event_detail.html', context)
 
 
 def register_page(request):
@@ -83,9 +85,17 @@ def events(request):
 
 
 @login_required(login_url='eve_holder:login')
+def visitors_list(request, pk):
+    event = Event.objects.get(id=pk)
+    visitors = Visitor.objects.filter(visitor_event=event)
+    context = {'event': event, 'visitors': visitors}
+    return render(request, 'eve_holder/visitors_list.html', context)
+
+
+@login_required(login_url='eve_holder:login')
 def visitors(request, pk):
     visitors_list = Visitor.objects.get(id=pk)
-    events_list = visitors_list.event_set.all()
+    events_list = visitors_list.visitor_event.all()
     events_count = events_list.count()
 
     my_filter = EventFilter(request.GET, queryset=events_list)
