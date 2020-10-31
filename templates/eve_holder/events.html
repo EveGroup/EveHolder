@@ -15,13 +15,16 @@
                         <th>Events</th>
                         <th>Description</th>
                         <th>Status</th>
+                        <th>Views</th>
                     </tr>
 
-                    {% for i in events %}
+                    {% for event in events %}
                         <tr>
-                            <td>{{ i.event_name }}</td>
-                            <td>{{ i.event_description }}</td>
-                            <td>{{ i.event_status }}</td>
+                            <td>{{ event.event_name }}</td>
+                            <td>{{ event.event_description }}</td>
+                            <td>{{ event.is_expired }}</td>
+                            <td><a class="btn btn-sm btn-primary"
+                                href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
                         </tr>
                     {% endfor %}
                 </table>
