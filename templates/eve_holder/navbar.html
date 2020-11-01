@@ -21,7 +21,24 @@
         </form>
     </div>
 
-    <span id="hello-msg">Hello, {{ request.user }}</span>
-    <span><a href="{% url 'eve_holder:logout' %}">Logout</a></span>
+    {% if user.is_authenticated %}
+        <span class="hello-msg" id="hello-msg">Hello, {{ request.user }}</span>
+        <button class="btn btn-primary" data-target=".bs-logout-modal-sm" data-toggle="modal">Logout</button>
+
+        <div tabindex="-1" class="modal bs-logout-modal-sm" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
+                    <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?
+                    </div>
+                    <div class="modal-footer"><a class="btn btn-primary btn-block"
+                                                 href="{% url 'eve_holder:logout' %}">Logout</a></div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <span class="login-msg">You are not logged in</span>
+        <a class="btn btn-primary" href="{% url 'eve_holder:login' %}">Log In</a>
+    {% endif %}
 
 </nav>
