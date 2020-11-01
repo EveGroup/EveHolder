@@ -109,6 +109,13 @@ def visitors(request, pk):
 
 
 @login_required(login_url='eve_holder:login')
+def visitor_information(request, pk):
+    visitor = Visitor.objects.get(id=pk)
+
+    return render(request, 'eve_holder/visitor_info.html', {'visitor': visitor})
+
+
+@login_required(login_url='eve_holder:login')
 def create_event(request, pk):
     visitors_list = Visitor.objects.get(id=pk)
     form = EventForm(initial={'visitor': visitors_list})
