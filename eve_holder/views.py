@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from .filters import EventFilter
-from .forms import EventForm, CreateUserForm
+from .forms import EventForm, CreateUserForm, EventRegistrationForm
 # Create your views here.
 from .models import Visitor, Event
 
@@ -148,3 +148,17 @@ def delete_event(request, pk):
     context = {'item': events_list}
 
     return render(request, 'eve_holder/delete.html', context)
+
+
+@login_required(login_url='eve_holder:login')
+def event_register(request, pk):
+    visitor = Visitor.objects.get(id=request.user.id)
+    form = EventRegistrationForm(instance=visitor)
+    if request.method == 'POST':
+        form = EventRegistrationForm(request.POST, instance=visitor)
+        if form.is_valid():
+            form.save()
+            return redirect('eve_holder:dashboard')
+    context = {'form': form}
+    return render(request, 'eve_holder/event_registration.html', context)
+
