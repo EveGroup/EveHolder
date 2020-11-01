@@ -153,12 +153,9 @@ def delete_event(request, pk):
 @login_required(login_url='eve_holder:login')
 def event_register(request, pk):
     visitor = Visitor.objects.get(id=request.user.id)
-    print(visitor.visitor_name)
-    # print(visitor.visitor_name)
     form = EventRegistrationForm(instance=visitor)
     if request.method == 'POST':
-        # print(request.user.id)
-        form = EventRegistrationForm(request.POST)
+        form = EventRegistrationForm(request.POST, instance=visitor)
         if form.is_valid():
             form.save()
             return redirect('eve_holder:dashboard')
