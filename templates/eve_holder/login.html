@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
 
 </head>
+
 <body>
 <div class="container h-100">
     <div class="d-flex justify-content-center h-100">
@@ -56,7 +57,9 @@
                 <div class="d-flex justify-content-center links">
                     Don't have an account? <a href="{% url 'eve_holder:register' %}" class="ml-2">Sign Up</a>
                 </div>
-
+                <div class="d-flex justify-content-center links">
+                Back to <a href="{% url 'eve_holder:dashboard' %}" class="ml-2">Dashboard</a>
+                </div>
             </div>
         </div>
     </div>

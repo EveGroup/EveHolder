@@ -1,0 +1,33 @@
+{% extends 'eve_holder/main.html' %}
+
+{% block content %}
+
+    <br>
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Visitor Information</h5>
+            </div>
+            <div class="card card-body">
+                <table class="table">
+                    <tr>
+                        <th>User name</th>
+                        <th>Email</th>
+                        <th>Phone number</th>
+                    </tr>
+                        <tr>
+                            <td>{{ visitor.visitor_name }}</td>
+                            <td>{{ visitor.visitor_email }}</td>
+                            <td>{{ visitor.visitor_phone_num }}</td>
+                        </tr>
+                </table>
+            </div>
+            <div class="card card-body">
+                <span style="margin-left: auto">Edit Information</span>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

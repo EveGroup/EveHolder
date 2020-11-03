@@ -10,17 +10,17 @@ class Host(models.Model):
     """Create host table in database.
     Collect name, email, phone_num of Host into database.
     Notes:
-        host_name: host's name.
-        host_email: host's email.
-        host_phone_num: host's phone number.
+        name: host's name.
+        email: host's email.
+        phone_num: host's phone number.
     """
-    host_name = models.CharField(max_length=100, null=True)
-    host_email = models.EmailField(max_length=200, null=True)
-    host_phone_num = models.CharField(max_length=100, null=True)
+    name = models.CharField(max_length=100, null=True)
+    email = models.EmailField(max_length=200, null=True)
+    phone_num = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         """Display host's name."""
-        return self.host_name
+        return self.name
 
 
 class Event(models.Model):
@@ -68,17 +68,17 @@ class Visitor(models.Model):
     Collect name, phone_num, email,
     event_already_regis, and event_history into database.
     Notes:
-        visitor_name: visitor's name.
-        visitor_phone_num: visitor's phone number.
-        visitor_email: visitor's email.
+        name: visitor's name.
+        phone_num: visitor's phone number.
+        email: visitor's email.
         visitor_event_already_regis: visitor's registration event.
         visitor_event_history: history of event from each visitor.
     """
-    visitor_name = models.CharField(max_length=150, null=True)
-    visitor_phone_num = models.CharField(max_length=100, null=True)
-    visitor_email = models.EmailField(max_length=100, null=True)
-    visitor_event = models.ManyToManyField(Event, blank=True)
+    name = models.CharField(max_length=150, null=True)
+    phone_num = models.CharField(max_length=100, null=True)
+    email = models.EmailField(max_length=100, null=True)
+    event = models.ManyToManyField(Event, blank=True)
 
     def __str__(self):
         """Display visitor's name"""
-        return self.visitor_name
+        return self.name
