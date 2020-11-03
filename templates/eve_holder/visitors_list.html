@@ -28,8 +28,8 @@
 
                     {% for visitor in visitors %}
                         <tr>
-                            <td>{{ visitor.visitor_name }}</td>
-                            <td>{{ visitor.visitor_email }}</td>
+                            <td>{{ visitor.name }}</td>
+                            <td>{{ visitor.email }}</td>
                             <td>{{ visitor.visitor.phone }}</td>
                             <td><a class="btn btn-sm btn-info"
                                    href="{% url 'eve_holder:visitors' visitor.id %}">Views</a></td>
