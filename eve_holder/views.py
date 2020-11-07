@@ -86,7 +86,7 @@ def events(request):
 @login_required(login_url='eve_holder:login')
 def visitors_list(request, pk):
     event = Event.objects.get(id=pk)
-    visitors_list = Visitor.objects.filter(visitor_event=event)
+    visitors_list = Visitor.objects.filter(event=event)
     context = {'event': event, 'visitors': visitors_list}
     return render(request, 'eve_holder/visitors_list.html', context)
 
