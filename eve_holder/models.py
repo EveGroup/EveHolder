@@ -79,6 +79,12 @@ class Visitor(models.Model):
     email = models.EmailField(max_length=100, null=True)
     event = models.ManyToManyField(Event, blank=True)
 
+    private = models.BooleanField(default=False)
+
+    def is_private(self):
+        """Return True if this visitor data is private."""
+        return self.private
+
     def __str__(self):
         """Display visitor's name"""
         return self.name

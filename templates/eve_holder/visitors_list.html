@@ -30,9 +30,9 @@
                         <tr>
                             <td>{{ visitor.name }}</td>
                             <td>{{ visitor.email }}</td>
-                            <td>{{ visitor.visitor.phone }}</td>
+                            <td>{{ visitor.phone_num }}</td>
                             <td><a class="btn btn-sm btn-info"
-                                   href="{% url 'eve_holder:visitors' visitor.id %}">Views</a></td>
+                                   href="{% url 'eve_holder:information' visitor.id %}">Views</a></td>
                         </tr>
                     {% endfor %}
 
