@@ -49,3 +49,6 @@ class EventModelTest(TestCase):
         end_date = pub_date + datetime.timedelta(hours=20)
         future_event = Event(event_name="Future Event", pub_date=pub_date, end_date=end_date)
         self.assertTrue(future_event.is_expired())
+
+    def test_event_name(self):
+        pub_date = 
