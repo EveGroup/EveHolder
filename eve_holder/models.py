@@ -4,6 +4,7 @@ TODO: implement the models class is this can be better with separate file.
 
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Host(models.Model):
@@ -14,7 +15,8 @@ class Host(models.Model):
         email: host's email.
         phone_num: host's phone number.
     """
-    name = models.CharField(max_length=100, null=True)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=150, null=True)
     email = models.EmailField(max_length=200, null=True)
     phone_num = models.CharField(max_length=100, null=True)
 
@@ -59,7 +61,7 @@ class Event(models.Model):
     def __str__(self):
         """Display the event's name."""
         return self.event_name
-      
+
     can_register.boolean = True
 
 
@@ -74,10 +76,11 @@ class Visitor(models.Model):
         visitor_event_already_regis: visitor's registration event.
         visitor_event_history: history of event from each visitor.
     """
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=150, null=True)
     phone_num = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=100, null=True)
-    event = models.ManyToManyField(Event, blank=True)
+    event = models.ManyToManyField(Event, blank=True, null=True)
 
     def __str__(self):
         """Display visitor's name"""
