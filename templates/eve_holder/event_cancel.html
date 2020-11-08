@@ -1,0 +1,22 @@
+{% extends 'eve_holder/main.html' %}
+
+{% block content %}
+<body>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+
+                <p>Are you sure you want to cancel "{{ item }}?"</p>
+
+                <form action="{% url 'eve_holder:event_cancel' item.id %}" method="POST">
+                    {% csrf_token %}
+                    <a class="btn btn-danger" href="{% url 'eve_holder:events' %}" type="submit">Yes</a>
+                    <a class="btn btn-warning" href="{% url 'eve_holder:events' %}">No</a>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+{% endblock %}
