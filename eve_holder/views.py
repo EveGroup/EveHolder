@@ -26,7 +26,7 @@ def event_detail(request, pk):
     context = {'event': event}
     return render(request, 'eve_holder/event_detail.html', context)
 
-@unauthenticated_user
+
 def dashboard(request):
     """Main dashboard."""
     visitors = Visitor.objects.all()
@@ -56,12 +56,10 @@ def register_page(request):
             group = Group.objects.get(name=group_name)
             user.groups.add(group)
 
-            print(type(group_name))
+            # add user to Host or Visitor
             if group_name == Group.objects.get(name='Visitors'):
-                print('in vis')
                 Visitor.objects.create(user=user, name=username, email=email)
             elif group_name == Group.objects.get(name='Host'):
-                print('in ho')
                 Host.objects.create(user=user, name=username, email=email)
 
             messages.success(request, 'Account was created for ' + username)
@@ -69,6 +67,7 @@ def register_page(request):
     context = {'form': form}
 
     return render(request, 'eve_holder/register.html', context)
+
 
 @unauthenticated_user
 def login_page(request):
@@ -86,7 +85,7 @@ def login_page(request):
             if group == 'Host':
                 return redirect('eve_holder:host')
             elif group == 'Visitors':
-                return redirect('eve_holder:visitors')
+                return redirect('eve_holder:visitor')
         else:
             messages.info(request, 'Username or Password is incorrect')
 
@@ -105,15 +104,11 @@ def logout_page(request):
 # for host
 @login_required(login_url='eve_holder:login')
 @host_only
-# @allowed_users(allowed_roles=['Host'])
 def host(request):
     """Host dashboard."""
-    # visitors_list = Visitor.objects.get(id=pk)   #  visitor list
-    # host = request.user.host
     id = request.user.host.id
     host = Host.objects.get(id=id)
     events_list = request.user.host.event_set.all()
-    # events_list = Event.objects.filter(event_host=host)
     events_count = events_list.count()
 
     my_filter = EventFilter(request.GET, queryset=events_list)
@@ -128,16 +123,6 @@ def host(request):
 
 @login_required(login_url='eve_holder:login')
 @host_only
-def visitors_list(request, pk):
-    """Host view list of visitors."""
-    event = Event.objects.get(id=pk)
-    visitors_list = Visitor.objects.filter(visitor_event=event)
-    context = {'event': event, 'visitors': visitors_list}
-    return render(request, 'eve_holder/visitors_list.html', context)
-
-
-@login_required(login_url='eve_holder:login')
-@host_only
 def visitor_information(request, pk):
     """Host view visitor that register event information."""
     visitor = Visitor.objects.get(id=pk)
@@ -147,19 +132,26 @@ def visitor_information(request, pk):
 
 @login_required(login_url='eve_holder:login')
 @host_only
-# @allowed_users(allowed_roles=['Host'])
+def visitors_list(request, pk):
+    """All visitor that register in that event."""
+    event = Event.objects.get(id=pk)
+    visitors_list = Visitor.objects.filter(event=event)
+    context = {'event': event, 'visitors': visitors_list}
+    return render(request, 'eve_holder/visitors_list.html', context)
+
+
+@login_required(login_url='eve_holder:login')
+@host_only
 def create_event(request):
     """Host create event."""
     id = request.user.host.id
     host = Host.objects.get(id=id)
     form = EventForm(initial={'event_host': host})
     if request.method == 'POST':
-        print('post')
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            print(form)
-            Event.objects.create(form)
+            # Event.objects.create(form)
             return redirect('eve_holder:host')
 
     context = {'form': form}
@@ -169,7 +161,6 @@ def create_event(request):
 
 @login_required(login_url='eve_holder:login')
 @host_only
-# @allowed_users(allowed_roles=['Host'])
 def edit_event(request, pk):
     """Host edit event."""
     events_list = Event.objects.get(id=pk)
@@ -178,7 +169,7 @@ def edit_event(request, pk):
         form = EventForm(request.POST, instance=events_list)
         if form.is_valid():
             form.save()
-            return redirect('eve_holder:dashboard')
+            return redirect('eve_holder:host')
 
     context = {'form': form}
 
@@ -186,14 +177,16 @@ def edit_event(request, pk):
 
 
 @login_required(login_url='eve_holder:login')
-@host_only
-# @allowed_users(allowed_roles=['Host'])
+# @host_only
 def delete_event(request, pk):
     """For host delete event."""
     events_list = Event.objects.get(id=pk)
     if request.method == 'POST':
         events_list.delete()
-        return redirect('eve_holder:dashboard')
+        if request.user.groups.all()[0].name == 'Host':
+            return redirect('eve_holder:host')
+        elif request.user.groups.all()[0].name == 'Visitors':
+            return redirect('eve_holder:visitor')
 
     context = {'item': events_list}
 
@@ -205,8 +198,6 @@ def delete_event(request, pk):
 @allowed_users(allowed_roles=['Visitors'])
 def visitors(request):
     """Visitor dashboard."""
-    # visitor = Visitor.objects.get(id=pk)
-    # events_list = visitor.event.all()
     id = request.user.visitor.id
     visitors = Visitor.objects.get(id=id)
     events_list = visitors.event.all()
@@ -224,7 +215,7 @@ def visitors(request):
 
 @login_required(login_url='eve_holder:login')
 @allowed_users(allowed_roles=['Visitors'])
-def event_register(request, pk):
+def event_register(request):
     """For visitor register event. ploy"""
     visitor = Visitor.objects.get(id=request.user.visitor.id)
     form = EventRegistrationForm(instance=visitor)
@@ -232,7 +223,7 @@ def event_register(request, pk):
         form = EventRegistrationForm(request.POST, instance=visitor)
         if form.is_valid():
             form.save()
-            return redirect('eve_holder:dashboard')
+            return redirect('eve_holder:visitor')
     context = {'form': form}
     return render(request, 'eve_holder/event_registration.html', context)
 

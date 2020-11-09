@@ -5,7 +5,7 @@ TODO: implement the models class is this can be better with separate file.
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
+from datetime import date
 
 class Host(models.Model):
     """Create host table in database.
@@ -38,9 +38,9 @@ class Event(models.Model):
     """
     event_name = models.CharField(max_length=500, null=True)
     event_description = models.CharField(max_length=500, null=True, blank=True)
-    event_host = models.ManyToManyField(Host)
-    pub_date = models.DateTimeField('published date', null=True)
-    end_date = models.DateTimeField('ending date', null=True)
+    event_host = models.ManyToManyField(Host, null=True)
+    pub_date = models.DateTimeField('published date', null=True, default=date.today())
+    end_date = models.DateTimeField('ending date', null=True, default=date.today())
 
     def can_register(self):
         """Check the event that can registration or not.

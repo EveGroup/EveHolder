@@ -9,6 +9,7 @@ from .models import *
 class EventForm(ModelForm):
     pub_date = DateTimeField(widget=forms.widgets.DateTimeInput(format="%Y-%m-%d %H:%M:%S"))
     end_date = DateTimeField(widget=forms.widgets.DateTimeInput(format="%Y-%m-%d %H:%M:%S"))
+
     class Meta:
         model = Event
         fields = '__all__'

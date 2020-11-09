@@ -29,7 +29,7 @@ def host_only(view_func):
             group = request.user.groups.all()[0].name
 
         if group == 'Visitors':
-            return redirect('eve_holder:visitors')
+            return redirect('eve_holder:visitor')
         if group == 'Host':
             return view_func(request, *args, **kwargs)
 

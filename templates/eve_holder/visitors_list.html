@@ -21,9 +21,9 @@
                 <table class="table">
                     <tr>
                         <th>Name</th>
-                        <th>Emial</th>
+                        <th>Email</th>
                         <th>PhoneNumber</th>
-                        <th>Views</th>
+{#                        <th>Views</th>#}
                     </tr>
 
                     {% for visitor in visitors %}
@@ -31,8 +31,9 @@
                             <td>{{ visitor.name }}</td>
                             <td>{{ visitor.email }}</td>
                             <td>{{ visitor.visitor.phone }}</td>
-                            <td><a class="btn btn-sm btn-info"
-                                   href="{% url 'eve_holder:visitors' visitor.id %}">Views</a></td>
+{#                            <td>#}
+{#                                <a class="btn btn-sm btn-info" href="{% url 'eve_holder:informations' visitor.id %}">Views</a>#}
+{#                            </td>#}
                         </tr>
                     {% endfor %}
 

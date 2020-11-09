@@ -43,7 +43,6 @@
                         <th>Event</th>
                         <th>Description</th>
                         <th>Status</th>
-                        <th>Edit</th>
                         <th>Remove</th>
                     </tr>
 
@@ -52,8 +51,6 @@
                             <td>{{ event.event_name }}</td>
                             <td>{{ event.event_description }}</td>
                             <td>{{ event.can_register }}</td>
-                            <td><a class="btn btn-sm btn-info"
-                                   href="{% url 'eve_holder:edit_event' event.id %}">Edit</a></td>
                             <td><a class="btn btn-sm btn-danger"
                                    href="{% url 'eve_holder:delete_event' event.id %}">Remove</a>
                             </td>

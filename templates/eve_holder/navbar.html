@@ -8,15 +8,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-            {% ifequal user.groups.all.0.name "Visitors" %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'eve_holder:events' %}">Event</a>
-            </li>
+            {% if user.groups.all.0.name == "Visitors" %}
+                    <a class="nav-link" href="{% url 'eve_holder:visitor' %}">Account</a>
+                    <a class="nav-link" href="{% url 'eve_holder:events' %}">Event</a>
+            {% elif user.groups.all.0.name == "Host" %}
+                    <a class="nav-link" href="{% url 'eve_holder:host' %}">Account</a>
+                    <a class="nav-link" href="{% url 'eve_holder:create_event' %}">Create Event</a>
             {% else %}
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'eve_holder:dashboard' %}">Dashboard</a>
-            </li>
-            {% endifequal %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'eve_holder:dashboard' %}">Dashboard</a>
+                </li>
+            {% endif %}
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
