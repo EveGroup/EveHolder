@@ -1,18 +1,22 @@
 import datetime
 
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.utils import timezone
 
 from eve_holder.models import Event
 
 
-def create_event(name: str, duration: datetime):
+def create_event(name: str, duration: datetime, host):
     pub_date = datetime.datetime.now() + datetime.timedelta(days=duration)
     end_date = pub_date + datetime.timedelta(days=abs(duration))
-    return Event.objects.create(event_name=name, pub_date=pub_date, end_date=end_date)
+    return Event.objects.create(event_name=name, event_host=host, pub_date=pub_date, end_date=end_date)
 
 
 class EventModelTest(TestCase):
+
+    def setUp(self) -> None:
+        self.host = User.objects.create_user("Host", "test@gmail.com", "testPassword")
 
     def test_can_register_before_pubdate(self):
         pub_date = timezone.now() + datetime.timedelta(days=1)

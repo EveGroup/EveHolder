@@ -29,6 +29,8 @@ jobs:
         env:
           DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
         run: |
+          python manage.py makemigrations
+          python manage.py migrate
           coverage run manage.py test
       - name: Coverage Report
         run: |
