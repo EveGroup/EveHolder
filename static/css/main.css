@@ -1,9 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Piazzolla&display=swap');
-
-#logo {
+#eve_logo {
+    max-width: 100%;
+    height: auto;
 }
 
 body {
