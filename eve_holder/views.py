@@ -5,44 +5,57 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 
+from .decorations import unauthenticated_user, allowed_users, host_only
 from .filters import EventFilter
 from .forms import EventForm, CreateUserForm, EventRegistrationForm
 from .models import Visitor, Event, Host
-from .decorations import unauthenticated_user, allowed_users, host_only
 
 
 # Any one can view this below page.
 def homepage(request):
-    """Home page of the application."""
+    """Home page of the application.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the homepage with the context.
+    """
     event_list = Event.objects.all()
     context = {'events': event_list}
 
     return render(request, 'eve_holder/homepage.html', context)
 
 
-def event_detail(request, pk):
-    """Detail for each event."""
-    event = Event.objects.get(id=pk)
-    context = {'event': event}
-    return render(request, 'eve_holder/event_detail.html', context)
-
-
 def dashboard(request):
-    """Main dashboard."""
-    visitors = Visitor.objects.all()
-    events_list = Event.objects.all()
+    """Main dashboard.
 
-    total_events = events_list.count()
+    Args:
+        request: A HttpRequest object, which contains data about the request.
 
-    context = {'visitors': visitors, 'events': events_list, 'total_events': total_events}
+    Returns:
+        render: Render the dashboard page with the context.
+    """
+    get_visitors = Visitor.objects.all()
+    get_events = Event.objects.all()
+
+    total_events = get_events.count()
+
+    context = {'visitors': get_visitors, 'events': get_events, 'total_events': total_events}
 
     return render(request, 'eve_holder/dashboard.html', context)
 
 
-# about login logout and register
 @unauthenticated_user
 def register_page(request):
-    """Register account for both visitors and host."""
+    """Register account for both visitors and host.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the register page with the context.
+    """
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -69,9 +82,17 @@ def register_page(request):
     return render(request, 'eve_holder/register.html', context)
 
 
+# about login logout and register
 @unauthenticated_user
 def login_page(request):
-    """Login for both visitors and host."""
+    """Login for both visitors and host.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the login page with the context.
+    """
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -95,37 +116,84 @@ def login_page(request):
 
 
 def logout_page(request):
-    """Logged out for both visitors and host."""
+    """Logged out for both visitors and host.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the logout page with the context.
+    """
     logout(request)
 
     return redirect('eve_holder:homepage')
 
 
-
-# for host
 @login_required(login_url='eve_holder:login')
 @host_only
 def host(request):
-    """Host dashboard."""
-    id = request.user.host.id
-    host = Host.objects.get(id=id)
+    """Host dashboard.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the host page with the context.
+    """
+    host_id = request.user.host.id
+    get_host = Host.objects.get(id=host_id)
     events_list = request.user.host.event_set.all()
     events_count = events_list.count()
 
     my_filter = EventFilter(request.GET, queryset=events_list)
     events_list = my_filter.qs
 
-    context = {'host': host, 'events': events_list,
+    context = {'host': get_host, 'events': events_list,
                'events_count': events_count, 'my_filter': my_filter
                }
 
     return render(request, 'eve_holder/host.html', context)
 
 
+# for host
+@login_required(login_url='eve_holder:login')
+@allowed_users(allowed_roles=['Visitors'])
+def visitors(request):
+    """Visitor dashboard.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the visitor page with the context.
+    """
+    visitor_id = request.user.visitor.id
+    get_visitors = Visitor.objects.get(id=visitor_id)
+    events_list = get_visitors.event.all()
+    events_count = events_list.count()
+
+    my_filter = EventFilter(request.GET, queryset=events_list)
+    events_list = my_filter.qs
+
+    context = {'visitors': get_visitors, 'events': events_list,
+               'events_count': events_count, 'my_filter': my_filter
+               }
+
+    return render(request, 'eve_holder/visitor.html', context)
+
+
 @login_required(login_url='eve_holder:login')
 @host_only
 def visitor_information(request, pk):
-    """Host view visitor that register event information."""
+    """Host view visitor that register event information.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk: visitor's id.
+
+    Returns:
+        render: Render the visitor information page with the context.
+    """
     visitor = Visitor.objects.get(id=pk)
 
     return render(request, 'eve_holder/visitor_info.html', {'visitor': visitor})
@@ -134,20 +202,51 @@ def visitor_information(request, pk):
 @login_required(login_url='eve_holder:login')
 @host_only
 def visitors_list(request, pk):
-    """All visitor that register in that event."""
+    """All visitor that register in that event.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk: visitor's id.
+
+    Returns:
+        render: Render the visitors list page with the context.
+    """
     event = Event.objects.get(id=pk)
-    visitors_list = Visitor.objects.filter(event=event)
-    context = {'event': event, 'visitors': visitors_list}
+    list_visitors = Visitor.objects.filter(event=event)
+    context = {'event': event, 'visitors': list_visitors}
     return render(request, 'eve_holder/visitors_list.html', context)
+
+
+@login_required(login_url='eve_holder:login')
+@allowed_users(allowed_roles=['Visitors'])
+def events(request):
+    """All events in the application.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the events page with events list.
+    """
+    events_list = Event.objects.all()
+
+    return render(request, 'eve_holder/events.html', {'events': events_list})
 
 
 @login_required(login_url='eve_holder:login')
 @host_only
 def create_event(request):
-    """Host create event."""
-    id = request.user.host.id
-    host = Host.objects.get(id=id)
-    form = EventForm(initial={'event_host': host})
+    """Host create event.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the create event page with the context.
+    """
+    host_id = request.user.host.id
+    get_host = Host.objects.get(id=host_id)
+    form = EventForm(initial={'event_host': get_host})
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
@@ -163,7 +262,15 @@ def create_event(request):
 @login_required(login_url='eve_holder:login')
 @host_only
 def edit_event(request, pk):
-    """Host edit event."""
+    """Host edit event.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk: event's id.
+
+    Returns:
+        render: Render the edit event page with the context.
+    """
     events_list = Event.objects.get(id=pk)
     form = EventForm(instance=events_list)
     if request.method == 'POST':
@@ -180,7 +287,15 @@ def edit_event(request, pk):
 @login_required(login_url='eve_holder:login')
 @host_only
 def delete_event(request, pk):
-    """For host delete event."""
+    """For host delete event.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk: event's id
+
+    Returns:
+        render: Render the delete event page with the context.
+    """
     events_list = Event.objects.get(id=pk)
     if request.method == 'POST':
         events_list.delete()
@@ -195,29 +310,34 @@ def delete_event(request, pk):
 
 
 # for visitor
-@login_required(login_url='eve_holder:login')
-@allowed_users(allowed_roles=['Visitors'])
-def visitors(request):
-    """Visitor dashboard."""
-    id = request.user.visitor.id
-    visitors = Visitor.objects.get(id=id)
-    events_list = visitors.event.all()
-    events_count = events_list.count()
 
-    my_filter = EventFilter(request.GET, queryset=events_list)
-    events_list = my_filter.qs
 
-    context = {'visitors': visitors, 'events': events_list,
-               'events_count': events_count, 'my_filter': my_filter
-               }
+def event_detail(request, pk):
+    """Detail for each event.
 
-    return render(request, 'eve_holder/visitor.html', context)
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk: event's id.
+
+    Returns:
+        render: Render the event detail page with the context.
+    """
+    event = Event.objects.get(id=pk)
+    context = {'event': event}
+    return render(request, 'eve_holder/event_detail.html', context)
 
 
 @login_required(login_url='eve_holder:login')
 @allowed_users(allowed_roles=['Visitors'])
 def event_register(request):
-    """For visitor register event. ploy"""
+    """For visitor register event.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the event_registration page with the context.
+    """
     visitor = Visitor.objects.get(id=request.user.visitor.id)
 
     form = EventRegistrationForm(instance=visitor)
@@ -229,18 +349,20 @@ def event_register(request):
     context = {'form': form}
     return render(request, 'eve_holder/event_registration.html', context)
 
-  
-@login_required(login_url='eve_holder:login')
-@allowed_users(allowed_roles=['Visitors'])
-def events(request):
-    """All events in the application."""
-    events_list = Event.objects.all()
 
-    return render(request, 'eve_holder/events.html', {'events': events_list})
-  
-  
 @login_required(login_url='login')
 def cancel_event(request, pk_event, pk_visitor):
+    """For cancel the event use with visitor's accounts.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk_event: event's id.
+        pk_visitor: visitor's id.
+
+    Returns:
+        render: Render the cancel event page with the context.
+
+    """
     visitor = Visitor.objects.get(id=pk_visitor)
     my_event = Event.objects.get(id=pk_event)
     print(visitor.event)

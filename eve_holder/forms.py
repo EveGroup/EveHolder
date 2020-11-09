@@ -1,8 +1,8 @@
-from django.forms import ModelForm
-from django.contrib.auth.forms import UserCreationForm
+"""TODO: add description for the forms."""
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.forms import DateTimeField
-from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 from .models import *
 
