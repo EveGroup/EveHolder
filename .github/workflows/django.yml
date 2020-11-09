@@ -27,9 +27,11 @@ jobs:
           pip install -r requirements.txt
       - name: Run Tests
         env:
-          DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
+          DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5433] }}/postgres'
         run: |
-          coverage run manage.py test
+          python manage.py makemigrations
+          python manage.py migrate
+          coverage run manage.py test --no-input
       - name: Coverage Report
         run: |
           bash <(curl -s https://codecov.io/bash)

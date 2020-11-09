@@ -101,6 +101,7 @@ def logout_page(request):
     return redirect('eve_holder:homepage')
 
 
+
 # for host
 @login_required(login_url='eve_holder:login')
 @host_only
@@ -218,6 +219,7 @@ def visitors(request):
 def event_register(request):
     """For visitor register event. ploy"""
     visitor = Visitor.objects.get(id=request.user.visitor.id)
+
     form = EventRegistrationForm(instance=visitor)
     if request.method == 'POST':
         form = EventRegistrationForm(request.POST, instance=visitor)
@@ -227,7 +229,7 @@ def event_register(request):
     context = {'form': form}
     return render(request, 'eve_holder/event_registration.html', context)
 
-
+  
 @login_required(login_url='eve_holder:login')
 @allowed_users(allowed_roles=['Visitors'])
 def events(request):
@@ -235,3 +237,18 @@ def events(request):
     events_list = Event.objects.all()
 
     return render(request, 'eve_holder/events.html', {'events': events_list})
+  
+  
+@login_required(login_url='login')
+def cancel_event(request, pk_event, pk_visitor):
+    visitor = Visitor.objects.get(id=pk_visitor)
+    my_event = Event.objects.get(id=pk_event)
+    print(visitor.event)
+    if request.method == 'POST':
+        visitor.event.remove(my_event)
+        # print(visitor.event)
+        # messages.success(request, f"Already cancel {my_event}")
+        return redirect('eve_holder:event_cancel')
+    events_list = Event.objects.get(id=pk_event)
+    context = {'item': events_list}
+    return render(request, 'eve_holder/event_cancel.html', context)

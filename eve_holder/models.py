@@ -1,7 +1,7 @@
 """This module contain models to set layout for database.
 TODO: implement the models class is this can be better with separate file.
 """
-
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -19,6 +19,7 @@ class Host(models.Model):
     name = models.CharField(max_length=150, null=True)
     email = models.EmailField(max_length=200, null=True)
     phone_num = models.CharField(max_length=100, null=True)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         """Display host's name."""
@@ -81,6 +82,12 @@ class Visitor(models.Model):
     phone_num = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=100, null=True)
     event = models.ManyToManyField(Event, blank=True, null=True)
+
+    private = models.BooleanField(default=False)
+
+    def is_private(self):
+        """Return True if this visitor data is private."""
+        return self.private
 
     def __str__(self):
         """Display visitor's name"""

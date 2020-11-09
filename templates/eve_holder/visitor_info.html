@@ -7,7 +7,11 @@
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>Visitor Information</h5>
+                {% if visitor.private %}
+                    <h5> Visitor Information : Private </h5>
+                {% else %}
+                    <h5> Visitor Information </h5>
+                {% endif %}
             </div>
             <div class="card card-body">
                 <table class="table">
@@ -17,14 +21,22 @@
                         <th>Phone number</th>
                     </tr>
                         <tr>
-                            <td>{{ visitor.visitor_name }}</td>
-                            <td>{{ visitor.visitor_email }}</td>
-                            <td>{{ visitor.visitor_phone_num }}</td>
+                            {% if visitor.private %}
+                                <td> {{ visitor.name }} </td>
+                                <td> ========== </td>
+                                <td> ========== </td>
+                            {% else %}
+                                <td>{{ visitor.name }}</td>
+                                <td>{{ visitor.email }}</td>
+                                <td>{{ visitor.phone_num }}</td>
+                            {% endif %}
                         </tr>
                 </table>
             </div>
-            <div class="card card-body">
-                <span style="margin-left: auto">Edit Information</span>
+            <div>
+                <hr>
+                <a style="margin-right: auto" class="btn btn-sm btn-secondary" href="">Back</a>
+                <a style="margin-left: auto" class="btn btn-sm btn-info" href="">Edit Information</a>
             </div>
         </div>
     </div>
