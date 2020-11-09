@@ -23,6 +23,11 @@
             <div class="nav-link-wrapper">
                 <a href="{% url 'eve_holder:dashboard' %}">Go to our website</a>
             </div>
+            {% if not user.is_authenticated %}
+            <div class="nav-link-wrapper">
+                <a href="{% url 'eve_holder:login' %}"> Login</a>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

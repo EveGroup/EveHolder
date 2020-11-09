@@ -12,7 +12,12 @@
                 <form action="{% url 'eve_holder:delete_event' item.id %}" method="post">
 
                     {% csrf_token %}
-                    <a class="btn btn-warning" href="{% url 'eve_holder:dashboard' %}">Cancel</a>
+                    {% ifequal user.groups.all.0.name "Host" %}
+                    <a class="btn btn-warning" href="{% url 'eve_holder:host' %}">Cancel</a>
+                    {% endifequal %}
+                    {% ifequal user.groups.all.0.name "Visitors" %}
+                    <a class="btn btn-warning" href="{% url 'eve_holder:visitors' %}">Cancel</a>
+                    {% endifequal %}
 
                     <input class="btn btn-danger" type="submit" name="Confirm">
 

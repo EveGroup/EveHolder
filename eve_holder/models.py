@@ -4,7 +4,8 @@ TODO: implement the models class is this can be better with separate file.
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.models import User
+from datetime import date
 
 class Host(models.Model):
     """Create host table in database.
@@ -14,7 +15,8 @@ class Host(models.Model):
         email: host's email.
         phone_num: host's phone number.
     """
-    name = models.CharField(max_length=100, null=True)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=150, null=True)
     email = models.EmailField(max_length=200, null=True)
     phone_num = models.CharField(max_length=100, null=True)
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
@@ -37,9 +39,9 @@ class Event(models.Model):
     """
     event_name = models.CharField(max_length=500, null=True)
     event_description = models.CharField(max_length=500, null=True, blank=True)
-    event_host = models.ManyToManyField(Host)
-    pub_date = models.DateTimeField('published date', null=True)
-    end_date = models.DateTimeField('ending date', null=True)
+    event_host = models.ManyToManyField(Host, null=True)
+    pub_date = models.DateTimeField('published date', null=True, default=date.today())
+    end_date = models.DateTimeField('ending date', null=True, default=date.today())
 
     def can_register(self):
         """Check the event that can registration or not.
@@ -60,7 +62,7 @@ class Event(models.Model):
     def __str__(self):
         """Display the event's name."""
         return self.event_name
-      
+
     can_register.boolean = True
 
 
@@ -75,11 +77,11 @@ class Visitor(models.Model):
         visitor_event_already_regis: visitor's registration event.
         visitor_event_history: history of event from each visitor.
     """
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=150, null=True)
     phone_num = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=100, null=True)
-    event = models.ManyToManyField(Event, blank=True)
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    event = models.ManyToManyField(Event, blank=True, null=True)
 
     private = models.BooleanField(default=False)
 

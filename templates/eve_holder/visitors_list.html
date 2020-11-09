@@ -23,7 +23,6 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>PhoneNumber</th>
-                        <th>Views</th>
                     </tr>
 
                     {% for visitor in visitors %}
@@ -31,9 +30,6 @@
                             <td>{{ visitor.name }}</td>
                             <td>{{ visitor.email }}</td>
                             <td>{{ visitor.phone_num }}</td>
-                            <td><a class="btn btn-sm btn-info"
-                                   href="{% url 'eve_holder:information' visitor.id %}">Views</a></td>
-                        </tr>
                     {% endfor %}
 
 

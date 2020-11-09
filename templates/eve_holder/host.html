@@ -7,10 +7,10 @@
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>Visitor: {{ visitors.name }}</h5>
+                <h5>Host: {{ host.name }}</h5>
                 <hr>
-                <a class="btn btn-outline-info  btn-sm btn-block" href="">Update Account</a>
-                <a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Account</a>
+                <a class="btn btn-outline-info  btn-sm btn-block" href="">Update Host</a>
+                <a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Host</a>
 
             </div>
         </div>
@@ -19,8 +19,8 @@
             <div class="card card-body">
                 <h5>Contact Information</h5>
                 <hr>
-                <p>Email: {{ visitors.email }}</p>
-                <p>Phone: {{ visitors.phone_num }}</p>
+                <p>Email: {{ host.email }}</p>
+                <p>Phone: {{ host.phone_num }}</p>
             </div>
         </div>
 
@@ -43,6 +43,8 @@
                         <th>Event</th>
                         <th>Description</th>
                         <th>Status</th>
+                        <th>Edit</th>
+                        <th>Visitors</th>
                         <th>Remove</th>
                     </tr>
 
@@ -51,6 +53,10 @@
                             <td>{{ event.event_name }}</td>
                             <td>{{ event.event_description }}</td>
                             <td>{{ event.can_register }}</td>
+                            <td><a class="btn btn-sm btn-info"
+                                   href="{% url 'eve_holder:edit_event' event.id %}">Edit</a></td>
+                            <td><a class="btn btn-sm btn-info"
+                                   href="{% url 'eve_holder:visitors_list' event.id %}">View</a></td>
                             <td><a class="btn btn-sm btn-danger"
                                    href="{% url 'eve_holder:delete_event' event.id %}">Remove</a>
                             </td>

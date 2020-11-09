@@ -20,8 +20,6 @@
                         <th>Description</th>
                         <th>Status</th>
                         <th>Details</th>
-                        <th>Edit</th>
-                        <th>Remove</th>
                     </tr>
 
                     {% for event in events %}
@@ -31,10 +29,6 @@
                             <td>{{ event.can_register }} </td>
                             <td><a class="btn btn-sm btn-primary"
                                    href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
-                            <td><a class="btn btn-sm btn-info"
-                                   href="{% url 'eve_holder:edit_event' event.id %}">Edit</a></td>
-                            <td><a class="btn btn-sm btn-danger" 
-                                   href="{% url 'eve_holder:delete_event' event.id %}">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}
