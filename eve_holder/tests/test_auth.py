@@ -1,4 +1,4 @@
-"""Module for test event."""
+"""Module for tests event."""
 import datetime
 
 from django.test import TestCase

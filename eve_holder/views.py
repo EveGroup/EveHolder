@@ -177,7 +177,7 @@ def edit_event(request, pk):
 
 
 @login_required(login_url='eve_holder:login')
-# @host_only
+@host_only
 def delete_event(request, pk):
     """For host delete event."""
     events_list = Event.objects.get(id=pk)
