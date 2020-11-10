@@ -351,7 +351,7 @@ def event_register(request):
 
 
 @login_required(login_url='login')
-def cancel_event(request, pk_event, pk_visitor):
+def cancel_event(request, pk_event):
     """For cancel the event use with visitor's accounts.
 
     Args:
@@ -363,14 +363,12 @@ def cancel_event(request, pk_event, pk_visitor):
         render: Render the cancel event page with the context.
 
     """
-    visitor = Visitor.objects.get(id=pk_visitor)
+    visitor = Visitor.objects.get(id=request.user.visitor.id)
     my_event = Event.objects.get(id=pk_event)
-    print(visitor.event)
     if request.method == 'POST':
+        # print("events bef", visitor.event)
         visitor.event.remove(my_event)
-        # print(visitor.event)
-        # messages.success(request, f"Already cancel {my_event}")
-        return redirect('eve_holder:event_cancel')
+        return redirect('eve_holder:events')
     events_list = Event.objects.get(id=pk_event)
     context = {'item': events_list}
     return render(request, 'eve_holder/event_cancel.html', context)
