@@ -52,7 +52,7 @@
                             <td>{{ event.event_description }}</td>
                             <td>{{ event.can_register }}</td>
                             <td><a class="btn btn-sm btn-danger"
-                                   href="{% url 'eve_holder:delete_event' event.id %}">Remove</a>
+                                   href="{% url 'eve_holder:event_cancel' event.id %}">Remove</a>
                             </td>
                         </tr>
                     {% endfor %}

@@ -228,9 +228,11 @@ def events(request):
     Returns:
         render: Render the events page with events list.
     """
-    events_list = Event.objects.all()
-
-    return render(request, 'eve_holder/events.html', {'events': events_list})
+    visitor_id = request.user.visitor.id
+    visitor = Visitor.objects.get(id=visitor_id)
+    registered_events_list = visitor.event.all()
+    events_list = Event.objects.exclude(pk__in=registered_events_list)
+    return render(request, 'eve_holder/events.html', {'events': events_list, 'visitor_events': registered_events_list})
 
 
 @login_required(login_url='eve_holder:login')
@@ -329,21 +331,24 @@ def event_detail(request, pk):
 
 @login_required(login_url='eve_holder:login')
 @allowed_users(allowed_roles=['Visitors'])
-def event_register(request):
+def event_register(request, pk_event):
     """For visitor register event.
 
     Args:
         request: A HttpRequest object, which contains data about the request.
+        pk_event: event's id
 
     Returns:
         render: Render the event_registration page with the context.
     """
-    visitor = Visitor.objects.get(id=request.user.visitor.id)
-
+    # visitor = Visitor.objects.get(id=request.user.visitor.id)
+    visitor = Visitor.objects.get(user=request.user)
     form = EventRegistrationForm(instance=visitor)
     if request.method == 'POST':
         form = EventRegistrationForm(request.POST, instance=visitor)
         if form.is_valid():
+            event = Event.objects.get(id=pk_event)
+            visitor.event.add(event)
             form.save()
             return redirect('eve_holder:visitor')
     context = {'form': form}
@@ -351,24 +356,25 @@ def event_register(request):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Visitors'])
 def cancel_event(request, pk_event):
     """For cancel the event use with visitor's accounts.
 
     Args:
         request: A HttpRequest object, which contains data about the request.
         pk_event: event's id.
-        pk_visitor: visitor's id.
 
     Returns:
         render: Render the cancel event page with the context.
 
     """
-    visitor = Visitor.objects.get(id=request.user.visitor.id)
+    # visitor = Visitor.objects.get(id=request.user.visitor.id)
+    visitor = Visitor.objects.get(user=request.user)
     my_event = Event.objects.get(id=pk_event)
     if request.method == 'POST':
         # print("events bef", visitor.event)
         visitor.event.remove(my_event)
-        return redirect('eve_holder:events')
+        return redirect('eve_holder:visitor')
     events_list = Event.objects.get(id=pk_event)
     context = {'item': events_list}
     return render(request, 'eve_holder/event_cancel.html', context)
