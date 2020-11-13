@@ -14,3 +14,5 @@ More information, visit our [Homepage](https://github.com/EveGroup/EveHolder/wik
 - [Iteration 2 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-2-Plan)
 - [Iteration 3 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-3-Plan)
 - [Iteration 4 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-4-Plan)
+- [Code Review Procedure](https://github.com/EveGroup/EveHolder/wiki/Code-Review-Procedure)
+- [Code Review Checklist](https://github.com/EveGroup/EveHolder/wiki/Code-Review-checklist)
