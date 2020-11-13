@@ -5,7 +5,7 @@ jobs: # A basic unit of work in a run
     working_directory: ~/circleci-demo-python-django
     docker: # run the steps with Docker
       # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
-      - image: circleci/python:3.7
+      - image: circleci/python:3.6.2
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
