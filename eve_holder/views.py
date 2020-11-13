@@ -2,12 +2,13 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.shortcuts import render, redirect
 
 from .decorations import unauthenticated_user, allowed_users, host_only
 from .filters import EventFilter
-from .forms import EventForm, CreateUserForm, EventRegistrationForm
+from .forms import EventForm, CreateUserForm, EventRegistrationForm, UpdateInformationUserForm, \
+    UpdateInformationVisitorForm, UpdateInformationHostForm
 from .models import Visitor, Event, Host
 
 
@@ -378,3 +379,73 @@ def cancel_event(request, pk_event):
     events_list = Event.objects.get(id=pk_event)
     context = {'item': events_list}
     return render(request, 'eve_holder/event_cancel.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Visitors'])
+def visitor_update_information(request):
+    """Update the visitor's information.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the update information page with the context.
+
+    """
+    user = request.user
+    visitor = Visitor.objects.get(user=user)
+    visitor_form = UpdateInformationVisitorForm(instance=visitor)
+    user_form = UpdateInformationUserForm(instance=user)
+    if request.method == 'POST':
+        user_form = UpdateInformationUserForm(request.POST, instance=user)
+        user_form.save()
+        visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
+        visitor_form.save()
+        return redirect('eve_holder:visitor')
+    context = {'user_form': user_form, 'visitor_form': visitor_form}
+    return render(request, 'eve_holder/visitor_update_information.html', context)
+
+
+@login_required(login_url='login')
+@host_only
+def host_update_information(request):
+    """Update the host's information.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the update information page with the context.
+
+    """
+    user = request.user
+    host = Host.objects.get(user=user)
+    host_form = UpdateInformationHostForm(instance=host)
+    user_form = UpdateInformationUserForm(instance=user)
+    if request.method == 'POST':
+        user_form = UpdateInformationUserForm(request.POST, instance=user)
+        user_form.save()
+        host_form = UpdateInformationHostForm(request.POST, instance=host)
+        host_form.save()
+        return redirect('eve_holder:host')
+    context = {'user_form': user_form, 'host_form': host_form}
+    return render(request, 'eve_holder/host_update_information.html', context)
+
+
+@login_required(login_url='login')
+def delete_account(request):
+    user = request.user
+    previous_page = request.META['HTTP_REFERER']
+    context = {'previous_page': previous_page}
+    # if user.groups.filter(name='visitors').exists():
+    #     visitor = Visitor.objects.get(user=user)
+    #     context = {'visitor': visitor}
+    # elif user.groups.filter(name='host').exists():
+    #     host = Host.objects.get(user=user)
+    #     context = {'host': host}
+    if request.method == 'POST':
+        user = User.objects.get(id=user.id)
+        user.delete()
+        return redirect('eve_holder:homepage')
+    return render(request, 'eve_holder/delete_account.html', context)

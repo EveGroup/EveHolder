@@ -26,3 +26,21 @@ class EventRegistrationForm(ModelForm):
     class Meta:
         model = Visitor
         fields = ['name', 'phone_num', 'email']
+
+
+class UpdateInformationUserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']
+
+
+class UpdateInformationVisitorForm(ModelForm):
+    class Meta:
+        model = Visitor
+        fields = ['phone_num', 'email']
+
+
+class UpdateInformationHostForm(ModelForm):
+    class Meta:
+        model = Host
+        fields = ['phone_num', 'email']
