@@ -7,6 +7,10 @@ python: "3.7"
 git:
   depth: 1
 
+# Start database
+services:
+  - postgresql
+
 # Install any dependencies
 install:
   - pip install -r requirements.txt
