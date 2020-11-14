@@ -17,7 +17,9 @@
                                 <div class="userData ml-3">
                                     <h2 class="d-block"
                                         style="font-size: 1.5rem; font-weight: bold">{{ event.event_name }}</h2>
-                                    <h6 class="d-block">Host by: <a href="javascript:void(0)">{{ event.event_host }}</a>
+<!--                                    <h6 class="d-block">Host by: <a href="javascript:void(0)">{{ host_name }}</a>-->
+<!--                                    </h6>-->
+                                    <h6 class="d-block">Host by: {{ host_name }}
                                     </h6>
                                 </div>
                                 <div class="ml-auto">
@@ -73,10 +75,10 @@
                                             <hr/>
                                             <div class="row">
                                                 <div class="col-sm-3 col-md-2 col-5">
-                                                    <label style="font-weight:bold;">Status (is_expired)</label>
+                                                    <label style="font-weight:bold;">Expired</label>
                                                 </div>
                                                 <div class="col-md-8 col-6">
-                                                    {{ event.is_expired }}
+                                                    {{ event.end_date }}
                                                 </div>
                                             </div>
                                             <hr/>
@@ -85,18 +87,37 @@
                                                     <label style="font-weight:bold;">Number of visitors</label>
                                                 </div>
                                                 <div class="col-md-8 col-6">
-                                                    <a href=" {% url 'eve_holder:visitors_list' event.id %} ">see more
-                                                        details</a>
+<!--                                                    <a href=" {% url 'eve_holder:visitors_list' event.id %} ">see more-->
+<!--                                                        details</a>-->
+                                                    {% if event.amount_accepted is not None %}
+                                                        {{ event.visitor_set.all.count }} / {{ event.amount_accepted }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                             <hr/>
-
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
+                                                    <label style="font-weight:bold;">Status</label>
+                                                </div>
+                                                <div class="col-md-8 col-6">
+                                                    {% if event.visitor_set.all.count < event.amount_accepted or event.amount_accepted is None %}
+                                                        <p>Available</p>
+                                                    {% else %}
+                                                        <p>Full</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            {% if event.visitor_set.all.count < event.amount_accepted or event.amount_accepted is None %}
                                                 <div class="row">
                                                     <div class="col-sm-3 col-md-2 col-5">
                                                         <a class="btn btn-sm btn-info"
                                                            href="{% url 'eve_holder:event_register' event.id %}">Join
                                                             Now</a>
                                                     </div>
+                                                    {% endif %}
                                                     <div>
                                                         <a class="btn btn-sm btn-secondary"
                                                            href="{% url 'eve_holder:dashboard' %}">Return to

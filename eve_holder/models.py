@@ -1,12 +1,10 @@
-"""This module contain models to set layout for database.
-
-TODO: implement the models class is this can be better with separate file.
-"""
+"""This module contain models to set layout for database."""
 from datetime import date
 
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from django.core.validators import MinValueValidator
 
 
 class Host(models.Model):
@@ -47,12 +45,13 @@ class Event(models.Model):
     event_host = models.ManyToManyField(Host, null=True)
     pub_date = models.DateTimeField('published date', null=True, default=date.today())
     end_date = models.DateTimeField('ending date', null=True, default=date.today())
+    amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
 
     def can_register(self):
-        """Check the event that can registration or not.
+        """Check if the event can be registered.
 
         Returns:
-             bool: true if now was between pub_date and end_date.
+             bool: true if the event can be registered.
         """
         now = timezone.now()
         return self.pub_date <= now <= self.end_date
@@ -65,6 +64,9 @@ class Event(models.Model):
         """
         now = timezone.now()
         return now > self.end_date
+
+    def is_full(self, amount):
+        return amount > self.limit_number
 
     def __str__(self):
         """Display the event's name."""
