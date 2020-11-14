@@ -7,7 +7,7 @@ jobs: # A basic unit of work in a run
       # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
       - image: circleci/python:3.7.9
         auth:
-          username: james31366
+          username: $DOCKERHUB_USERNAME  # please add your docker username in circle ci project settings
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
         environment: # environment variables for primary container
           PIPENV_VENV_IN_PROJECT: true
@@ -15,7 +15,7 @@ jobs: # A basic unit of work in a run
       # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
       - image: circleci/postgres:9.6.2
         auth:
-          username: james31366
+          username: $DOCKERHUB_USERNAME  # please add your docker username in circle ci project settings
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
         environment: # environment variables for the Postgres container.
           POSTGRES_USER: root
@@ -30,10 +30,12 @@ jobs: # A basic unit of work in a run
       - restore_cache: # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
-          name: Install pipenv
+          name: Ensuring installed dependencies
           command: |
             sudo pip install pipenv
-            pipenv install
+            pip install -r requirements.txt
+            python3 -m venv --system-site-packages venv/
+            . venv/bin/activate
       - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
           key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
