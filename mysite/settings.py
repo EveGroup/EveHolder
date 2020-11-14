@@ -80,7 +80,7 @@ DATABASES = {
     # read os.environ['DATABASE_URL'] and raises ImproperlyConfigured exception if not found
     'default': env.db(),
     # read os.environ['SQLITE_URL']
-    'extra': env.db('SQLITE_URL', default='psql:////tmp/my-tmp-sqlite.db')
+    'extra': env.db('SQLITE_URL', default='sqlite:////tmp/my-tmp-sqlite.db')
 }
 
 # Password validation
