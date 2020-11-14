@@ -5,4 +5,3 @@ django-environ
 psycopg2
 django-crispy-forms
 django-filter
-pipenv
