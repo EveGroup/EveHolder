@@ -9,8 +9,8 @@
             <div class="card card-body">
                 <h5>Host: {{ host.name }}</h5>
                 <hr>
-                <a class="btn btn-outline-info  btn-sm btn-block" href="">Update Host</a>
-                <a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Host</a>
+                <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'eve_holder:host_update_information' %}">Update Account</a>
+                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete Account</a>
 
             </div>
         </div>
@@ -19,6 +19,8 @@
             <div class="card card-body">
                 <h5>Contact Information</h5>
                 <hr>
+                <p>First name: {{ user.first_name }} </p>
+                <p>Last name: {{ user.last_name }} </p>
                 <p>Email: {{ host.email }}</p>
                 <p>Phone: {{ host.phone_num }}</p>
             </div>
@@ -42,23 +44,23 @@
                     <tr>
                         <th>Event</th>
                         <th>Description</th>
-                        <th>Status</th>
+                        <th>Event Date</th>
                         <th>Edit</th>
                         <th>Visitors</th>
-                        <th>Remove</th>
+                        <th>Delete ?</th>
                     </tr>
 
                     {% for event in events %}
                         <tr>
                             <td>{{ event.event_name }}</td>
                             <td>{{ event.event_description }}</td>
-                            <td>{{ event.can_register }}</td>
-                            <td><a class="btn btn-sm btn-info"
+                            <td>{{ event.event_date }}</td>
+                            <td><a class="btn btn-sm btn-warning"
                                    href="{% url 'eve_holder:edit_event' event.id %}">Edit</a></td>
                             <td><a class="btn btn-sm btn-info"
                                    href="{% url 'eve_holder:visitors_list' event.id %}">View</a></td>
                             <td><a class="btn btn-sm btn-danger"
-                                   href="{% url 'eve_holder:delete_event' event.id %}">Remove</a>
+                                   href="{% url 'eve_holder:delete_event' event.id %}">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}

@@ -2,12 +2,13 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.shortcuts import render, redirect
 
 from .decorations import unauthenticated_user, allowed_users, host_only
 from .filters import EventFilter
-from .forms import EventForm, CreateUserForm, EventRegistrationForm
+from .forms import EventForm, CreateUserForm, EventRegistrationForm, UpdateInformationUserForm, \
+    UpdateInformationVisitorForm, UpdateInformationHostForm
 from .models import Visitor, Event, Host
 
 
@@ -228,9 +229,11 @@ def events(request):
     Returns:
         render: Render the events page with events list.
     """
-    events_list = Event.objects.all()
-
-    return render(request, 'eve_holder/events.html', {'events': events_list})
+    visitor_id = request.user.visitor.id
+    visitor = Visitor.objects.get(id=visitor_id)
+    registered_events_list = visitor.event.all()
+    events_list = Event.objects.exclude(pk__in=registered_events_list)
+    return render(request, 'eve_holder/events.html', {'events': events_list, 'visitor_events': registered_events_list})
 
 
 @login_required(login_url='eve_holder:login')
@@ -249,12 +252,16 @@ def create_event(request):
     form = EventForm(initial={'event_host': get_host})
     if request.method == 'POST':
         form = EventForm(request.POST)
+        # form.event_host = request.user
+        # form['event_host'] = request.user
+        # print(form)
         if form.is_valid():
+            # form.event_host = request.user
+            # print(form.event_host)
             form.save()
-            # Event.objects.create(form)
             return redirect('eve_holder:host')
 
-    context = {'form': form}
+    context = {'form': form, 'host': request.user}
 
     return render(request, 'eve_holder/event_form.html', context)
 
@@ -301,8 +308,6 @@ def delete_event(request, pk):
         events_list.delete()
         if request.user.groups.all()[0].name == 'Host':
             return redirect('eve_holder:host')
-        elif request.user.groups.all()[0].name == 'Visitors':
-            return redirect('eve_holder:visitor')
 
     context = {'item': events_list}
 
@@ -311,7 +316,8 @@ def delete_event(request, pk):
 
 # for visitor
 
-
+@login_required(login_url='eve_holder:login')
+@allowed_users(allowed_roles=['Visitors'])
 def event_detail(request, pk):
     """Detail for each event.
 
@@ -323,27 +329,35 @@ def event_detail(request, pk):
         render: Render the event detail page with the context.
     """
     event = Event.objects.get(id=pk)
-    context = {'event': event}
+    host = event.event_host.values_list('name', flat=True)[0]
+    visitor = request.user.visitor
+    # print(visitor not in event.visitor_set.all())
+    context = {'event': event, 'host_name': host, 'visitor': visitor}
+    # print(Visitor.objects.filter(event=event))
+    # print(event.visitor_set.all().count())
     return render(request, 'eve_holder/event_detail.html', context)
 
 
 @login_required(login_url='eve_holder:login')
 @allowed_users(allowed_roles=['Visitors'])
-def event_register(request):
+def event_register(request, pk_event):
     """For visitor register event.
 
     Args:
         request: A HttpRequest object, which contains data about the request.
+        pk_event: event's id
 
     Returns:
         render: Render the event_registration page with the context.
     """
-    visitor = Visitor.objects.get(id=request.user.visitor.id)
-
+    # visitor = Visitor.objects.get(id=request.user.visitor.id)
+    visitor = Visitor.objects.get(user=request.user)
     form = EventRegistrationForm(instance=visitor)
     if request.method == 'POST':
         form = EventRegistrationForm(request.POST, instance=visitor)
         if form.is_valid():
+            event = Event.objects.get(id=pk_event)
+            visitor.event.add(event)
             form.save()
             return redirect('eve_holder:visitor')
     context = {'form': form}
@@ -351,26 +365,95 @@ def event_register(request):
 
 
 @login_required(login_url='login')
-def cancel_event(request, pk_event, pk_visitor):
+@allowed_users(allowed_roles=['Visitors'])
+def cancel_event(request, pk_event):
     """For cancel the event use with visitor's accounts.
 
     Args:
         request: A HttpRequest object, which contains data about the request.
         pk_event: event's id.
-        pk_visitor: visitor's id.
 
     Returns:
         render: Render the cancel event page with the context.
 
     """
-    visitor = Visitor.objects.get(id=pk_visitor)
+    # visitor = Visitor.objects.get(id=request.user.visitor.id)
+    visitor = Visitor.objects.get(user=request.user)
     my_event = Event.objects.get(id=pk_event)
-    print(visitor.event)
     if request.method == 'POST':
+        # print("events bef", visitor.event)
         visitor.event.remove(my_event)
-        # print(visitor.event)
-        # messages.success(request, f"Already cancel {my_event}")
-        return redirect('eve_holder:event_cancel')
+        return redirect('eve_holder:visitor')
     events_list = Event.objects.get(id=pk_event)
     context = {'item': events_list}
     return render(request, 'eve_holder/event_cancel.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Visitors'])
+def visitor_update_information(request):
+    """Update the visitor's information.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the update information page with the context.
+
+    """
+    user = request.user
+    visitor = Visitor.objects.get(user=user)
+    visitor_form = UpdateInformationVisitorForm(instance=visitor)
+    user_form = UpdateInformationUserForm(instance=user)
+    if request.method == 'POST':
+        user_form = UpdateInformationUserForm(request.POST, instance=user)
+        user_form.save()
+        visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
+        visitor_form.save()
+        return redirect('eve_holder:visitor')
+    context = {'user_form': user_form, 'visitor_form': visitor_form}
+    return render(request, 'eve_holder/visitor_update_information.html', context)
+
+
+@login_required(login_url='login')
+@host_only
+def host_update_information(request):
+    """Update the host's information.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the update information page with the context.
+
+    """
+    user = request.user
+    host = Host.objects.get(user=user)
+    host_form = UpdateInformationHostForm(instance=host)
+    user_form = UpdateInformationUserForm(instance=user)
+    if request.method == 'POST':
+        user_form = UpdateInformationUserForm(request.POST, instance=user)
+        user_form.save()
+        host_form = UpdateInformationHostForm(request.POST, instance=host)
+        host_form.save()
+        return redirect('eve_holder:host')
+    context = {'user_form': user_form, 'host_form': host_form}
+    return render(request, 'eve_holder/host_update_information.html', context)
+
+
+@login_required(login_url='login')
+def delete_account(request):
+    user = request.user
+    previous_page = request.META['HTTP_REFERER']
+    context = {'previous_page': previous_page}
+    # if user.groups.filter(name='visitors').exists():
+    #     visitor = Visitor.objects.get(user=user)
+    #     context = {'visitor': visitor}
+    # elif user.groups.filter(name='host').exists():
+    #     host = Host.objects.get(user=user)
+    #     context = {'host': host}
+    if request.method == 'POST':
+        user = User.objects.get(id=user.id)
+        user.delete()
+        return redirect('eve_holder:homepage')
+    return render(request, 'eve_holder/delete_account.html', context)

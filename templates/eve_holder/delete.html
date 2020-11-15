@@ -7,20 +7,15 @@
         <div class="col-md-6">
             <div class="card card-body">
 
-                <p>Are you sure you want to delete "{{ item }}?"</p>
+                <p>Are you sure you want to delete "{{ item }}" ?</p>
 
                 <form action="{% url 'eve_holder:delete_event' item.id %}" method="post">
 
                     {% csrf_token %}
-                    {% ifequal user.groups.all.0.name "Host" %}
-                    <a class="btn btn-warning" href="{% url 'eve_holder:host' %}">Cancel</a>
-                    {% endifequal %}
-                    {% ifequal user.groups.all.0.name "Visitors" %}
-                    <a class="btn btn-warning" href="{% url 'eve_holder:visitors' %}">Cancel</a>
-                    {% endifequal %}
-
-                    <input class="btn btn-danger" type="submit" name="Confirm">
-
+                     <input class="btn btn-danger" type="submit" name="Confirm" value="Yes">
+                    {% if user.groups.all.0.name == "Host" %}
+                    <a class="btn btn-warning" href="{% url 'eve_holder:host' %}">No</a>
+                    {% endif %}
                 </form>
 
             </div>

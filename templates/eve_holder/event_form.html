@@ -9,7 +9,26 @@
 
                 <form action="" method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form.event_name.label }}
+                    {{ form.event_name }}
+                    <br>
+                    {{ form.event_host }}
+                    {{ form.event_description.label }}
+                    {{ form.event_description }}
+                    <br>
+                    {{ form.event_date.label }}
+                    {{ form.event_date }}
+                    <br>
+                    {{ form.pub_date.label }}
+                    {{ form.pub_date }}
+                    <br>
+                    {{ form.end_date.label }}
+                    {{ form.end_date }}
+
+                    <br>
+                    {{ form.amount_accepted.label }} (minimum is 1)
+                    {{ form.amount_accepted }}
+
 
                     <input class="btn btn-info" type="submit" name="Submit">
                 </form>

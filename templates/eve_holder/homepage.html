@@ -1,6 +1,5 @@
 {% load static %}
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="{% static '/css/homepage.css' %}">
@@ -42,12 +41,15 @@
 
             <ul>
                 {% for event in events %}
-                    <div class="event-txt">
-                        <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a>
-                    </div>
-                    <div class="end-date-container">
-                        {{ event.end_date }}
-                    </div>
+                <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a> <p>{{ event.event_date }}</p>
+<!--
+<br>-->
+<!--                    <div class="event-txt">-->
+<!--                        <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a>-->
+<!--                    </div>-->
+<!--                    <div class="end-date-container">-->
+<!--                        {{ event.event_date }}-->
+<!--                    </div>-->
                 {% endfor %}
             </ul>
 
@@ -72,13 +74,13 @@
             </div>
             <div class="text-information-wrapper">
                 <div class="text-information">
-                    here are the information
+                    <p>want to share your idea?</p>
                 </div>
             </div>
 
             <div class="text-information-wrapper">
                 <div class="text-information">
-                    here are the information
+                    <p>"This event is so cool, I want to join!"</p>
                 </div>
             </div>
             <div class="item-wrapper">

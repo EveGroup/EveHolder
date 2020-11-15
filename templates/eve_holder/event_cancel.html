@@ -8,10 +8,10 @@
 
                 <p>Are you sure you want to cancel "{{ item }}?"</p>
 
-                <form action="{% url 'eve_holder:event_cancel' item.id %}" method="POST">
+                <form action="{% url 'eve_holder:event_cancel' item.id %}" method="post">
                     {% csrf_token %}
-                    <a class="btn btn-danger" href="{% url 'eve_holder:events' %}" type="submit">Yes</a>
-                    <a class="btn btn-warning" href="{% url 'eve_holder:events' %}">No</a>
+                    <input class="btn btn-danger" type="submit" value="Yes">
+                    <a class="btn btn-warning" href="{% url 'eve_holder:visitor' %}">No</a>
                 </form>
 
             </div>

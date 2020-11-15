@@ -16,12 +16,14 @@ urlpatterns = [
     # visitor part
     path('visitor/', views.visitors, name="visitor"),
     path('events/', views.events, name="events"),
-    path('events/<int:pk>/', views.event_detail, name='event_detail'),
-    path('events/register', views.event_register, name='event_register'),
-    path('events/<int:pk_event>/<int:pk_visitor>/cancel', views.cancel_event, name='event_cancel'),
+    path('events/update_information', views.visitor_update_information, name='visitor_update_information'),
+    # path('events/<int:pk>/', views.event_detail, name='event_detail'),
+    path('events/<int:pk_event>/register', views.event_register, name='event_register'),
+    path('events/<int:pk_event>/cancel', views.cancel_event, name='event_cancel'),
 
     # host part
     path('host/', views.host, name="host"),
+    path('host/update_information', views.host_update_information, name='host_update_information'),
     # host event
     path('create_event/', views.create_event, name="create_event"),
     path('edit_event/<str:pk>/', views.edit_event, name="edit_event"),
@@ -33,4 +35,5 @@ urlpatterns = [
 
     # both host and visitor use
     path('events/<int:pk>/', views.event_detail, name='event_detail'),
+    path('delete_account/', views.delete_account, name='delete_account'),
 ]
