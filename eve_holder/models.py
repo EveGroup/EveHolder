@@ -1,5 +1,5 @@
 """This module contain models to set layout for database."""
-from datetime import date
+from datetime import date, timedelta
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -46,6 +46,7 @@ class Event(models.Model):
     pub_date = models.DateTimeField('published date', null=True, default=date.today())
     end_date = models.DateTimeField('ending date', null=True, default=date.today())
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
+    event_date = models.DateField('event date', null=True, default=date.today() + timedelta(days=1))
 
     def can_register(self):
         """Check if the event can be registered.
@@ -66,7 +67,7 @@ class Event(models.Model):
         return now > self.end_date
 
     def is_full(self, amount):
-        return amount > self.limit_number
+        return amount > self.amount_accepted
 
     def __str__(self):
         """Display the event's name."""

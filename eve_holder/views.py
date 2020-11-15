@@ -308,8 +308,6 @@ def delete_event(request, pk):
         events_list.delete()
         if request.user.groups.all()[0].name == 'Host':
             return redirect('eve_holder:host')
-        elif request.user.groups.all()[0].name == 'Visitors':
-            return redirect('eve_holder:visitor')
 
     context = {'item': events_list}
 
@@ -318,7 +316,8 @@ def delete_event(request, pk):
 
 # for visitor
 
-
+@login_required(login_url='eve_holder:login')
+@allowed_users(allowed_roles=['Visitors'])
 def event_detail(request, pk):
     """Detail for each event.
 
@@ -331,9 +330,11 @@ def event_detail(request, pk):
     """
     event = Event.objects.get(id=pk)
     host = event.event_host.values_list('name', flat=True)[0]
+    visitor = request.user.visitor
+    # print(visitor not in event.visitor_set.all())
+    context = {'event': event, 'host_name': host, 'visitor': visitor}
     # print(Visitor.objects.filter(event=event))
     # print(event.visitor_set.all().count())
-    context = {'event': event, 'host_name': host}
     return render(request, 'eve_holder/event_detail.html', context)
 
 
