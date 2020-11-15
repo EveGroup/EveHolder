@@ -252,12 +252,16 @@ def create_event(request):
     form = EventForm(initial={'event_host': get_host})
     if request.method == 'POST':
         form = EventForm(request.POST)
+        # form.event_host = request.user
+        # form['event_host'] = request.user
+        # print(form)
         if form.is_valid():
+            # form.event_host = request.user
+            # print(form.event_host)
             form.save()
-            # Event.objects.create(form)
             return redirect('eve_holder:host')
 
-    context = {'form': form}
+    context = {'form': form, 'host': request.user}
 
     return render(request, 'eve_holder/event_form.html', context)
 
@@ -304,8 +308,6 @@ def delete_event(request, pk):
         events_list.delete()
         if request.user.groups.all()[0].name == 'Host':
             return redirect('eve_holder:host')
-        elif request.user.groups.all()[0].name == 'Visitors':
-            return redirect('eve_holder:visitor')
 
     context = {'item': events_list}
 
@@ -314,7 +316,8 @@ def delete_event(request, pk):
 
 # for visitor
 
-
+@login_required(login_url='eve_holder:login')
+@allowed_users(allowed_roles=['Visitors'])
 def event_detail(request, pk):
     """Detail for each event.
 
@@ -326,7 +329,12 @@ def event_detail(request, pk):
         render: Render the event detail page with the context.
     """
     event = Event.objects.get(id=pk)
-    context = {'event': event}
+    host = event.event_host.values_list('name', flat=True)[0]
+    visitor = request.user.visitor
+    # print(visitor not in event.visitor_set.all())
+    context = {'event': event, 'host_name': host, 'visitor': visitor}
+    # print(Visitor.objects.filter(event=event))
+    # print(event.visitor_set.all().count())
     return render(request, 'eve_holder/event_detail.html', context)
 
 

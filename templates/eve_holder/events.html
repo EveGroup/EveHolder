@@ -14,7 +14,8 @@
                     <tr>
                         <th>Events</th>
                         <th>Description</th>
-                        <th>Expired</th>
+                        <th>Last day of registration</th>
+                        <th>Event Date</th>
                         <th>Views</th>
                     </tr>
 
@@ -22,7 +23,8 @@
                         <tr>
                             <td>{{ event.event_name }}</td>
                             <td>{{ event.event_description }}</td>
-                            <td>{{ event.is_expired }}</td>
+                            <td>{{ event.end_date }}</td>
+                            <td>{{ event.event_date }}</td>
                             <td><a class="btn btn-sm btn-primary"
                                 href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
                         </tr>
@@ -41,20 +43,22 @@
                     <tr>
                         <th>Events</th>
                         <th>Description</th>
-                        <th>Expired</th>
+                        <th>Last day of registration</th>
+                        <th>Event Date</th>
                         <th>Views</th>
-                        <th>Cancel</th>
+                        <th>Cancel ?</th>
                     </tr>
 
                     {% for event in visitor_events %}
                         <tr>
                             <td>{{ event.event_name }}</td>
                             <td>{{ event.event_description }}</td>
-                            <td>{{ event.is_expired }}</td>
+                            <td>{{ event.end_date }}</td>
+                            <td>{{ event.event_date }}</td>
                             <td><a class="btn btn-sm btn-primary"
                                 href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
-                            <td><a class="btn btn-warning"
-                                href="{% url 'eve_holder:event_cancel' event.id %}">Cancel This Event</a></td>
+                            <td><a class="btn btn-sm btn-danger"
+                                href="{% url 'eve_holder:event_cancel' event.id %}">Cancel</a></td>
 
                         </tr>
                     {% endfor %}
