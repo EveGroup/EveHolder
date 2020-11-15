@@ -9,8 +9,8 @@
             <div class="card card-body">
                 <h5>Host: {{ host.name }}</h5>
                 <hr>
-                <a class="btn btn-outline-info  btn-sm btn-block" href="">Update Host</a>
-                <a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Host</a>
+                <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'eve_holder:host_update_information' %}">Update Host</a>
+                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete Host</a>
 
             </div>
         </div>
@@ -19,6 +19,8 @@
             <div class="card card-body">
                 <h5>Contact Information</h5>
                 <hr>
+                <p>First name: {{ user.first_name }} </p>
+                <p>Last name: {{ user.last_name }} </p>
                 <p>Email: {{ host.email }}</p>
                 <p>Phone: {{ host.phone_num }}</p>
             </div>

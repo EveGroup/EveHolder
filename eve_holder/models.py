@@ -92,7 +92,7 @@ class Visitor(models.Model):
     email = models.EmailField(max_length=100, null=True)
     event = models.ManyToManyField(Event, blank=True, null=True)
 
-    private = models.BooleanField(default=False)
+    private = models.BooleanField(default=False, null=True)
 
     def is_private(self):
         """Return True if this visitor data is private."""
