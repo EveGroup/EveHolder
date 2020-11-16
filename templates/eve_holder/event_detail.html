@@ -8,7 +8,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-
                     <div class="card-body">
                         <div class="card-title mb-4">
                             <div class="d-flex justify-content-start">
@@ -94,6 +93,15 @@
                                             <hr/>
                                             <div class="row">
                                                 <div class="col-sm-3 col-md-2 col-5">
+                                                    <label style="font-weight:bold;">Location</label>
+                                                </div>
+                                                <div class="col-md-8 col-6">
+                                                    {{ event.event_location }}
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
                                                     <label style="font-weight:bold;">Number of visitors</label>
                                                 </div>
                                                 <div class="col-md-8 col-6">
@@ -132,8 +140,7 @@
                                                     {% endif %}
                                                     <div>
                                                         <a class="btn btn-sm btn-secondary"
-                                                           href="{% url 'eve_holder:dashboard' %}">Return to
-                                                            Dashboard</a>
+                                                           href="{% url 'eve_holder:visitor' %}">Back</a>
                                                     </div>
 
                                                 </div>
