@@ -45,6 +45,7 @@ jobs: # A basic unit of work in a run
       - run:
           name: Run test
           command: |
+            pipenv run python manage.py group
             pipenv run coverage run manage.py test --noinput
       - run:
           name: Send to codecov
