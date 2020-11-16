@@ -1,6 +1,6 @@
 # Requirement for run CI/CD
 coverage
-Django
+django
 django-environ
 psycopg2
 django-crispy-forms
