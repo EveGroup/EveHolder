@@ -32,7 +32,7 @@ jobs: # A basic unit of work in a run
       - run:
           name: Ensuring installed dependencies
           command: |
-            sudo pip install pipenv
+            sudo pip install pipenvไ
             pip install -r requirements.txt
             python3 -m venv --system-site-packages venv/
             . venv/bin/activate
@@ -40,14 +40,10 @@ jobs: # A basic unit of work in a run
           key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - "venv"
-#      - run:
-#          name: Migrating models to the database
-#          command: |
-#            .\venv\Scripts\activate
-#            pipenv run python manage.py migrate
       - run:
           name: Run test
           command: |
+            pipenv run python manage.py group
             pipenv run coverage run manage.py test --noinput
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test-results
