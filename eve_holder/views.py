@@ -457,3 +457,14 @@ def delete_account(request):
         user.delete()
         return redirect('eve_holder:homepage')
     return render(request, 'eve_holder/delete_account.html', context)
+
+
+@login_required(login_url='login')
+def search_event(request):
+    request_events = request.POST['search']
+    filtered_events = Event.objects.filter(event_name__contains=request_events)
+    print(filtered_events)
+    if filtered_events.exists():
+        context = {'events': filtered_events}
+        return render(request, 'eve_holder/search_event.html', context)
+    return redirect('eve_holder:dashboard')

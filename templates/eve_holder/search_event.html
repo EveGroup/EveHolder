@@ -1,0 +1,10 @@
+{% extends 'eve_holder/main.html' %}
+<html lang="en">
+<body>
+{% block content %}
+    {% for event in events %}
+        <p>{{ event.event_name }}</p>
+    {% endfor %}
+{% endblock %}
+</body>
+</html>
