@@ -314,10 +314,7 @@ def delete_event(request, pk):
     return render(request, 'eve_holder/delete.html', context)
 
 
-# for visitor
-
 @login_required(login_url='eve_holder:login')
-@allowed_users(allowed_roles=['Visitors'])
 def event_detail(request, pk):
     """Detail for each event.
 
@@ -330,12 +327,14 @@ def event_detail(request, pk):
     """
     event = Event.objects.get(id=pk)
     host = event.event_host.values_list('name', flat=True)[0]
-    visitor = request.user.visitor
-    # print(visitor not in event.visitor_set.all())
-    context = {'event': event, 'host_name': host, 'visitor': visitor}
-    # print(Visitor.objects.filter(event=event))
-    # print(event.visitor_set.all().count())
-    return render(request, 'eve_holder/event_detail.html', context)
+    user = request.user
+    if user.groups.filter(name='Visitors').exists():
+        visitor = request.user.visitor
+        context = {'event': event, 'host_name': host, 'visitor': visitor}
+        return render(request, 'eve_holder/event_detail.html', context)
+    elif user.groups.filter(name='Host').exists():
+        context = {'event': event, 'host_name': host}
+        return render(request, 'eve_holder/host_event_detail.html', context)
 
 
 @login_required(login_url='eve_holder:login')
@@ -443,6 +442,15 @@ def host_update_information(request):
 
 @login_required(login_url='login')
 def delete_account(request):
+    """Delete requested account.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        redirect: Redirect to homepage.
+        render: A render page for delete confirmation.
+    """
     user = request.user
     previous_page = request.META['HTTP_REFERER']
     context = {'previous_page': previous_page}
@@ -461,10 +469,20 @@ def delete_account(request):
 
 @login_required(login_url='login')
 def search_event(request):
-    request_events = request.POST['search']
-    filtered_events = Event.objects.filter(event_name__contains=request_events)
-    print(filtered_events)
-    if filtered_events.exists():
-        context = {'events': filtered_events}
+    """Search for particular event.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render page of results found.
+        redirect: Redirect to homepage.
+    """
+    requested_events = request.POST['search']
+    if requested_events is not "":
+        filtered_events = Event.objects.filter(event_name__contains=requested_events)
+        # print(filtered_events)
+        # if filtered_events.exists():
+        context = {'events': filtered_events, 'requested_events': requested_events}
         return render(request, 'eve_holder/search_event.html', context)
     return redirect('eve_holder:dashboard')
