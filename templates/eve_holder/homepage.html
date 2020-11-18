@@ -2,6 +2,7 @@
 <html lang="en">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
@@ -12,30 +13,36 @@
 <nav class="navbar navbar-light bg-light" id="navbar">
     <span class="navbar-brand mb-0 h1" id="navbar-content">
         <span id="navbar-brand">EVEHOLDER</span>
+        </span>
         {% if not user.is_authenticated %}
-        <a id="navbar-login" href="{% url 'eve_holder:login' %}">LOGIN</a>
-        <a id="navbar-signup" href="{% url 'eve_holder:register' %}">SIGNUP</a>
+        <div id="navbar-content-right">
+            <a id="navbar-login" href="{% url 'eve_holder:login' %}">LOGIN</a>
+            <a id="navbar-signup" href="{% url 'eve_holder:register' %}">SIGNUP</a>
+        </div>
         {% endif %}
-    </span>
 </nav>
-<div class="content">
-    <div class="split">
-        <div id="above">
-            <div id="host-headline">
-                HOST
-            </div>
+<div id="content">
+    <div id="block1">
+        <div id="block1-text">
+            HELLOWORLD
         </div>
-        <div id="below">
-            <div id="visitor-headline">
-                VISITOR
-            </div>
-        </div>
+        <img src="{% static 'eve_holder/../../static/images/block1.jpg' %}">
     </div>
-    <div class="center">
+    <div id="block2">
+        <div id="block2-text" data-aos="fade-up" data-aos-duration="1100">
+            HOST
+        </div>
+<!--        <div id="block2-description" data-aos="fade-up" data-aos-duration="1100">-->
+<!--            eiei-->
+<!--        </div>-->
 
+        <img src="{% static 'eve_holder/../../static/images/block2.jpg' %}">
     </div>
-    <div id="start-now-button">
-        <a href="" type="button" class="btn btn-danger" id="start-now">START NOW!</a>
+    <div id="block3">
+        <div id="block3-text" data-aos="fade-up" data-aos-duration="1100">
+            VISITOR
+        </div>
+        <img src="{% static 'eve_holder/../../static/images/lastblock.jpg' %}">
     </div>
 
 </div>
@@ -54,4 +61,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </html>
