@@ -43,6 +43,7 @@ class Event(models.Model):
     event_name = models.CharField(max_length=500, null=True)
     event_description = models.CharField(max_length=500, null=True, blank=True)
     event_host = models.ManyToManyField(Host)
+    event_location = models.CharField(max_length=1000, null=True)
     pub_date = models.DateTimeField('published date', null=True, default=timezone.now)
     end_date = models.DateTimeField('ending date', null=True, default=timezone.now() + timedelta(days=2))
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
