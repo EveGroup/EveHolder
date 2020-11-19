@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Registration</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/re.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body class="image">
+    <div class="container">
+        <div class="regform">
+            <h3>Register Form</h3>
+        </div>
+        <div class="main">
+            <form method="POST" action="" class="form-group">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-sm-2 col-form-label">Name: </label>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="first_name" placeholder="Enter your first name...">
+                        <label class="namesm">First Name</label>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="last_name" placeholder="Enter your last name...">
+                        <label class="namesm">Last Name</label>
+                    </div>
+                </div>
+                <div class=" col-md-4">
+                    <label class="col-md-2 col-form-label namecol">Username: </label>
+                </div>
+                <div class=" col-md-6">
+                    <input type="text" class="form-control my-3" name="username" placeholder="Enter your Username here...">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-md-2 col-form-label namecol">Email: </label>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control my-3" name="email" placeholder="Enter your Email here...">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-md-2 col-form-label namecol">Phone: </label>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control my-3" name="phone_number" placeholder="Enter your Phone number here...">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-mid-2 col-form-label namecol">User type: </label>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control my-3" name="group" placeholder="Enter your user type here...">
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="col-mid-2 col-form-label namecol">Password: </label>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control my-3" name="password1" placeholder="Enter your password here...">
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="col-mid-2 col-form-label namecol">Confirm Password: </label>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control my-3" name="password2" placeholder="Confirm your password here...">
+                </div>
+                    <div class="col-md-6">
+                        <div class="backtext">
+                        Already have an account? <a href="{% url 'eve_holder:login' %}">Login</a>
+                        or <a href="{% url 'eve_holder:homepage' %}">Back to homepage</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn1 mt-3 mb-3">Register</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
