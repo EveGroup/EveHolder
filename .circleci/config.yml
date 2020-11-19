@@ -33,7 +33,7 @@ jobs: # A basic unit of work in a run
           command: |
             pipenv install
             python3 -m venv --system-site-packages venv/
-            . venv/bin/activate
+            ./venv/bin/activate
       - save_cache:
           paths:
             - ./venv
@@ -41,7 +41,7 @@ jobs: # A basic unit of work in a run
       - run:
           name: Running tests
           command: |
-            . venv/bin/activate
+            ./venv/bin/activate
             coverage run manage.py test --noinput
       - run:
           name: Send to codecov
