@@ -4,8 +4,8 @@
 
     <br>
 
-    {%include 'eve_holder/messages.html'%}
-    
+    {% include 'eve_holder/messages.html' %}
+
     <br>
 
     <div class="row">
@@ -13,8 +13,10 @@
             <div class="card card-body" style="min-height: 275px">
                 <h5>Visitor: {{ visitors.user }}</h5>
                 <hr>
-                <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'eve_holder:visitor_update_information' %}">Update Account</a>
-                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete Account</a>
+                <a class="btn btn-outline-info  btn-sm btn-block"
+                   href="{% url 'eve_holder:visitor_update_information' %}">Update Account</a>
+                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete
+                    Account</a>
             </div>
         </div>
 
@@ -57,7 +59,7 @@
                             <td>{{ event.event_description }}</td>
                             <td>{{ event.event_date }}</td>
                             <td><a class="btn btn-sm btn-primary"
-                                href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
+                                   href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
                         </tr>
                     {% endfor %}
 

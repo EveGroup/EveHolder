@@ -329,14 +329,14 @@ def event_detail(request, pk):
         render: Render the event detail page with the context.
     """
     event = Event.objects.get(id=pk)
-    host = event.event_host.values_list('name', flat=True)[0]
+    get_first_host_name = event.event_host.values_list('name', flat=True)[0]
     user = request.user
     if user.groups.filter(name='Visitors').exists():
         visitor = request.user.visitor
-        context = {'event': event, 'host_name': host, 'visitor': visitor}
+        context = {'event': event, 'host_name': get_first_host_name, 'visitor': visitor}
         return render(request, 'eve_holder/event_detail.html', context)
     elif user.groups.filter(name='Host').exists():
-        context = {'event': event, 'host_name': host}
+        context = {'event': event, 'host_name': get_first_host_name}
         return render(request, 'eve_holder/host_event_detail.html', context)
 
 
@@ -433,13 +433,13 @@ def host_update_information(request):
 
     """
     user = request.user
-    host = Host.objects.get(user=user)
-    host_form = UpdateInformationHostForm(instance=host)
+    get_first_host_name = Host.objects.get(user=user)
+    host_form = UpdateInformationHostForm(instance=get_first_host_name)
     user_form = UpdateInformationUserForm(instance=user)
     if request.method == 'POST':
         user_form = UpdateInformationUserForm(request.POST, instance=user)
         user_form.save()
-        host_form = UpdateInformationHostForm(request.POST, instance=host)
+        host_form = UpdateInformationHostForm(request.POST, instance=get_first_host_name)
         host_form.save()
         messages.success(request, "Account Updated")
         return redirect('eve_holder:host')
@@ -487,11 +487,11 @@ def search_event(request):
         redirect: Redirect to homepage.
     """
     requested_events = request.POST['search']
-    if requested_events is not "":
+    if requested_events != "":
         filtered_events = Event.objects.filter(event_name__contains=requested_events)
         # print(filtered_events)
         # if filtered_events.exists():
-        if ( not filtered_events.exists()):
+        if not filtered_events.exists():
             messages.warning(request, "No result found for \"" + requested_events + "\"")
         context = {'events': filtered_events, 'requested_events': requested_events}
         return render(request, 'eve_holder/search_event.html', context)

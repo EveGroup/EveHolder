@@ -28,7 +28,7 @@
                             <td>{{ event.end_date }}</td>
                             <td>{{ event.event_date }}</td>
                             <td><a class="btn btn-sm btn-primary"
-                                href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
+                                   href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
                         </tr>
                     {% endfor %}
                 </table>
@@ -58,9 +58,9 @@
                             <td>{{ event.end_date }}</td>
                             <td>{{ event.event_date }}</td>
                             <td><a class="btn btn-sm btn-primary"
-                                href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
+                                   href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
                             <td><a class="btn btn-sm btn-danger"
-                                href="{% url 'eve_holder:event_cancel' event.id %}">Cancel</a></td>
+                                   href="{% url 'eve_holder:event_cancel' event.id %}">Cancel</a></td>
 
                         </tr>
                     {% endfor %}
