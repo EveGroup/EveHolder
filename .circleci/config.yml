@@ -43,17 +43,16 @@ jobs: # A basic unit of work in a run
       - run:
           name: Migrating models to the database
           command: |
-            python3 manage.py migrate
+            pipenv run python3 manage.py migrate
       - run:
           name: Run test
           command: |
-            . venv/bin/activate
-            python manage.py group
-            coverage run manage.py test --noinput
+            pipenv run python manage.py group
+            piprnv run coverage run manage.py test --noinput
       - run:
           name: Send to codecov
           command: |
-            bash <(curl -s https://codecov.io/bash)
+            pipenv run bash <(curl -s https://codecov.io/bash)
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test-results
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
