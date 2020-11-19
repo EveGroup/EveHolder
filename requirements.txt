@@ -1,7 +1,9 @@
 # Requirement for run CI/CD
 coverage
-Django
+django
 django-environ
 psycopg2
 django-crispy-forms
+python-decouple
+dj-database-url
 django-filter

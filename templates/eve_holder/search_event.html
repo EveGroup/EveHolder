@@ -1,0 +1,36 @@
+{% extends 'eve_holder/main.html' %}
+<html lang="en">
+<body>
+{% block content %}
+
+<br>
+
+{% include 'eve_holder/messages.html' %}
+
+<h1>{{ requested_events }}</h1>
+    {% if events.count > 1 %}
+        {{ events.count }} results found
+    {% else %}
+        {{ events.count }} result found
+    {% endif %}
+    {% for event in events %}
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <table>
+                    <tr>
+                        <th>Event name</th>
+                    </tr>
+
+                    <tr>
+                        <td>{{ event.event_name }}</td>
+                        <td><a class="btn btn-sm btn-primary" href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
+</body>
+</html>
