@@ -1,4 +1,4 @@
-version: 2.1 # use CircleCI 2.1
+version: 2.0 # use CircleCI 2.1
 
 jobs: # A basic unit of work in a run
   build: # runs not using Workflows must have a `build` job as entry point
@@ -22,41 +22,35 @@ jobs: # A basic unit of work in a run
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
 
-    steps: # steps that comprise the `build` job
-      - checkout # check out source code to working directory
-      - run:
-          name: Pre CI
-          command: |
-            sudo chown -R circleci:circleci /usr/local/bin
-            sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
-      - restore_cache: # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "Pipfile.lock" }}
       - run:
           name: Ensuring installed dependencies
           command: |
-            sudo pip install pipenv
-            pipenv install
-      - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+            pip install -r requirements.txt
+            pip install -r test-requirements.txt
+            python3 -m venv --system-site-packages venv/
+            . venv/bin/activate
+      - save_cache:
           paths:
-            - "venv"
+            - ./venv
+          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "Pipfile.lock" }}
       - run:
-          name: Migrating models to the database
+          name: Running tests
           command: |
-            pipenv shell
-            python manage.py makemigrations
-            python manage.py migrate
-      - run:
-          name: Run test
-          command: |
-            python manage.py group
+            . venv/bin/activate
             coverage run manage.py test --noinput
       - run:
           name: Send to codecov
           command: |
             pipenv run bash <(curl -s https://codecov.io/bash)
-      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: test-results
-      - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-          path: test-results
-          destination: tr1
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
