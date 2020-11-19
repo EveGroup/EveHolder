@@ -35,7 +35,8 @@ jobs: # A basic unit of work in a run
           name: Ensuring installed dependencies
           command: |
             sudo pip install pipenv
-            pip install -r requirements.txt
+            pipenv install request
+            pipenv install -r requirements.txt
             python3 -m venv --system-site-packages venv/
             . venv/bin/activate
       - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
