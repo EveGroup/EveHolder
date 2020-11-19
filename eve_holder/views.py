@@ -66,7 +66,6 @@ def register_page(request):
             email = form.cleaned_data.get('email')
 
             group_name = form.cleaned_data.get('groups')[0]
-
             group = Group.objects.get(name=group_name)
             user.groups.add(group)
 

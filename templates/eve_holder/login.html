@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
-    <title>Hello, world!</title>
+    <title>login</title>
   </head>
   <body>
     <section class="Form my-7 mx-5">
@@ -23,7 +23,6 @@
                     <h5>Sign into your account</h5>
                     <form method="POST" action="">
                         {% csrf_token %}
-                        
                         <div class="form-row">
                             <div class="col-lg-8">
                                 <input type="text" name="username" placeholder=" Username..." class="username my-3">

@@ -29,6 +29,8 @@ class CreateUserForm(UserCreationForm):
         fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'groups']
 
 
+
+
 class EventRegistrationForm(ModelForm):
     class Meta:
         model = Visitor

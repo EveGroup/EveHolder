@@ -21,6 +21,7 @@ class Host(models.Model):
     name = models.CharField(max_length=150, null=True)
     email = models.EmailField(max_length=200, null=True)
     phone_num = models.CharField(max_length=100, null=True)
+    profile_pic = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         """Display host's name."""
@@ -43,7 +44,7 @@ class Event(models.Model):
     event_name = models.CharField(max_length=500, null=True)
     event_description = models.CharField(max_length=500, null=True, blank=True)
     event_host = models.ManyToManyField(Host)
-    event_location = models.CharField(max_length=1000, null=True)
+    event_location = models.CharField(max_length=1000, null=True )
     pub_date = models.DateTimeField('published date', null=True, default=timezone.now)
     end_date = models.DateTimeField('ending date', null=True, default=timezone.now() + timedelta(days=2))
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
@@ -95,6 +96,7 @@ class Visitor(models.Model):
     phone_num = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=100, null=True)
     event = models.ManyToManyField(Event, blank=True)
+    profile_pic = models.ImageField(null=True, blank=True)
 
     private = models.BooleanField(default=False, null=True)
 
