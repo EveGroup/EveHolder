@@ -8,10 +8,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant&family=Dancing+Script:wght@500&family=Zilla+Slab&display=swap');
 
-/* for content brand */
-
-body{
-    background-color: #142850;
+#navbar{
+    position: sticky;
+    z-index: 2;
+    top: 0;
 }
 
 #navbar-content{
@@ -167,6 +167,37 @@ img {
 }
 
 #block3-description{
+    font-size: 20px;
+    display: flex;
+    color: white;
+    z-index: 1;
+    text-align: center;
+    font-family: 'Nanum Myeongjo', serif;
+}
+ /*short description about brand*/
+#brand-information{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#brand-information-text{
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    position: absolute;
+    flex-direction: column;
+}
+
+#brand-information-headline{
+    font-size: 100px;
+    display: flex;
+    color: #21bf73;
+    z-index: 1;
+    font-family: 'Kaushan Script', cursive;
+}
+
+#brand-information-description{
     font-size: 20px;
     display: flex;
     color: white;
