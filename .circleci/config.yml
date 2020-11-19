@@ -43,14 +43,13 @@ jobs: # A basic unit of work in a run
       - run:
           name: Migrating models to the database
           command: |
-            pipenv shell
-            python manage.py makemigrations
-            python manage.py migrate
+            pipenv run python manage.py makemigrations
+            pipenv run python manage.py migrate
       - run:
           name: Run test
           command: |
-            python manage.py group
-            coverage run manage.py test --noinput
+            pipenv run python manage.py group
+            pipenv run coverage run manage.py test --noinput
       - run:
           name: Send to codecov
           command: |
