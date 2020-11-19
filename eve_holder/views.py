@@ -259,6 +259,7 @@ def create_event(request):
             # form.event_host = request.user
             # print(form.event_host)
             form.save()
+            messages.success(request, "Event Created Successfully")
             return redirect('eve_holder:host')
 
     context = {'form': form, 'host': request.user}
@@ -283,6 +284,7 @@ def edit_event(request, pk):
     if request.method == 'POST':
         form = EventForm(request.POST, instance=events_list)
         if form.is_valid():
+            messages.info(request, f"Event Edited ({events_list})")
             form.save()
             return redirect('eve_holder:host')
 
@@ -307,6 +309,7 @@ def delete_event(request, pk):
     if request.method == 'POST':
         events_list.delete()
         if request.user.groups.all()[0].name == 'Host':
+            messages.success(request, "Event Delete Successfully")
             return redirect('eve_holder:host')
 
     context = {'item': events_list}
@@ -358,6 +361,7 @@ def event_register(request, pk_event):
             event = Event.objects.get(id=pk_event)
             visitor.event.add(event)
             form.save()
+            messages.success(request, "You have registered the event")
             return redirect('eve_holder:visitor')
     context = {'form': form}
     return render(request, 'eve_holder/event_registration.html', context)
@@ -382,6 +386,7 @@ def cancel_event(request, pk_event):
     if request.method == 'POST':
         # print("events bef", visitor.event)
         visitor.event.remove(my_event)
+        messages.success(request, "Event Cancel Successfully")
         return redirect('eve_holder:visitor')
     events_list = Event.objects.get(id=pk_event)
     context = {'item': events_list}
@@ -409,6 +414,7 @@ def visitor_update_information(request):
         user_form.save()
         visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
         visitor_form.save()
+        messages.success(request, "Account Updated")
         return redirect('eve_holder:visitor')
     context = {'user_form': user_form, 'visitor_form': visitor_form}
     return render(request, 'eve_holder/visitor_update_information.html', context)
@@ -435,6 +441,7 @@ def host_update_information(request):
         user_form.save()
         host_form = UpdateInformationHostForm(request.POST, instance=host)
         host_form.save()
+        messages.success(request, "Account Updated")
         return redirect('eve_holder:host')
     context = {'user_form': user_form, 'host_form': host_form}
     return render(request, 'eve_holder/host_update_information.html', context)
@@ -462,8 +469,9 @@ def delete_account(request):
     #     context = {'host': host}
     if request.method == 'POST':
         user = User.objects.get(id=user.id)
+        messages.success(request, f"Account Deleted ({user.username})")
         user.delete()
-        return redirect('eve_holder:homepage')
+        return redirect('eve_holder:dashboard')
     return render(request, 'eve_holder/delete_account.html', context)
 
 
@@ -483,6 +491,9 @@ def search_event(request):
         filtered_events = Event.objects.filter(event_name__contains=requested_events)
         # print(filtered_events)
         # if filtered_events.exists():
+        if ( not filtered_events.exists()):
+            messages.warning(request, "No result found for \"" + requested_events + "\"")
         context = {'events': filtered_events, 'requested_events': requested_events}
         return render(request, 'eve_holder/search_event.html', context)
+    messages.warning(request, "Search field is Empty.")
     return redirect('eve_holder:dashboard')

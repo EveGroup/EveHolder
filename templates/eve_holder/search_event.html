@@ -2,6 +2,11 @@
 <html lang="en">
 <body>
 {% block content %}
+
+<br>
+
+{% include 'eve_holder/messages.html' %}
+
 <h1>{{ requested_events }}</h1>
     {% if events.count > 1 %}
         {{ events.count }} results found
