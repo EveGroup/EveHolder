@@ -58,6 +58,26 @@
     border-radius: 10px;
 }
 
+#navbar-content-right-visitor, #navbar-content-right-host{
+    display: flex;
+    justify-content: flex-end;
+}
+
+#navbar-visitor, #navbar-host{
+    font-family: 'Kalam', cursive;
+    text-decoration: none;
+    color: black;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#navbar-visitor:hover, #navbar-host:hover {
+    transition: 1s;
+    /*transition-timing-function: linear;*/
+    background-color: #ffc93c;
+    border-radius: 10px;
+}
+
 /*content*/
 img {
     max-width: 100%;
