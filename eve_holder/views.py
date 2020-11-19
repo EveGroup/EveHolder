@@ -458,11 +458,23 @@ def delete_account(request):
         return redirect('eve_holder:homepage')
     return render(request, 'eve_holder/delete_account.html', context)
 
+
 @login_required(login_url='login')
 def my_account(request):
-    visitor_id = request.user.visitor.id
-    get_visitors = Visitor.objects.get(id=visitor_id)
-    events_list = get_visitors.event.all()
-    events_count = events_list.count()
-    context = {'visitors': get_visitors, 'events_count': events_count}
-    return render(request, 'eve_holder/my_account.html', context)
+    user = request.user
+    if user.groups.filter(name='Visitors').exists():
+        visitor_id = request.user.visitor.id
+        get_visitors = Visitor.objects.get(id=visitor_id)
+        events_list = get_visitors.event.all()
+        events_count = events_list.count()
+        context = {'visitors': get_visitors, 'events_count': events_count}
+        return render(request, 'eve_holder/visitor_my_account.html', context)
+    elif user.groups.filter(name='Host').exists():
+        host_id = user.host.id
+        get_host = Host.objects.get(id=host_id)
+        events_list = request.user.host.event_set.all()
+        events_count = events_list.count()
+        context = {'host': get_host, 'events': events_list,
+                   'events_count': events_count}
+        return render(request, 'eve_holder/host_my_account.html', context)
+
