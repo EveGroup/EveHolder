@@ -36,4 +36,5 @@ urlpatterns = [
     # both host and visitor use
     path('events/<int:pk>/', views.event_detail, name='event_detail'),
     path('delete_account/', views.delete_account, name='delete_account'),
+    path('account/', views.my_account, name='my_account')
 ]
