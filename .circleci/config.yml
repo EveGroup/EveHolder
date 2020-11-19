@@ -36,7 +36,6 @@ jobs: # A basic unit of work in a run
           command: |
             sudo pip install pipenv
             pipenv install
-            . venv/bin/activate
       - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
@@ -44,6 +43,7 @@ jobs: # A basic unit of work in a run
       - run:
           name: Migrating models to the database
           command: |
+            . venv/bin/activate
             python manage.py makemigrations
             python manage.py migrate
       - run:
