@@ -30,17 +30,14 @@ jobs: # A basic unit of work in a run
             sudo chown -R circleci:circleci /usr/local/bin
             sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
       - restore_cache: # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           name: Ensuring installed dependencies
           command: |
             sudo pip install pipenv
-            pipenv install request
-            pipenv install -r requirements.txt
-            python3 -m venv --system-site-packages venv/
-            . venv/bin/activate
+            pipenv install
       - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
-          key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
             - "venv"
       - run:
