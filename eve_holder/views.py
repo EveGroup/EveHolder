@@ -80,7 +80,7 @@ def register_page(request):
             return redirect('eve_holder:login')
     context = {'form': form}
 
-    return render(request, 'eve_holder/register.html', context)
+    return render(request, 'eve_holder/re.html', context)
 
 
 # about login logout and register
@@ -113,7 +113,7 @@ def login_page(request):
 
     context = {}
 
-    return render(request, 'eve_holder/login.html', context)
+    return render(request, 'eve_holder/log.html', context)
 
 
 def logout_page(request):
@@ -358,7 +358,7 @@ def event_register(request, pk_event):
             event = Event.objects.get(id=pk_event)
             visitor.event.add(event)
             form.save()
-            return redirect('eve_holder:visitor')
+            return redirect('eve_holder:events')
     context = {'form': form}
     return render(request, 'eve_holder/event_registration.html', context)
 
@@ -382,7 +382,7 @@ def cancel_event(request, pk_event):
     if request.method == 'POST':
         # print("events bef", visitor.event)
         visitor.event.remove(my_event)
-        return redirect('eve_holder:visitor')
+        return redirect('eve_holder:events')
     events_list = Event.objects.get(id=pk_event)
     context = {'item': events_list}
     return render(request, 'eve_holder/event_cancel.html', context)
