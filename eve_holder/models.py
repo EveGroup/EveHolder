@@ -1,10 +1,10 @@
 """This module contain models to set layout for database."""
-from datetime import date, timedelta
+from datetime import timedelta
 
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils import timezone
-from django.core.validators import MinValueValidator
 
 
 class Host(models.Model):
@@ -42,11 +42,12 @@ class Event(models.Model):
     """
     event_name = models.CharField(max_length=500, null=True)
     event_description = models.CharField(max_length=500, null=True, blank=True)
-    event_host = models.ManyToManyField(Host, null=True)
-    pub_date = models.DateTimeField('published date', null=True, default=date.today())
-    end_date = models.DateTimeField('ending date', null=True, default=date.today())
+    event_host = models.ManyToManyField(Host)
+    event_location = models.CharField(max_length=1000, null=True)
+    pub_date = models.DateTimeField('published date', null=True, default=timezone.now)
+    end_date = models.DateTimeField('ending date', null=True, default=timezone.now() + timedelta(days=2))
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
-    event_date = models.DateField('event date', null=True, default=date.today() + timedelta(days=1))
+    event_date = models.DateField('event date', null=True, default=timezone.now() + timedelta(days=1))
 
     def can_register(self):
         """Check if the event can be registered.
@@ -93,7 +94,7 @@ class Visitor(models.Model):
     name = models.CharField(max_length=150, null=True)
     phone_num = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=100, null=True)
-    event = models.ManyToManyField(Event, blank=True, null=True)
+    event = models.ManyToManyField(Event, blank=True)
 
     private = models.BooleanField(default=False, null=True)
 

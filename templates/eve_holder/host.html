@@ -4,9 +4,13 @@
 
     <br>
 
+    {%include 'eve_holder/messages.html'%}
+
+    <br>
+
     <div class="row">
         <div class="col-md">
-            <div class="card card-body">
+            <div class="card card-body" style="min-height: 275px">
                 <h5>Host: {{ host.name }}</h5>
                 <hr>
                 <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'eve_holder:host_update_information' %}">Update Account</a>
@@ -16,7 +20,7 @@
         </div>
 
         <div class="col-md">
-            <div class="card card-body">
+            <div class="card card-body" style="min-height: 275px">
                 <h5>Contact Information</h5>
                 <hr>
                 <p>First name: {{ user.first_name }} </p>
@@ -27,7 +31,7 @@
         </div>
 
         <div class="col-md">
-            <div class="card card-body">
+            <div class="card card-body" style="min-height: 275px">
                 <h5>Total Events</h5>
                 <hr>
                 <h1 style="text-align: center;padding: 10px">{{ events_count }}</h1>
@@ -39,7 +43,7 @@
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
-                <h5>Participated Events</h5>
+                <h5>Your Events</h5>
                 <table class="table table-sm">
                     <tr>
                         <th>Event</th>

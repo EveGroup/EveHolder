@@ -8,6 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
+
                     <div class="card-body">
                         <div class="card-title mb-4">
                             <div class="d-flex justify-content-start">
@@ -93,15 +94,6 @@
                                             <hr/>
                                             <div class="row">
                                                 <div class="col-sm-3 col-md-2 col-5">
-                                                    <label style="font-weight:bold;">Location</label>
-                                                </div>
-                                                <div class="col-md-8 col-6">
-                                                    {{ event.event_location }}
-                                                </div>
-                                            </div>
-                                            <hr/>
-                                            <div class="row">
-                                                <div class="col-sm-3 col-md-2 col-5">
                                                     <label style="font-weight:bold;">Number of visitors</label>
                                                 </div>
                                                 <div class="col-md-8 col-6">
@@ -114,35 +106,7 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
-                                            <hr/>
-                                            <div class="row">
-                                                <div class="col-sm-3 col-md-2 col-5">
-                                                    <label style="font-weight:bold;">Status</label>
-                                                </div>
-                                                <div class="col-md-8 col-6">
-                                                    {% if event.visitor_set.all.count < event.amount_accepted or event.amount_accepted is None %}
-                                                        <p>Available</p>
-                                                    {% else %}
-                                                        <p>Full</p>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                            <hr/>
-                                            {% if event.visitor_set.all.count < event.amount_accepted or event.amount_accepted is None %}
-                                                {% if visitor not in event.visitor_set.all %}
-                                                <div class="row">
-                                                    <div class="col-sm-3 col-md-2 col-5">
-                                                        <a class="btn btn-sm btn-info"
-                                                           href="{% url 'eve_holder:event_register' event.id %}">Join Now</a>
-                                                    </div>
-                                                    {% endif %}
-                                                    {% endif %}
-                                                    <div>
-                                                        <a class="btn btn-sm btn-secondary"
-                                                           href="{% url 'eve_holder:visitor' %}">Back</a>
-                                                    </div>
 
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
