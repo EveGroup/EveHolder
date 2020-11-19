@@ -41,10 +41,14 @@ jobs: # A basic unit of work in a run
           paths:
             - "venv"
       - run:
-          name: Migrating models to the database
+          name: Activate pipenv
           command: |
             pipenv shell
-            pipenv run python3 manage.py migrate
+      - run:
+          name: Migrating models to the database
+          command: |
+            pipenv run python manage.py makemigrations
+            pipenv run python manage.py migrate
       - run:
           name: Run test
           command: |
