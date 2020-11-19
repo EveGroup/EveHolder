@@ -31,7 +31,7 @@ jobs: # A basic unit of work in a run
       - run:
           name: Ensuring installed dependencies
           command: |
-            pip install
+            pipenv install
             python3 -m venv --system-site-packages venv/
             . venv/bin/activate
       - save_cache:
