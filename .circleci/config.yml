@@ -44,11 +44,11 @@ jobs: # A basic unit of work in a run
 #          name: Activate pipenv
 #          command: |
 #            pipenv shell
-#      - run:
-#          name: Migrating models to the database
-#          command: |
-#            pipenv run python manage.py makemigrations
-#            pipenv run python manage.py migrate
+      - run:
+          name: Migrating models to the database
+          command: |
+            pipenv run python manage.py makemigrations
+            pipenv run python manage.py migrate
       - run:
           name: Run test
           command: |
@@ -63,3 +63,7 @@ jobs: # A basic unit of work in a run
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: test-results
           destination: tr1
+      - run:
+          name: remove pipenv
+          command: |
+            pipenv --rm
