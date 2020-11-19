@@ -1,69 +1,57 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<head>
-    <title>Login</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
-
-</head>
-
-<body>
-<div class="container h-100">
-    <div class="d-flex justify-content-center h-100">
-        <div class="user_card">
-            <div class="d-flex justify-content-center">
-
-
-                <h3 id="form-title">LOGIN</h3>
-            </div>
-            <div class="d-flex justify-content-center form_container">
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <section class="Form my-7 mx-5">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-5">
+                    <img src="/static/images/pic5.jpg" class="img-fluid">
+                </div>
+                <div class="col-lg-7 px-5 pt-3">
+                    <h3 class="font-weight-bold py-3">Login</h3>
+                    <h5>Sign into your account</h5>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-lg-8">
+                                <input type="text" name="username" placeholder=" Username..." class="username my-3">
+                            </div>
                         </div>
-
-                        <input type="text" name="username" placeholder="Username..." class="form-control">
-                    </div>
-
-                    <div class="input-group mb-2">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <div class="form-row">
+                            <div class="col-lg-8">
+                                <input type="password"  name="password" placeholder=" Password..." class="username my-3">
+                            </div>
                         </div>
-
-                        <input type="password" name="password" placeholder="Password..." class="form-control">
-                    </div>
-
-                    <div class="d-flex justify-content-center mt-3 login_container">
-                        <input class="btn login_btn" type="submit" value="Login">
-                    </div>
-                </form>
-
-            </div>
-
-            {% for message in messages %}
+                        <div class="form-row">
+                            <div class="col-lg-9">
+                                <button type="submit" class="btn1 mt-3 mb-3">Login</button>
+                            </div>
+                        </div>
+                        <a href="#">Forget Password</a>
+                         or <a href="{% url 'eve_holder:homepage' %}">Back</a>
+                        <p>Don't have an account? <a href="{% url 'eve_holder:register' %}">Register here</a></p>
+                    </form>
+                </div>
+                {% for message in messages %}
                 <p id="messages">{{ message }}</p>
-            {% endfor %}
-
-            <div class="mt-4">
-                <div class="d-flex justify-content-center links">
-                    Don't have an account? <a href="{% url 'eve_holder:register' %}" class="ml-2">Sign Up</a>
-                </div>
-                <div class="d-flex justify-content-center links">
-                Back to <a href="{% url 'eve_holder:dashboard' %}" class="ml-2">Dashboard</a>
-                </div>
+                {% endfor %}
             </div>
         </div>
-    </div>
-</div>
-</body>
+    </section>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
 </html>
