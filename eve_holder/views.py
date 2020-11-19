@@ -113,7 +113,7 @@ def login_page(request):
 
     context = {}
 
-    return render(request, 'eve_holder/log.html', context)
+    return render(request, 'eve_holder/login.html', context)
 
 
 def logout_page(request):
