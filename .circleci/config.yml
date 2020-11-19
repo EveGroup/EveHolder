@@ -36,24 +36,21 @@ jobs: # A basic unit of work in a run
           command: |
             sudo pip install pipenv
             pipenv install
+            . venv/bin/activate
       - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
             - "venv"
-#      - run:
-#          name: Activate pipenv
-#          command: |
-#            pipenv shell
       - run:
           name: Migrating models to the database
           command: |
-            pipenv run python manage.py makemigrations
-            pipenv run python manage.py migrate
+            python manage.py makemigrations
+            python manage.py migrate
       - run:
           name: Run test
           command: |
-            pipenv run python manage.py group
-            pipenv run coverage run manage.py test --noinput
+            python manage.py group
+            coverage run manage.py test --noinput
       - run:
           name: Send to codecov
           command: |
@@ -63,7 +60,3 @@ jobs: # A basic unit of work in a run
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: test-results
           destination: tr1
-      - run:
-          name: remove pipenv
-          command: |
-            pipenv --rm
