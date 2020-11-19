@@ -2,36 +2,39 @@
 
 {% block content %}
 
-    <br>
+<!--    <br>-->
 
-    {%include 'eve_holder/messages.html'%}
-    
-    <br>
+<!--    <div class="row">-->
+<!--        <div class="col-md">-->
+<!--            <div class="card card-body">-->
+<!--                <h5>Visitor: {{ visitors.user }}</h5>-->
+<!--                <hr>-->
+<!--                <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'eve_holder:visitor_update_information' %}">Update Account</a>-->
+<!--                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete Account</a>-->
 
-    <div class="row">
-        <div class="col-md">
-            <div class="card card-body" style="min-height: 275px">
-                <h5>Visitor: {{ visitors.user }}</h5>
-                <hr>
-                <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'eve_holder:visitor_update_information' %}">Update Account</a>
-                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete Account</a>
-            </div>
-        </div>
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="col-md">
-            <div class="card card-body" style="min-height: 275px">
-                <h5>Contact Information</h5>
-                <hr>
-                <p>Firstname: {{ user.first_name }}</p>
-                <p>Lastname: {{ user.last_name }}</p>
-                <p>Email: {{ visitors.email }}</p>
-                <p>Phone: {{ visitors.phone_num }}</p>
-            </div>
-        </div>
+<!--        <div class="col-md">-->
+<!--            <div class="card card-body">-->
+<!--                <h5>Contact Information</h5>-->
+<!--                <hr>-->
+<!--                <p>Firstname: {{ user.first_name }}</p>-->
+<!--                <p>Lastname: {{ user.last_name }}</p>-->
+<!--                <p>Email: {{ visitors.email }}</p>-->
+<!--                <p>Phone: {{ visitors.phone_num }}</p>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        {% include 'eve_holder/notifications.html' %}
-        
-    </div>
+<!--        <div class="col-md">-->
+<!--            <div class="card card-body">-->
+<!--                <h5>Total Events</h5>-->
+<!--                <hr>-->
+<!--                <h1 style="text-align: center;padding: 10px">{{ events_count }}</h1>-->
+<!--            </div>-->
+<!--        </div>-->
+
+    {% include 'eve_holder/notifications.html' %}    
 
     <br>
     <div class="row">

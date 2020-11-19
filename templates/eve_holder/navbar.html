@@ -1,24 +1,50 @@
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/navbar.css' %}">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+<nav class="navbar navbar-expand-lg navbar-light" id="navbar">
     <img id="eve_logo" class="img-fluid" src="{% static '/images/logo_transparent.png' %}" alt="EveHolder Logo">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
             {% if user.groups.all.0.name == "Visitors" %}
-                    <a class="nav-link" href="{% url 'eve_holder:visitor' %}">Account</a>
-                    <a class="nav-link" href="{% url 'eve_holder:events' %}">Event</a>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'eve_holder:events' %}" style="color:white;">Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'eve_holder:visitor' %}" style="color: white;">Registered Events</a>
+            </li>
             {% elif user.groups.all.0.name == "Host" %}
-                    <a class="nav-link" href="{% url 'eve_holder:host' %}">Account</a>
-                    <a class="nav-link" href="{% url 'eve_holder:create_event' %}">Create Event</a>
+            <a class="nav-link" href="{% url 'eve_holder:create_event' %}" style="color:white;">Create Event</a>
+            <a class="nav-link" href="{% url 'eve_holder:host' %}" style="color:white;">My Events</a>
             {% else %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'eve_holder:dashboard' %}">Dashboard</a>
-                </li>
-            {% endif %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'eve_holder:homepage' %}">Homepage</a>
+                {% endif %}
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true"
+                   aria-expanded="false" style="color: white">
+                    {{ request.user }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'eve_holder:my_account' %}">Account</a>
+                    <a class="dropdown-item" href="{% url 'eve_holder:logout' %}">Logout</a>
+<!--                    <a class="dropdown-item" data-target=".bs-logout-modal-sm" data-toggle="modal">Logout</a>-->
+<!--                    <div tabindex="-1" class="modal bs-logout-modal-sm" role="dialog" aria-hidden="true">-->
+<!--                        <div class="modal-dialog modal-sm">-->
+<!--                            <div class="modal-content">-->
+<!--                                <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>-->
+<!--                                <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to-->
+<!--                                    log-off?-->
+<!--                                </div>-->
+<!--                                <div class="modal-footer"><a class="btn btn-primary btn-block"-->
+<!--                                                             href="{% url 'eve_holder:logout' %}">Logout</a></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+            </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="{% url 'eve_holder:search_event' %}" method="post">
             {% csrf_token %}
@@ -26,25 +52,4 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
-
-    {% if user.is_authenticated %}
-        <span class="hello-msg" id="hello-msg">Hello, {{ request.user }}</span>
-        <button class="btn btn-primary" data-target=".bs-logout-modal-sm" data-toggle="modal">Logout</button>
-
-        <div tabindex="-1" class="modal bs-logout-modal-sm" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
-                    <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?
-                    </div>
-                    <div class="modal-footer"><a class="btn btn-primary btn-block"
-                                                 href="{% url 'eve_holder:logout' %}">Logout</a></div>
-                </div>
-            </div>
-        </div>
-    {% else %}
-        <span class="login-msg">You are not logged in</span>
-        <a class="btn btn-primary" href="{% url 'eve_holder:login' %}">Log In</a>
-    {% endif %}
-
 </nav>
