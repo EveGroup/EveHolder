@@ -40,9 +40,9 @@ body {
   background-color: #ffa31a;
   color: white;
   width: fit-content;
-  position: absolute;
-  right: 20px;
   z-index: 1;
+  margin-top: 5px;
+  margin-bottom: 1px;
 }
 
 .danger {
@@ -50,9 +50,8 @@ body {
   background-color: #f44336;
   color: white;
   width: fit-content;
-  position: absolute;
-  right: 20px;
   z-index: 1;
+  margin-top: 5px;
   }
 
 .success {
@@ -60,9 +59,8 @@ body {
   background-color:#5cd65c;
   color: white;
   width: fit-content;
-  position: absolute;
-  right: 20px;
   z-index: 1;
+  margin-top: 5px;
 }
 
 .info {
@@ -70,9 +68,8 @@ body {
   background-color: #33adff;
   color: white;
   width: fit-content;
-  position: absolute;
-  right: 20px;
   z-index: 1;
+  margin-top: 5px;
 }
 
 .closebtn {
@@ -89,3 +86,9 @@ body {
 .closebtn:hover {
   color: black;
 }
+
+.scroll {
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    text-align:justify; 
+} 

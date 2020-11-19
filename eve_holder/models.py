@@ -105,3 +105,25 @@ class Visitor(models.Model):
     def __str__(self):
         """Display visitor's name."""
         return self.name
+
+
+class Notification(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(max_length=75, null=True)
+    level = models.TextField(max_length=150, null=True)
+    visitor = models.ManyToManyField(Visitor, through='NotificationUser')
+
+    def __str__(self):
+        """Return Notification's text"""
+        return self.text
+
+
+class NotificationUser(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    visitor = models.ForeignKey(Visitor, on_delete=models.CASCADE, null=True)
+    notification = models.ForeignKey(Notification, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        """Return Notification's text"""
+        return str(self.notification)
