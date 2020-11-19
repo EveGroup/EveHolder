@@ -1,0 +1,132 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/homepage.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Eve Holder Homepage</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="nav-wrapper">
+        <div class="left-side">
+            <div class="brand">
+                <div>EVEHOLDER</div>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="nav-link-wrapper">
+                <a href="{% url 'eve_holder:dashboard' %}">Go to our website</a>
+            </div>
+            {% if not user.is_authenticated %}
+            <div class="nav-link-wrapper">
+                <a href="{% url 'eve_holder:login' %}"> Login</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="middle">
+    <div class="active_events">
+        <h1>Popular Events</h1>
+    </div>
+
+    <div class="events-txt">
+        {% if events %}
+
+            <ul>
+                {% for event in events %}
+                <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a> <p>{{ event.event_date }}</p>
+<!--
+<br>-->
+<!--                    <div class="event-txt">-->
+<!--                        <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a>-->
+<!--                    </div>-->
+<!--                    <div class="end-date-container">-->
+<!--                        {{ event.event_date }}-->
+<!--                    </div>-->
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            <p>There is no event.</p>
+        {% endif %}
+    </div>
+
+    <div class="content-wrapper">
+        <div class="items-wrapper">
+            <div class="item-wrapper">
+                <div class="img-deco">
+                    <div class="pic1-container">
+                        <img src="{% static 'eve_holder/../../static/images/pic1.jpg' %}" alt="Create Event Pic">
+                    </div>
+                </div>
+                <div class="img-text-wrapper">
+                    <div class="subtitle">
+                        create your own event
+                    </div>
+                </div>
+            </div>
+            <div class="text-information-wrapper">
+                <div class="text-information">
+                    <p>want to share your idea?</p>
+                </div>
+            </div>
+
+            <div class="text-information-wrapper">
+                <div class="text-information">
+                    <p>"This event is so cool, I want to join!"</p>
+                </div>
+            </div>
+            <div class="item-wrapper">
+                <div class="img-deco">
+                    <div class="pic2-container">
+                        <img src="{% static 'eve_holder/../../static/images/pic2.jpg' %}" alt="Join Event Pic">
+                    </div>
+                </div>
+                <div class="img-text-wrapper">
+                    <div class="subtitle">
+                        join event
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bottom-container">
+    <div class="bottom-content">
+        <div class="bottom-text-container">
+            <div class="bottom-msg">
+                start now
+            </div>
+            <div class="login-button-bottom">
+                <div class="login-button">
+                    <a href="{% url 'eve_holder:dashboard' %}" type="button" class="btn btn-outline-warning">Go to our website</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- <script>
+    const items = document.querySelectorAll('.img-deco')
+    items.forEach(item => {
+        item.addEventListener('mouseover', () => {
+            console.log(item.childNodes[1].classList)
+            item.childNodes[1].classList.add('img-darken');
+
+        })
+
+        item.addEventListener('mouseout', () => {
+            item.childNodes[1].classList.remove('img-darken');
+
+        })
+    })
+</script> -->
+
+</html>

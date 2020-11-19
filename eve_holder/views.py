@@ -80,7 +80,7 @@ def register_page(request):
             return redirect('eve_holder:login')
     context = {'form': form}
 
-    return render(request, 'eve_holder/register.html', context)
+    return render(request, 'eve_holder/re.html', context)
 
 
 # about login logout and register
@@ -113,7 +113,7 @@ def login_page(request):
 
     context = {}
 
-    return render(request, 'eve_holder/login.html', context)
+    return render(request, 'eve_holder/log.html', context)
 
 
 def logout_page(request):
