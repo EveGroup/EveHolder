@@ -13,10 +13,7 @@ def group_strategy(group_name: str, group_permission: list):
 
 
 class Command(BaseCommand):
-    help = 'Closes the specified poll for voting'
-
-    # def add_arguments(self, parser):
-    #     parser.add_argument()
+    help = 'Add group of Visitor and Host'
 
     def handle(self, *args, **options):
         host_perm_names = ['Can add event', 'Can change event', 'Can delete event', 'Can view event', 'Can change host',
