@@ -45,6 +45,8 @@ jobs: # A basic unit of work in a run
           command: |
             pipenv run python manage.py makemigrations
             pipenv run python manage.py migrate
+            pipenv run python manage.py makemigrations eve_holder
+            pipenv run python manage.py migrate eve_holder
       - run:
           name: Run test
           command: |
