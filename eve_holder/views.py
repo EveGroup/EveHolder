@@ -313,26 +313,19 @@ def delete_event(request, pk):
     """
     events_list = Event.objects.get(id=pk)
     visitors_list = Visitor.objects.filter(event=events_list)
-
-    if request.method == 'POST':
-        del_text = f"Event Deleted: {events_list}"
-        edit_text = f"Event Edited: {events_list}"
-        if request.user.groups.all()[0].name == 'Host':
-            if (Notification.objects.filter(text=edit_text).exists()):
-                notify = Notification.objects.get(text=edit_text, level='info')
-                notify.delete()
-            notify = Notification.objects.create(text=del_text, level='warning')
-            for person in visitors_list:
-                notify.visitor.add(person)
-            events_list.delete()
-            messages.success(request, del_text)
-            notify.save()
-
-            return redirect('eve_holder:host')
-
-    context = {'item': events_list}
-
-    return render(request, 'eve_holder/delete.html', context)
+    del_text = f"Event Deleted: {events_list}"
+    edit_text = f"Event Edited: {events_list}"
+    if request.user.groups.all()[0].name == 'Host':
+        if (Notification.objects.filter(text=edit_text).exists()):
+            notify = Notification.objects.get(text=edit_text, level='info')
+            notify.delete()
+        notify = Notification.objects.create(text=del_text, level='warning')
+        for person in visitors_list:
+            notify.visitor.add(person)
+        messages.success(request, del_text)
+        events_list.delete()
+        notify.save()
+    return redirect('eve_holder:host')
 
 
 @login_required(login_url='eve_holder:login')
