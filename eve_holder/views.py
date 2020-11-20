@@ -233,8 +233,8 @@ def events(request):
     visitor = Visitor.objects.get(id=visitor_id)
     registered_events_list = visitor.event.all()
     events_list = Event.objects.exclude(pk__in=registered_events_list)
-    return render(request, 'eve_holder/events.html', {'events': events_list, 'visitor_events': registered_events_list})
-
+    # return render(request, 'eve_holder/events.html', {'events': events_list, 'visitor_events': registered_events_list})
+    return render(request, 'eve_holder/events.html', {'events': events_list})
 
 @login_required(login_url='eve_holder:login')
 @host_only
@@ -476,6 +476,24 @@ def delete_account(request):
 
 
 @login_required(login_url='login')
+def my_account(request):
+    user = request.user
+    if user.groups.filter(name='Visitors').exists():
+        visitor_id = request.user.visitor.id
+        get_visitors = Visitor.objects.get(id=visitor_id)
+        events_list = get_visitors.event.all()
+        events_count = events_list.count()
+        context = {'visitors': get_visitors, 'events_count': events_count}
+        return render(request, 'eve_holder/visitor_my_account.html', context)
+    elif user.groups.filter(name='Host').exists():
+        host_id = user.host.id
+        get_host = Host.objects.get(id=host_id)
+        events_list = request.user.host.event_set.all()
+        events_count = events_list.count()
+        context = {'host': get_host, 'events': events_list,
+                   'events_count': events_count}
+        return render(request, 'eve_holder/host_my_account.html', context)
+
 def search_event(request):
     """Search for particular event.
 
