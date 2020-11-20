@@ -7,19 +7,20 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             {% if user.groups.all.0.name == "Visitors" %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'eve_holder:events' %}" style="color:white;">Events</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'eve_holder:visitor' %}" style="color: white;">Registered Events</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'eve_holder:events' %}" style="color:white;">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'eve_holder:visitor' %}" style="color: white;">Registered
+                        Events</a>
+                </li>
             {% elif user.groups.all.0.name == "Host" %}
-            <a class="nav-link" href="{% url 'eve_holder:create_event' %}" style="color:white;">Create Event</a>
-            <a class="nav-link" href="{% url 'eve_holder:host' %}" style="color:white;">My Events</a>
+                <a class="nav-link" href="{% url 'eve_holder:create_event' %}" style="color:white;">Create Event</a>
+                <a class="nav-link" href="{% url 'eve_holder:host' %}" style="color:white;">My Events</a>
             {% else %}
-            <li class="nav-item active">
+                <li class="nav-item active">
                 <a class="nav-link" href="{% url 'eve_holder:homepage' %}">Homepage</a>
-                {% endif %}
+            {% endif %}
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"

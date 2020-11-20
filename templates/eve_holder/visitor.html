@@ -2,39 +2,6 @@
 
 {% block content %}
 
-<!--    <br>-->
-
-<!--    <div class="row">-->
-<!--        <div class="col-md">-->
-<!--            <div class="card card-body">-->
-<!--                <h5>Visitor: {{ visitors.user }}</h5>-->
-<!--                <hr>-->
-<!--                <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'eve_holder:visitor_update_information' %}">Update Account</a>-->
-<!--                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete Account</a>-->
-
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md">-->
-<!--            <div class="card card-body">-->
-<!--                <h5>Contact Information</h5>-->
-<!--                <hr>-->
-<!--                <p>Firstname: {{ user.first_name }}</p>-->
-<!--                <p>Lastname: {{ user.last_name }}</p>-->
-<!--                <p>Email: {{ visitors.email }}</p>-->
-<!--                <p>Phone: {{ visitors.phone_num }}</p>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md">-->
-<!--            <div class="card card-body">-->
-<!--                <h5>Total Events</h5>-->
-<!--                <hr>-->
-<!--                <h1 style="text-align: center;padding: 10px">{{ events_count }}</h1>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
     <br>
     <div class="row">
         <div class="col-md">
@@ -54,7 +21,7 @@
                             <td>{{ event.event_description }}</td>
                             <td>{{ event.event_date }}</td>
                             <td><a class="btn btn-sm btn-primary"
-                                href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
+                                   href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
                         </tr>
                     {% endfor %}
 
