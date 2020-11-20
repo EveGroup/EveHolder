@@ -1,49 +1,47 @@
 {% extends 'eve_holder/main.html' %}
 {% load static %}
 {% block content %}
-
-    <br>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-body" style="width: fit-content; margin-right: auto; margin-left: auto; margin-top: 90px; margin-bottom: auto">
-                <span><h5>Event Register: </h5></span>
-                <hr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-body" style="width: fit-content; margin-right: auto; margin-left: auto; margin-top: 90px; margin-bottom: auto">
+            <span><h5>Event Register: </h5></span>
+            <hr>
 {#            </div>#}
 {#            <div class="card card-body" style="width: fit-content; margin-right: auto; margin-left: auto; margin-top: auto; margin-bottom: auto">#}
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <div class="col-md-12">
-                        <div class="row" >
-                            <div class="col-sm-3 col-md-4 col-3">
-                                <label style="font-weight:bold;">Name: </label>
-                            </div>
-                            <div class="col-md-8 col-6">
-                                {{ form.name }}
-                            </div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="col-md-12">
+                    <div class="row" >
+                        <div class="col-sm-3 col-md-4 col-3">
+                            <label style="font-weight:bold;">Name: </label>
                         </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-sm-3 col-md-4 col-3">
-                                <label style="font-weight:bold;">Phone Number: </label>
-                            </div>
-                            <div class="col-md-8 col-6">
-                                {{ form.phone_num }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3 col-md-4 col-3">
-                                <label style="font-weight:bold;">Email: </label>
-                            </div>
-                            <div class="col-md-8 col-6">
-                                {{ form.email }}
-                            </div>
+                        <div class="col-md-8 col-6">
+                            {{ form.name }}
                         </div>
                     </div>
                     <br>
-                        <input class="btn btn-info" type="submit" name="Submit">
-                </form>
-            </div>
+                    <div class="row">
+                        <div class="col-sm-3 col-md-4 col-3">
+                            <label style="font-weight:bold;">Phone Number: </label>
+                        </div>
+                        <div class="col-md-8 col-6">
+                            {{ form.phone_num }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 col-md-4 col-3">
+                            <label style="font-weight:bold;">Email: </label>
+                        </div>
+                        <div class="col-md-8 col-6">
+                            {{ form.email }}
+                        </div>
+                    </div>
+                </div>
+                <br>
+                    <input class="btn btn-info" type="submit" name="Submit">
+            </form>
         </div>
     </div>
+</div>
 
 {% endblock %}
