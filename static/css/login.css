@@ -20,9 +20,7 @@ img{
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
     border-bottom: 30px;
-}
-
-.btn1{
+}.btn1{
     border: none;
     outline: none;
     height: 35px;
@@ -37,6 +35,8 @@ img{
     border: 1px solid;
     color: white;
 }
+
+
 
 .username{
     top: 30px;

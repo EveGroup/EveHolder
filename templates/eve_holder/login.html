@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row no-gutters">
                 <div class="col-lg-5">
-                    <img src="/static/images/pic5.jpg" class="img-fluid">
+                    <img src="/static/images/pic5.jpg" class="img-fluid" style="height: 445px">
                 </div>
                 <div class="col-lg-7 px-5 pt-3">
                     <h3 class="font-weight-bold py-3">Login</h3>
@@ -38,14 +38,15 @@
                                 <button type="submit" class="btn1 mt-3 mb-3">Login</button>
                             </div>
                         </div>
+                        {% for message in messages %}
+                        <p id="messages">{{ message }}</p>
+                        {% endfor %}
+                        <hr>
                         <a href="#">Forget Password</a>
                          or <a href="{% url 'eve_holder:homepage' %}">Back</a>
                         <p>Don't have an account? <a href="{% url 'eve_holder:register' %}">Register here</a></p>
                     </form>
                 </div>
-                {% for message in messages %}
-                <p id="messages">{{ message }}</p>
-                {% endfor %}
             </div>
         </div>
     </section>

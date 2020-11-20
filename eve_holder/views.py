@@ -22,6 +22,9 @@ def homepage(request):
     Returns:
         render: Render the homepage with the context.
     """
+    if request.POST.get('click') == 'host':
+        print("here")
+        return redirect('eve_holder:register')
     event_list = Event.objects.all()
     context = {'events': event_list}
 
@@ -64,22 +67,21 @@ def register_page(request):
             user = form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
+            phone_num = request.POST.get('phone_number')
 
-            group_name = form.cleaned_data.get('groups')[0]
-            group = Group.objects.get(name=group_name)
+            group = Group.objects.get(name='Visitors')
             user.groups.add(group)
 
-            # add user to Host or Visitor
-            if group_name == Group.objects.get(name='Visitors'):
-                Visitor.objects.create(user=user, name=username, email=email)
-            elif group_name == Group.objects.get(name='Host'):
-                Host.objects.create(user=user, name=username, email=email)
+            # if group_name == Group.objects.get(name='Visitors'):
+            Visitor.objects.create(user=user, name=username, email=email, phone_num=phone_num)
+            # elif group_name == Group.objects.get(name='Host'):
+            #     Host.objects.create(user=user, name=username, email=email)
 
             messages.success(request, 'Account was created for ' + username)
             return redirect('eve_holder:login')
     context = {'form': form}
 
-    return render(request, 'eve_holder/re.html', context)
+    return render(request, 'eve_holder/register.html', context)
 
 
 # about login logout and register

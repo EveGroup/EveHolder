@@ -21,8 +21,6 @@ urlpatterns = [
     path('events/<int:pk_event>/register', views.event_register, name='event_register'),
     path('events/<int:pk_event>/cancel', views.cancel_event, name='event_cancel'),
 
-    path('account/',views.account, name='account'),
-
     # host part
     path('host/', views.host, name="host"),
     path('host/update_information', views.host_update_information, name='host_update_information'),

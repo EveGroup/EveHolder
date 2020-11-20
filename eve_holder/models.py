@@ -21,7 +21,7 @@ class Host(models.Model):
     name = models.CharField(max_length=150, null=True)
     email = models.EmailField(max_length=200, null=True)
     phone_num = models.CharField(max_length=100, null=True)
-    profile_pic = models.ImageField(null=True, blank=True)
+    # profile_pic = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         """Display host's name."""
