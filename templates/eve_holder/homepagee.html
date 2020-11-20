@@ -23,9 +23,9 @@
                 <a href="{% url 'eve_holder:dashboard' %}">Go to our website</a>
             </div>
             {% if not user.is_authenticated %}
-            <div class="nav-link-wrapper">
-                <a href="{% url 'eve_holder:login' %}"> Login</a>
-            </div>
+                <div class="nav-link-wrapper">
+                    <a href="{% url 'eve_holder:login' %}"> Login</a>
+                </div>
             {% endif %}
         </div>
     </div>
@@ -41,15 +41,16 @@
 
             <ul>
                 {% for event in events %}
-                <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a> <p>{{ event.event_date }}</p>
-<!--
-<br>-->
-<!--                    <div class="event-txt">-->
-<!--                        <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a>-->
-<!--                    </div>-->
-<!--                    <div class="end-date-container">-->
-<!--                        {{ event.event_date }}-->
-<!--                    </div>-->
+                    <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a>
+                    <p>{{ event.event_date }}</p>
+                    <!--
+                    <br>-->
+                    <!--                    <div class="event-txt">-->
+                    <!--                        <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="end-date-container">-->
+                    <!--                        {{ event.event_date }}-->
+                    <!--                    </div>-->
                 {% endfor %}
             </ul>
 
@@ -106,7 +107,8 @@
             </div>
             <div class="login-button-bottom">
                 <div class="login-button">
-                    <a href="{% url 'eve_holder:dashboard' %}" type="button" class="btn btn-outline-warning">Go to our website</a>
+                    <a href="{% url 'eve_holder:dashboard' %}" type="button" class="btn btn-outline-warning">Go to our
+                        website</a>
                 </div>
             </div>
         </div>

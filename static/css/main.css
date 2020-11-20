@@ -11,14 +11,6 @@ body {
     background-color: #6172be;
 }
 
-#events-registered {
-    background-color: #517ccf;
-}
-
-#history-events {
-    background-color: #809ed7;
-}
-
 #recent-event-table {
     margin-right: auto;
     margin-left: auto;
@@ -36,56 +28,56 @@ body {
 }
 
 .alert {
-  padding: 10px;
-  background-color: #ffa31a;
-  color: white;
-  width: fit-content;
-  position: absolute;
-  right: 20px;
-  z-index: 1;
+    padding: 10px;
+    background-color: #ffa31a;
+    color: white;
+    width: fit-content;
+    position: absolute;
+    right: 20px;
+    z-index: 1;
 }
 
 .danger {
-  padding: 10px;
-  background-color: #f44336;
-  color: white;
-  width: fit-content;
-  position: absolute;
-  right: 20px;
-  z-index: 1;
-  }
+    padding: 10px;
+    background-color: #f44336;
+    color: white;
+    width: fit-content;
+    position: absolute;
+    right: 20px;
+    z-index: 1;
+}
 
 .success {
-  padding: 10px;
-  background-color:#5cd65c;
-  color: white;
-  width: fit-content;
-  position: absolute;
-  right: 20px;
-  z-index: 1;
+    padding: 10px;
+    background-color: #5cd65c;
+    color: white;
+    width: fit-content;
+    position: absolute;
+    right: 20px;
+    z-index: 1;
 }
 
 .info {
-  padding: 10px;
-  background-color: #33adff;
-  color: white;
-  width: fit-content;
-  position: absolute;
-  right: 20px;
-  z-index: 1;
+    padding: 10px;
+    background-color: #33adff;
+    color: white;
+    width: fit-content;
+    position: absolute;
+    right: 20px;
+    z-index: 1;
 }
 
 .closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .closebtn:hover {
-  color: black;
+    color: black;
 }

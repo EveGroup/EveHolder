@@ -12,9 +12,9 @@
                 <form action="{% url 'eve_holder:delete_event' item.id %}" method="post">
 
                     {% csrf_token %}
-                     <input class="btn btn-danger" type="submit" name="Confirm" value="Yes">
+                    <input class="btn btn-danger" type="submit" name="Confirm" value="Yes">
                     {% if user.groups.all.0.name == "Host" %}
-                    <a class="btn btn-warning" href="{% url 'eve_holder:host' %}">No</a>
+                        <a class="btn btn-warning" href="{% url 'eve_holder:host' %}">No</a>
                     {% endif %}
                 </form>
 

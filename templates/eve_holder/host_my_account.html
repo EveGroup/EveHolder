@@ -8,13 +8,15 @@
 </head>
 <body>
 {% block content %}
-<div class="row">
+    <div class="row">
         <div class="col-md">
             <div class="card card-body">
                 <h5>Host: {{ host.name }}</h5>
                 <hr>
-                <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'eve_holder:host_update_information' %}">Update Account</a>
-                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete Account</a>
+                <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'eve_holder:host_update_information' %}">Update
+                    Account</a>
+                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete
+                    Account</a>
 
             </div>
         </div>

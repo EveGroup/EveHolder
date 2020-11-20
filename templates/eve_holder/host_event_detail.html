@@ -17,8 +17,8 @@
                                 <div class="userData ml-3">
                                     <h2 class="d-block"
                                         style="font-size: 1.5rem; font-weight: bold">{{ event.event_name }}</h2>
-<!--                                    <h6 class="d-block">Host by: <a href="javascript:void(0)">{{ host_name }}</a>-->
-<!--                                    </h6>-->
+                                    <!--                                    <h6 class="d-block">Host by: <a href="javascript:void(0)">{{ host_name }}</a>-->
+                                    <!--                                    </h6>-->
                                     <h6 class="d-block">Host by: {{ host_name }}
                                     </h6>
                                 </div>
@@ -68,7 +68,7 @@
                                                     <label style="font-weight:bold;">Event Date</label>
                                                 </div>
                                                 <div class="col-md-8 col-6">
-                                                    {{ event.event_date}}
+                                                    {{ event.event_date }}
                                                 </div>
                                             </div>
                                             <hr/>
@@ -97,8 +97,8 @@
                                                     <label style="font-weight:bold;">Number of visitors</label>
                                                 </div>
                                                 <div class="col-md-8 col-6">
-<!--                                                    <a href=" {% url 'eve_holder:visitors_list' event.id %} ">see more-->
-<!--                                                        details</a>-->
+                                                    <!--                                                    <a href=" {% url 'eve_holder:visitors_list' event.id %} ">see more-->
+                                                    <!--                                                        details</a>-->
                                                     {% if event.amount_accepted is not None %}
                                                         {{ event.visitor_set.all.count }} / {{ event.amount_accepted }}
                                                     {% else %}
@@ -107,14 +107,13 @@
                                                 </div>
                                             </div>
 
-                                            </div>
                                         </div>
                                     </div>
-
-
                                 </div>
 
+
                             </div>
+
                         </div>
                     </div>
                 </div>
