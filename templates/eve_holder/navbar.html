@@ -29,23 +29,25 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="{% url 'eve_holder:my_account' %}">Account</a>
-                    <a class="dropdown-item" href="{% url 'eve_holder:logout' %}">Logout</a>
-<!--                    <a class="dropdown-item" data-target=".bs-logout-modal-sm" data-toggle="modal">Logout</a>-->
-<!--                    <div tabindex="-1" class="modal bs-logout-modal-sm" role="dialog" aria-hidden="true">-->
-<!--                        <div class="modal-dialog modal-sm">-->
-<!--                            <div class="modal-content">-->
-<!--                                <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>-->
-<!--                                <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to-->
-<!--                                    log-off?-->
-<!--                                </div>-->
-<!--                                <div class="modal-footer"><a class="btn btn-primary btn-block"-->
-<!--                                                             href="{% url 'eve_holder:logout' %}">Logout</a></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <a class="dropdown-item" data-target=".bs-logout-modal-sm" data-toggle="modal">Logout</a>
                 </div>
             </li>
         </ul>
+
+        <div class="modal bs-logout-modal-sm">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
+                    <div class="modal-body">
+                        <i class="fa fa-question-circle">Are you sure you want to log-off?</i>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-primary btn-block" href="{% url 'eve_holder:logout' %}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <form class="form-inline my-2 my-lg-0" action="{% url 'eve_holder:search_event' %}" method="post">
             {% csrf_token %}
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
