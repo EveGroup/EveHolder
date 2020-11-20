@@ -9,7 +9,7 @@ from .decorations import unauthenticated_user, allowed_users, host_only
 from .filters import EventFilter
 from .forms import EventForm, CreateUserForm, EventRegistrationForm, UpdateInformationUserForm, \
     UpdateInformationVisitorForm, UpdateInformationHostForm
-from .models import Visitor, Event, Host
+from .models import Visitor, Event, Host, Notification, NotificationUser
 
 
 # Any one can view this below page.
@@ -99,10 +99,7 @@ def login_page(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            # if user.groups.filter(name='Visitors').exists():
-            #     return redirect('eve_holder:visitors')
             login(request, user)
-            # print
             group = request.user.groups.all()[0].name
             if group == 'Host':
                 return redirect('eve_holder:host')
@@ -172,12 +169,14 @@ def visitors(request):
     get_visitors = Visitor.objects.get(id=visitor_id)
     events_list = get_visitors.event.all()
     events_count = events_list.count()
+    notify = Notification.objects.filter(visitor=get_visitors)
 
     my_filter = EventFilter(request.GET, queryset=events_list)
     events_list = my_filter.qs
 
     context = {'visitors': get_visitors, 'events': events_list,
-               'events_count': events_count, 'my_filter': my_filter
+               'events_count': events_count, 'my_filter': my_filter,
+               'notifications':notify,
                }
 
     return render(request, 'eve_holder/visitor.html', context)
@@ -254,14 +253,10 @@ def create_event(request):
     form = EventForm(initial={'event_host': get_host})
     if request.method == 'POST':
         form = EventForm(request.POST)
-        # form.event_host = request.user
-        # form['event_host'] = request.user
-        # print(form)
         if form.is_valid():
-            # form.event_host = request.user
-            # print(form.event_host)
             form.save()
-            messages.success(request, "Event Created Successfully")
+            text = f"Event Created: {form.cleaned_data.get('event_name')}"
+            messages.success(request, text)
             return redirect('eve_holder:host')
 
     context = {'form': form, 'host': request.user}
@@ -282,11 +277,20 @@ def edit_event(request, pk):
         render: Render the edit event page with the context.
     """
     events_list = Event.objects.get(id=pk)
+    visitors_list = Visitor.objects.filter(event=events_list)
     form = EventForm(instance=events_list)
     if request.method == 'POST':
         form = EventForm(request.POST, instance=events_list)
         if form.is_valid():
-            messages.info(request, f"Event Edited ({events_list})")
+            text = f"Event Edited: {events_list}"
+            if (Notification.objects.filter(text=text).exists()):
+                notify = Notification.objects.get(text=text, level='info')
+                notify.delete()
+            notify = Notification.objects.create(text=text, level='info')
+            for person in visitors_list:
+                notify.visitor.add(person)
+            notify.save()
+            messages.info(request, text)
             form.save()
             return redirect('eve_holder:host')
 
@@ -308,8 +312,19 @@ def delete_event(request, pk):
         render: Render the delete event page with the context.
     """
     events_list = Event.objects.get(id=pk)
-    events_list.delete()
-    messages.success(request, "Event Delete Successfully")
+    visitors_list = Visitor.objects.filter(event=events_list)
+    del_text = f"Event Deleted: {events_list}"
+    edit_text = f"Event Edited: {events_list}"
+    if request.user.groups.all()[0].name == 'Host':
+        if (Notification.objects.filter(text=edit_text).exists()):
+            notify = Notification.objects.get(text=edit_text, level='info')
+            notify.delete()
+        notify = Notification.objects.create(text=del_text, level='warning')
+        for person in visitors_list:
+            notify.visitor.add(person)
+        messages.success(request, del_text)
+        events_list.delete()
+        notify.save()
     return redirect('eve_holder:host')
 
 
@@ -348,7 +363,6 @@ def event_register(request, pk_event):
     Returns:
         render: Render the event_registration page with the context.
     """
-    # visitor = Visitor.objects.get(id=request.user.visitor.id)
     visitor = Visitor.objects.get(user=request.user)
     form = EventRegistrationForm(instance=visitor)
     if request.method == 'POST':
@@ -376,11 +390,9 @@ def cancel_event(request, pk_event):
         render: Render the cancel event page with the context.
 
     """
-    # visitor = Visitor.objects.get(id=request.user.visitor.id)
     visitor = Visitor.objects.get(user=request.user)
     my_event = Event.objects.get(id=pk_event)
     if request.method == 'POST':
-        # print("events bef", visitor.event)
         visitor.event.remove(my_event)
         messages.success(request, "Event Cancel Successfully")
         return redirect('eve_holder:visitor')
@@ -457,12 +469,6 @@ def delete_account(request):
     user = request.user
     previous_page = request.META['HTTP_REFERER']
     context = {'previous_page': previous_page}
-    # if user.groups.filter(name='visitors').exists():
-    #     visitor = Visitor.objects.get(user=user)
-    #     context = {'visitor': visitor}
-    # elif user.groups.filter(name='host').exists():
-    #     host = Host.objects.get(user=user)
-    #     context = {'host': host}
     if request.method == 'POST':
         user = User.objects.get(id=user.id)
         messages.success(request, f"Account Deleted ({user.username})")
@@ -504,11 +510,21 @@ def search_event(request):
     requested_events = request.POST['search']
     if requested_events != "":
         filtered_events = Event.objects.filter(event_name__contains=requested_events)
-        # print(filtered_events)
-        # if filtered_events.exists():
         if not filtered_events.exists():
             messages.warning(request, "No result found for \"" + requested_events + "\"")
         context = {'events': filtered_events, 'requested_events': requested_events}
         return render(request, 'eve_holder/search_event.html', context)
     messages.warning(request, "Search field is Empty.")
     return redirect('eve_holder:dashboard')
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Visitors'])
+def close_notification(request, pk):
+    notification = Notification.objects.get(id=pk)
+    visitor = Visitor.objects.get(user=request.user)
+    notify = NotificationUser.objects.get(notification=notification, visitor=visitor)
+    notify.delete()
+    notification.visitor.remove(visitor)
+    if not Visitor.objects.filter(notification=notification).exists():
+        notification.delete()
+    return redirect('eve_holder:visitor')
