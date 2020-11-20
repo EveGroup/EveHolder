@@ -16,8 +16,10 @@
             <div class="card card-body">
                 <h5>Visitor: {{ visitors.user }}</h5>
                 <hr>
-                <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'eve_holder:visitor_update_information' %}">Update Account</a>
-                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete Account</a>
+                <a class="btn btn-outline-info  btn-sm btn-block"
+                   href="{% url 'eve_holder:visitor_update_information' %}">Update Account</a>
+                <a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'eve_holder:delete_account' %}">Delete
+                    Account</a>
 
             </div>
         </div>

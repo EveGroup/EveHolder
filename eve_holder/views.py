@@ -233,8 +233,10 @@ def events(request):
     visitor = Visitor.objects.get(id=visitor_id)
     registered_events_list = visitor.event.all()
     events_list = Event.objects.exclude(pk__in=registered_events_list)
-    # return render(request, 'eve_holder/events.html', {'events': events_list, 'visitor_events': registered_events_list})
+    # return render(request, 'eve_holder/events.html', {'events': events_list, 'visitor_events':
+    # registered_events_list})
     return render(request, 'eve_holder/events.html', {'events': events_list})
+
 
 @login_required(login_url='eve_holder:login')
 @host_only
@@ -493,6 +495,7 @@ def my_account(request):
         context = {'host': get_host, 'events': events_list,
                    'events_count': events_count}
         return render(request, 'eve_holder/host_my_account.html', context)
+
 
 def search_event(request):
     """Search for particular event.
