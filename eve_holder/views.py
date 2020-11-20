@@ -308,15 +308,9 @@ def delete_event(request, pk):
         render: Render the delete event page with the context.
     """
     events_list = Event.objects.get(id=pk)
-    if request.method == 'POST':
-        events_list.delete()
-        if request.user.groups.all()[0].name == 'Host':
-            messages.success(request, "Event Delete Successfully")
-            return redirect('eve_holder:host')
-
-    context = {'item': events_list}
-
-    return render(request, 'eve_holder/delete.html', context)
+    events_list.delete()
+    messages.success(request, "Event Delete Successfully")
+    return redirect('eve_holder:host')
 
 
 @login_required(login_url='eve_holder:login')

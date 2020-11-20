@@ -27,8 +27,21 @@
                                    href="{% url 'eve_holder:edit_event' event.id %}">Edit</a></td>
                             <td><a class="btn btn-sm btn-info"
                                    href="{% url 'eve_holder:visitors_list' event.id %}">View</a></td>
-                            <td><a class="btn btn-sm btn-danger"
-                                   href="{% url 'eve_holder:delete_event' event.id %}">Delete</a>
+                            <td><a class="btn btn-sm btn-danger" data-target=".bs-logout-modal-sm" data-toggle="modal" style="color: white;">Delete</a>
+                            <div tabindex="-1" class="modal bs-logout-modal-sm" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header"><h4>Delete Event<i class="fa fa-lock"></i></h4></div>
+                                        <div class="modal-body">
+                                            <i class="fa fa-question-circle">
+                                            Are you sure you want to Delete {{event.event_name}}?
+                                            </i>
+                                        </div>
+                                        <div class="modal-footer"><a class="btn btn-primary btn-block"
+                                                                        href="{% url 'eve_holder:delete_event' event.id %}">Delete!</a></div>
+                                    </div>
+                                </div>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}
