@@ -11,14 +11,6 @@ body {
     background-color: #6172be;
 }
 
-#events-registered {
-    background-color: #517ccf;
-}
-
-#history-events {
-    background-color: #809ed7;
-}
-
 #recent-event-table {
     margin-right: auto;
     margin-left: auto;
@@ -73,18 +65,18 @@ body {
 }
 
 .closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .closebtn:hover {
-  color: black;
+    color: black;
 }
 
 .scroll {
