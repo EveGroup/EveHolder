@@ -11,14 +11,6 @@ body {
     background-color: #6172be;
 }
 
-#events-registered {
-    background-color: #517ccf;
-}
-
-#history-events {
-    background-color: #809ed7;
-}
-
 #recent-event-table {
     margin-right: auto;
     margin-left: auto;
@@ -40,9 +32,9 @@ body {
   background-color: #ffa31a;
   color: white;
   width: fit-content;
-  position: absolute;
-  right: 20px;
   z-index: 1;
+  margin-top: 5px;
+  margin-bottom: 1px;
 }
 
 .danger {
@@ -50,9 +42,8 @@ body {
   background-color: #f44336;
   color: white;
   width: fit-content;
-  position: absolute;
-  right: 20px;
   z-index: 1;
+  margin-top: 5px;
   }
 
 .success {
@@ -60,9 +51,8 @@ body {
   background-color:#5cd65c;
   color: white;
   width: fit-content;
-  position: absolute;
-  right: 20px;
   z-index: 1;
+  margin-top: 5px;
 }
 
 .info {
@@ -70,22 +60,27 @@ body {
   background-color: #33adff;
   color: white;
   width: fit-content;
-  position: absolute;
-  right: 20px;
   z-index: 1;
+  margin-top: 5px;
 }
 
 .closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .closebtn:hover {
-  color: black;
+    color: black;
 }
+
+.scroll {
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    text-align:justify; 
+} 
