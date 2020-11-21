@@ -22,9 +22,6 @@ def homepage(request):
     Returns:
         render: Render the homepage with the context.
     """
-    if request.POST.get('click') == 'host':
-        print("here")
-        return redirect('eve_holder:register')
     event_list = Event.objects.all()
     context = {'events': event_list}
 
