@@ -5,9 +5,19 @@
 <link rel="stylesheet" type="text/css" href="{% static '/css/all_events.css' %}">
 
 <body>
+<div class="above">
+    <div class="inspiration-text">
+            <div id="sentence1">"We keep moving forward, opening new doors, and doing new things, </div>
+            <div id="sentence2">because we're curious and curiosity keeps leading us down new paths."</div>
+            <div class="author">-Walt Disney-</div>
+            <div class="section-separator">______</div>
+    </div>
+    <img id="inspire-pic" src="{% static '/images/cover.jpg' %}">
+</div>
 <div class="event-cards">
 
     {% for event in events %}
+    <div class="event-container" id="event-container">
     <div class="event">
     <!--    <div class="rank">3</div>-->
         <div class="front">
@@ -16,13 +26,15 @@
             {% else %}
                 <img class="thumbnail" src="{% static 'block2.jpg' %}" alt="event's picture">
             {% endif %}
-            <h4 class="event-name">{{ event.event_name }}</h4>
-            <div class="stats">
-                <p class="host-name">by {{ event.event_host.all.0 }}</p>
-                <div class="host-picture">
-                    <img src="{{ event.event_host.all.0.profile_pic.url }}" alt="">
+<!--            <div id="event-name-container">-->
+                <h4 class="event-name">{{ event.event_name }}</h4>
+                <div class="stats">
+                    <p class="host-name">by {{ event.event_host.all.0 }}</p>
+                    <div class="host-picture">
+                        <img src="{{ event.event_host.all.0.profile_pic.url }}" alt="">
+                    </div>
                 </div>
-            </div>
+<!--            </div>-->
         </div>
 
         <div class="back">
@@ -36,35 +48,19 @@
             </div>
             <div class="short-description">
                 <p class="event-description">Event Day: {{ event.event_date }}</p>
-                {% if event.event_location is not None %}
+                 {% if event.event_location is not None %}
                     <p class="event-description">Location: {{ event.event_location }}</p>
                 {% else %}
                     <p class="event-description">Location: tbc.</p>
                 {% endif %}
             </div>
             <a class="more-detail" href="{% url 'eve_holder:event_detail'  event.id %}">See more detail</a>
-    <!--        <div class="streamers">-->
-    <!--            <div class="streamer">-->
-    <!--                <div class="icon"><img src="{% static '/images/block1.jpg' %}"></div>-->
-    <!--                <p class="name">Gamer1</p>-->
-    <!--                <p class="number">500k</p>-->
-    <!--            </div>-->
-    <!--            <div class="streamer">-->
-    <!--                <div class="icon"><img src="{% static '/images/block1.jpg' %}"></div>-->
-    <!--                <p class="name">Gamer2</p>-->
-    <!--                <p class="number">10.6k</p>-->
-    <!--            </div>-->
-    <!--            <div class="streamer">-->
-    <!--                <div class="icon"><img src="{% static '/images/block1.jpg' %}"></div>-->
-    <!--                <p class="name">Gamer3</p>-->
-    <!--                <p class="number">11.4k</p>-->
-    <!--            </div>-->
-    <!--        </div>-->
         </div>
-        <div class="background"></div>
+    </div>
     </div>
 {% endfor %}
     </div>
+<!--    </div>-->
 </body>
 
 {% endblock %}
