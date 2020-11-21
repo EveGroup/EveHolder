@@ -20,17 +20,17 @@
                         <th>Email</th>
                         <th>Phone number</th>
                     </tr>
-                        <tr>
-                            {% if visitor.private %}
-                                <td> {{ visitor.name }} </td>
-                                <td> ========== </td>
-                                <td> ========== </td>
-                            {% else %}
-                                <td>{{ visitor.name }}</td>
-                                <td>{{ visitor.email }}</td>
-                                <td>{{ visitor.phone_num }}</td>
-                            {% endif %}
-                        </tr>
+                    <tr>
+                        {% if visitor.private %}
+                            <td> {{ visitor.name }} </td>
+                            <td> ==========</td>
+                            <td> ==========</td>
+                        {% else %}
+                            <td>{{ visitor.name }}</td>
+                            <td>{{ visitor.email }}</td>
+                            <td>{{ visitor.phone_num }}</td>
+                        {% endif %}
+                    </tr>
                 </table>
             </div>
             <div>

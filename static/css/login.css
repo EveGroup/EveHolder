@@ -16,11 +16,14 @@ body{
     border-radius: 30px;
 }
 
+
 img{
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
     border-bottom: 30px;
-}.btn1{
+}
+
+.btn1{
     border: none;
     outline: none;
     height: 35px;
@@ -36,11 +39,9 @@ img{
     color: white;
 }
 
-
-
 .username{
     top: 30px;
     line-height: 30px;
     padding: 0 10px;
     width: 200px;
-}
+  

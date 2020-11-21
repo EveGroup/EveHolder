@@ -1,7 +1,7 @@
-"""Module for creating forms"""
+"""Module for creating forms."""
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import DateTimeField, ModelForm, CharField
+from django.forms import DateTimeField, ModelForm
 
 from .models import *
 
@@ -10,6 +10,7 @@ class EventForm(ModelForm):
     # CharField.widget.attrs['readonly'] = True
     pub_date = DateTimeField(widget=forms.widgets.DateTimeInput(format="%Y-%m-%d %H:%M:%S"))
     end_date = DateTimeField(widget=forms.widgets.DateTimeInput(format="%Y-%m-%d %H:%M:%S"))
+
     # event_host = CharField()
 
     class Meta:

@@ -28,40 +28,7 @@
                             <td>{{ event.end_date }}</td>
                             <td>{{ event.event_date }}</td>
                             <td><a class="btn btn-sm btn-primary"
-                                href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md">
-            <div class="card card-body">
-                <h5>Registered Events</h5>
-            </div>
-            <div class="card card-body">
-                <table class="table">
-                    <tr>
-                        <th>Events</th>
-                        <th>Description</th>
-                        <th>Last day of registration</th>
-                        <th>Event Date</th>
-                        <th>Views</th>
-                        <th>Cancel ?</th>
-                    </tr>
-
-                    {% for event in visitor_events %}
-                        <tr>
-                            <td>{{ event.event_name }}</td>
-                            <td>{{ event.event_description }}</td>
-                            <td>{{ event.end_date }}</td>
-                            <td>{{ event.event_date }}</td>
-                            <td><a class="btn btn-sm btn-primary"
-                                href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
-                            <td><a class="btn btn-sm btn-danger"
-                                href="{% url 'eve_holder:event_cancel' event.id %}">Cancel</a></td>
-
+                                   href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
                         </tr>
                     {% endfor %}
                 </table>

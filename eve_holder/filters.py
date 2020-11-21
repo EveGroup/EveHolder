@@ -6,6 +6,7 @@ from .models import Event
 
 class EventFilter(FilterSet):
     """This will filter the things we need in event."""
+
     class Meta:
         """TODO: What is meta?"""
         model = Event
