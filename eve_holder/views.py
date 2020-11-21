@@ -64,23 +64,24 @@ def register_page(request):
             user = form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
-
-            group_name = form.cleaned_data.get('groups')[0]
+            phone_num = request.POST.get('phone_number')
+            group_name = request.POST.get('type')
 
             group = Group.objects.get(name=group_name)
             user.groups.add(group)
 
-            # add user to Host or Visitor
-            if group_name == Group.objects.get(name='Visitors'):
-                Visitor.objects.create(user=user, name=username, email=email)
-            elif group_name == Group.objects.get(name='Host'):
-                Host.objects.create(user=user, name=username, email=email)
+            login(request, user)
 
-            messages.success(request, 'Account was created for ' + username)
-            return redirect('eve_holder:login')
+            if group_name == 'Visitors':
+                Visitor.objects.create(user=user, name=username, email=email, phone_num=phone_num)
+                return redirect('eve_holder:visitor')
+            elif group_name == 'Host':
+                Host.objects.create(user=user, name=username, email=email)
+                return redirect('eve_holder:host')
+
     context = {'form': form}
 
-    return render(request, 'eve_holder/re.html', context)
+    return render(request, 'eve_holder/register.html', context)
 
 
 # about login logout and register

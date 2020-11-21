@@ -25,9 +25,56 @@ class EventForm(ModelForm):
 
 
 class CreateUserForm(UserCreationForm):
+
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        "placeholder": "Enter username...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="Username: ")
+    email = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "email",
+        "placeholder": "Enter email...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="Email: ")
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        "placeholder": "Enter First name...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="First name: ")
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        "placeholder": "Enter Last name...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="Last name: ")
+    password1 = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "password",
+        "placeholder": "Enter Password...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="Password: ")
+    password2 = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "password",
+        "placeholder": "Confirm Password...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="Password confirm: ")
+    # groups = forms.CharField(widget=forms.TextInput(attrs={
+    #     # "class": "form-control my-3",
+    #     "type": "text",
+    #     "placeholder": "choose type",
+    #     'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 100%; padding: 5ppx'
+    # }), label="Username: ")
+
     class Meta:
         model = User
+        # groups = 'Visitors'
         fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'groups']
+
+
 
 
 class EventRegistrationForm(ModelForm):

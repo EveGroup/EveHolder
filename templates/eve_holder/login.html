@@ -11,24 +11,25 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
-    <title>Hello, world!</title>
-</head>
-<body>
-<section class="Form my-7 mx-5">
-    <div class="container">
-        <div class="row no-gutters">
-            <div class="col-lg-5">
-                <img src="/static/images/pic5.jpg" class="img-fluid" alt="Login side image">
-            </div>
-            <div class="col-lg-7 px-5 pt-3">
-                <h3 class="font-weight-bold py-3">Login</h3>
-                <h5>Sign into your account</h5>
-                <form method="POST" action="">
-                    {% csrf_token %}
 
-                    <div class="form-row">
-                        <div class="col-lg-8">
-                            <input type="text" name="username" placeholder=" Username..." class="username my-3">
+    <title>login</title>
+  </head>
+  <body>
+    <section class="Form my-7 mx-5">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-5">
+                    <img src="/static/images/pic5.jpg" class="img-fluid" style="height: 445px">
+                </div>
+                <div class="col-lg-7 px-5 pt-3">
+                    <h3 class="font-weight-bold py-3">Login</h3>
+                    <h5>Sign into your account</h5>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-lg-8">
+                                <input type="text" name="username" placeholder=" Username..." class="username my-3">
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -40,11 +41,15 @@
                         <div class="col-lg-9">
                             <button type="submit" class="btn1 mt-3 mb-3">Login</button>
                         </div>
-                    </div>
-                    <a href="#">Forget Password</a>
-                    or <a href="{% url 'eve_holder:homepage' %}">Back</a>
-                    <p>Don't have an account? <a href="{% url 'eve_holder:register' %}">Register here</a></p>
-                </form>
+                        {% for message in messages %}
+                        <p id="messages">{{ message }}</p>
+                        {% endfor %}
+                        <hr>
+                        <a href="#">Forget Password</a>
+                         or <a href="{% url 'eve_holder:homepage' %}">Back</a>
+                        <p>Don't have an account? <a href="{% url 'eve_holder:register' %}">Register here</a></p>
+                    </form>
+                </div>
             </div>
             {% for message in messages %}
                 <p id="messages">{{ message }}</p>
