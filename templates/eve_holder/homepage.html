@@ -24,12 +24,15 @@
                 <div id="navbar-content-right-visitor">
                     <a id="navbar-visitor" href="{% url 'eve_holder:visitor' %}">let's go!</a>
                 </div>
-            {% else %}
+<!--    user.group.all == "Host"-->
+<!--            {% elif "Host" in user.group.all %}-->
+                {% elif user.group.all == "Host" %}
                 <div id="navbar-content-right-host">
                     <a id="navbar-host" href="{% url 'eve_holder:host' %}">let's go!</a>
                 </div>
+            {% else %}
+                <div id="invalid-account">please use the correct user type<a href="{% url 'eve_holder:logout' %}">Logout</a></div>
             {% endif %}
-
         {% endif %}
 </nav>
 <div id="content">

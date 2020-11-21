@@ -1,40 +1,70 @@
 {% extends 'eve_holder/main.html' %}
+{% load static %}
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/all_events.css' %}">
 
-    <br>
+<body>
+<div class="event-cards">
 
-    <div class="row">
-        <div class="col-md">
-            <div class="card card-body">
-                <h5>Events</h5>
-            </div>
-            <div class="card card-body">
-                <table class="table">
-                    <tr>
-                        <th>Events</th>
-                        <th>Description</th>
-                        <th>Last day of registration</th>
-                        <td>Location</td>
-                        <th>Event Date</th>
-                        <th>Views</th>
-                    </tr>
-
-                    {% for event in events %}
-                        <tr>
-                            <td>{{ event.event_name }}</td>
-                            <td>{{ event.event_description }}</td>
-                            <td>{{ event.event_location }}</td>
-                            <td>{{ event.end_date }}</td>
-                            <td>{{ event.event_date }}</td>
-                            <td><a class="btn btn-sm btn-primary"
-                                href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
-                        </tr>
-                    {% endfor %}
-                </table>
+    {% for event in events %}
+    <div class="event">
+    <!--    <div class="rank">3</div>-->
+        <div class="front">
+            {% if event.event_image %}
+                <img class="thumbnail" src="{{ event.event_image.url }}" alt="event's picture">
+            {% else %}
+                <img class="thumbnail" src="{% static 'block2.jpg' %}" alt="event's picture">
+            {% endif %}
+            <h4 class="event-name">{{ event.event_name }}</h4>
+            <div class="stats">
+                <p class="host-name">by {{ event.event_host.all.0 }}</p>
+                <div class="host-picture">
+                    <img src="{{ event.event_host.all.0.profile_pic.url }}" alt="">
+                </div>
             </div>
         </div>
-    </div>
 
+        <div class="back">
+            <div class="event-info">
+                {% if event.amount_accepted is not None %}
+                    <p class="amount">{{ event.amount_accepted }}<span>limit</span></p>
+                {% else %}
+                    <p class="amount">-<span>limit</span></p>
+                {% endif %}
+                <p class="amount">{{ event.visitor_set.all.count }}<span>now</span></p>
+            </div>
+            <div class="short-description">
+                <p class="event-description">Event Day: {{ event.event_date }}</p>
+                {% if event.event_location is not None %}
+                    <p class="event-description">Location: {{ event.event_location }}</p>
+                {% else %}
+                    <p class="event-description">Location: tbc.</p>
+                {% endif %}
+            </div>
+            <a class="more-detail" href="{% url 'eve_holder:event_detail'  event.id %}">See more detail</a>
+    <!--        <div class="streamers">-->
+    <!--            <div class="streamer">-->
+    <!--                <div class="icon"><img src="{% static '/images/block1.jpg' %}"></div>-->
+    <!--                <p class="name">Gamer1</p>-->
+    <!--                <p class="number">500k</p>-->
+    <!--            </div>-->
+    <!--            <div class="streamer">-->
+    <!--                <div class="icon"><img src="{% static '/images/block1.jpg' %}"></div>-->
+    <!--                <p class="name">Gamer2</p>-->
+    <!--                <p class="number">10.6k</p>-->
+    <!--            </div>-->
+    <!--            <div class="streamer">-->
+    <!--                <div class="icon"><img src="{% static '/images/block1.jpg' %}"></div>-->
+    <!--                <p class="name">Gamer3</p>-->
+    <!--                <p class="number">11.4k</p>-->
+    <!--            </div>-->
+    <!--        </div>-->
+        </div>
+        <div class="background"></div>
+    </div>
+{% endfor %}
+    </div>
+</body>
 
 {% endblock %}

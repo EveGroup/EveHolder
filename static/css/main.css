@@ -40,7 +40,7 @@ body {
   background-color: #ffa31a;
   color: white;
   width: fit-content;
-  position: absolute;
+  /*position: absolute;*/
   right: 20px;
   z-index: 1;
 }
@@ -50,7 +50,7 @@ body {
   background-color: #f44336;
   color: white;
   width: fit-content;
-  position: absolute;
+  /*position: absolute;*/
   right: 20px;
   z-index: 1;
   }
@@ -60,7 +60,7 @@ body {
   background-color:#5cd65c;
   color: white;
   width: fit-content;
-  position: absolute;
+  /*position: absolute;*/
   right: 20px;
   z-index: 1;
 }
@@ -70,7 +70,7 @@ body {
   background-color: #33adff;
   color: white;
   width: fit-content;
-  position: absolute;
+  /*position: absolute;*/
   right: 20px;
   z-index: 1;
 }
