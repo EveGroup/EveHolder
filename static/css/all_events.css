@@ -56,7 +56,7 @@
     /*flex-direction: row;*/
 }
 .event-cards{
-    padding-top: 50px;
+    padding-top: 100px;
     grid-column-gap: 30px;
     display: grid;
     grid-auto-rows: minmax(350px, auto);
