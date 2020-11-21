@@ -20,7 +20,7 @@ body{
     padding: 10px 0px 10px 0px;
     text-align: center;
     border-radius: 15px 15px 0px 0px;
-    margin-top: 5.5%;
+    margin-top: 4.5%;
 }
 
 .main{
@@ -33,7 +33,7 @@ body{
 
 .row{
     margin: auto;
-    margin-top: 25px;
+    margin-top: 4px;
     width: 650px;
     color: white;
     font-weight: bold;
@@ -45,7 +45,7 @@ body{
 .namecol{
     font-family: Commissioner;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -85,5 +85,7 @@ body{
     font-family: Commissioner;
     color: #cccccc;
     vertical-align: text-bottom;
-
+}
+.option {
+    position: relative;
 }

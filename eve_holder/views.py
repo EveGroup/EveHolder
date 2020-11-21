@@ -68,17 +68,20 @@ def register_page(request):
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             phone_num = request.POST.get('phone_number')
+            group_name = request.POST.get('type')
 
-            group = Group.objects.get(name='Visitors')
+            group = Group.objects.get(name=group_name)
             user.groups.add(group)
 
-            # if group_name == Group.objects.get(name='Visitors'):
-            Visitor.objects.create(user=user, name=username, email=email, phone_num=phone_num)
-            # elif group_name == Group.objects.get(name='Host'):
-            #     Host.objects.create(user=user, name=username, email=email)
+            login(request, user)
 
-            messages.success(request, 'Account was created for ' + username)
-            return redirect('eve_holder:login')
+            if group_name == 'Visitors':
+                Visitor.objects.create(user=user, name=username, email=email, phone_num=phone_num)
+                return redirect('eve_holder:visitor')
+            elif group_name == 'Host':
+                Host.objects.create(user=user, name=username, email=email)
+                return redirect('eve_holder:host')
+
     context = {'form': form}
 
     return render(request, 'eve_holder/register.html', context)
@@ -100,10 +103,7 @@ def login_page(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            # if user.groups.filter(name='Visitors').exists():
-            #     return redirect('eve_holder:visitors')
             login(request, user)
-            # print
             group = request.user.groups.all()[0].name
             if group == 'Host':
                 return redirect('eve_holder:host')

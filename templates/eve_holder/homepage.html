@@ -17,7 +17,7 @@
         {% if not user.is_authenticated %}
         <div id="navbar-content-right">
             <a id="navbar-login" href="{% url 'eve_holder:login' %}">LOGIN</a>
-{#            <a id="navbar-signup" href="{% url 'eve_holder:register' %}">SIGNUP</a>#}
+            <a id="navbar-signup" href="{% url 'eve_holder:register' %}">SIGNUP</a>
         </div>
         {% else %}
             {% if user.group.all == "Visitors" %}
@@ -70,7 +70,7 @@
                 <br> Your event is now ready to go.
             </div>
             <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
-                <button type="submit" class="btn1 mt-3 mb-3 btn1 form-control" name="click" value="host">Register as a Host</button>
+{#                <button type="submit" class="btn1 mt-3 mb-3 btn1 form-control" name="click" value="host">Register as a Host</button>#}
             </div>
         </div>
         <img src="{% static 'eve_holder/../../static/images/block2.jpg' %}">
@@ -85,7 +85,7 @@
                 Are you ready to discover a new thing?
             </div>
             <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
-                <button type="submit" class="btn1 mt-3 mb-3 btn1 form-control" name="click" value="visitor">Register as a Visitor</button>
+{#                <button type="submit" class="btn1 mt-3 mb-3 btn1 form-control" name="click" value="visitor">Register as a Visitor</button>#}
             </div>
         </div>
         <img src="{% static 'eve_holder/../../static/images/lastblock.jpg' %}">

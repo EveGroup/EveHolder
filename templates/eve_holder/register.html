@@ -23,13 +23,13 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="" class="col-md-2 col-form-label namecol">Name: </label>
+                        <label for="" class="col-md-2 col-form-label namecol toppad">Name: </label>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 ">
                         {{ form.first_name }}
                         <label for="" class="namesm label">First Name</label>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 ">
                         {{ form.last_name }}
                         <label class="namesm label" style="top: 2px">Last Name</label>
                     </div>
@@ -61,6 +61,16 @@
                 </div>
                 <div class="form-group col-md-6">
                     <input type="text" class="form-control my-3" name="phone_number" placeholder="Enter your Phone number here...">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-md-2 col-form-label namecol">Usertype: </label>
+                </div>
+                <div class="form-group col-md-6">
+                    <select class=" form-control my-3" name="type">
+                        <option value="Visitors">Visitor</option>
+                        <option value="Host">Host</option>
+                    </select>
                 </div>
 
                 <div class="form-group col-md-4">
