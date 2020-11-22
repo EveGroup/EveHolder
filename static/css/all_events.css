@@ -2,12 +2,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Castoro:ital@1&display=swap');
 
-
+:root{
+    --clr-light: #fff;
+    --br: .5em;
+}
 
 #navbar{
     position: sticky;
     top: 0;
     z-index: 2;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+body{
+    font-family: 'Commissioner', sans-serif;
+    min-height: 100vh;
+    /*display: grid;*/
+    place-items: center;
+    background: #ffc93c;
+    color: var(--clr-light);
 }
 
 .above{
@@ -22,14 +38,10 @@
 }
 
 .inspiration-text{
-    /*position: absolute;*/
     display: flex;
     justify-content: center;
-    /*align-items: center;*/
     font-family: 'Castoro', serif;
     flex-direction: column;
-    /*padding-top: 40px;*/
-    /*justify-items: center;*/
     z-index: 1;
     position: absolute;
 
@@ -43,18 +55,10 @@
     padding-top: 15px;
 }
 
-/*.inspiration-text:hover > div{*/
-/*    background: #33adff;*/
-/*}*/
 .inspiration-text > .section-separator{
     font-size: 70px;
 }
 
-.container-fluid {
-    padding: 0;
-    /*display: flex;*/
-    /*flex-direction: row;*/
-}
 .event-cards{
     margin-right: 20px;
     margin-left: 20px;
@@ -69,33 +73,10 @@
 }
 
 #event-container{
-    /*border: 2px solid #142850;*/
     border-radius: var(--br);
     padding: 20px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     background: white;
-    /*background-color: white;*/
-    /*height: fit-content;*/
-    /*max-width: 100%;*/
-}
-
-:root{
-    --clr-dark: rgb(13,17, 19);
-    --clr-light: #fff;
-    --clr-accent: rgb(222, 52, 0);
-    --clr-accent-dark: rgb(163, 38, 0);
-    --clr-secondary: rgb(0, 62, 163);
-    --br: .5em;
-    --transition: transform 200ms cubic-bezier(.21, 1.00, .81, 1.00);
-}
-
-body{
-    font-family: 'Commissioner', sans-serif;
-    min-height: 100vh;
-    /*display: grid;*/
-    place-items: center;
-    background: #ffc93c;
-    color: var(--clr-light);
 }
 
 p{
@@ -103,18 +84,14 @@ p{
 }
 
 .event-name{
-    /*font-family: 'Commissioner', sans-serif;*/
     font-weight: bold;
     color: #142850;
     word-wrap: break-word;
     font-family: 'Courgette', cursive;
     font-size: 27px;
-
-    /*border-bottom: 5px #f44336;*/
 }
 
 .host-name{
-    /*margin-top: -20px;*/
     font-size: 15px;
 }
 
@@ -126,7 +103,6 @@ p{
     position: relative;
     width: 12.5em;
     object-fit: cover;
-    /*margin-top: 70px;*/
 }
 
 img{
@@ -168,19 +144,6 @@ img{
 .front > .event-name{
     margin: .75em 0;
 }
-
-/*.rank{*/
-/*    font-weight: bold;*/
-/*    font-size: 1.125rem;*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    right: 1em;*/
-/*    background: #f44336;*/
-/*    padding: .5em .5em .75em;*/
-/*    clip-path: polygon(0 0, 0 100%, 50% 85%, 100% 100%, 100% 0);*/
-/*    !*z-index: 1000;*!*/
-/*    !*transition: var(--transition), opacity 100ms linear;*!*/
-/*}*/
 
 .more-detail{
     border: 0;
@@ -230,28 +193,6 @@ img{
     justify-content: space-around;
 }
 
-/*.background{*/
-/*    background: #142850;*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    right: 0;*/
-/*    bottom: 0;*/
-/*    z-index: -1;*/
-/*    transform: scale(.2, .9);*/
-/*    border-radius: var(--br);*/
-/*    opacity: 0;*/
-/*    !*max-block-size: fit-content;*!*/
-/*}*/
-/*#event-name-container{*/
-/*    bottom: 0;*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*    flex-direction: column;*/
-/*    !*align-items: center;*!*/
-/*}*/
-
-/*.event:hover > .front > .event-name{*/
 .event-container:hover > .event > .front > .event-name{
     animation: event_name 250ms forwards;
     color: #142850;
@@ -265,16 +206,6 @@ img{
     opacity: 0;
 }
 
-/*.event:hover > .background{*/
-/*    transition: var(--transition),opacity 100ms linear;*/
-/*    transform: scale(1.4, 1.2);*/
-/*    opacity: 1;*/
-/*}*/
-
-/*.event:hover > .rank{*/
-/*    transform: translate(150%, -81%);*/
-/*}*/
-
 .event-container:hover > .event > .back{
     opacity: 1;
 }
@@ -282,7 +213,6 @@ img{
 .short-description{
     text-align: left;
     color: #142850;
-    /*font-family: 'Amatic SC', cursive;*/
     font-size: 11px;
     font-family: 'Commissioner', sans-serif;
 }
