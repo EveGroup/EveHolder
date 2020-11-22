@@ -79,10 +79,14 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    # read os.environ['DATABASE_URL'] and raises ImproperlyConfigured exception if not found
-    'default': env.db(),
-    # read os.environ['SQLITE_URL']
-    'extra': env.db('SQLITE_URL', default='sqlite:////tmp/my-tmp-sqlite.db')
+    'default': {
+        'ENGINE': env.str('DATABASE_ENGINE', default='django.db.backends.sqlite3'),
+        'NAME': env.str('DATABASE_NAME', default='eve_holder_db.sqlite3'),
+        'USER': env.str('DATABASE_USER', default='username'),
+        'PASSWORD': env.str('DATABASE_PASSWORD', default='password'),
+        'HOST': env.str('DATABASE_HOST', default='127.0.0.1'),
+        'PORT': env.str('DATABASE_PORT', default='5432')
+    }
 }
 
 # Password validation
@@ -123,7 +127,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = os.path.join(BASE_DIR, 'static/images')
+MEDIA_URL = os.path.join(BASE_DIR, 'static/images/')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
