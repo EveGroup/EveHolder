@@ -19,14 +19,12 @@
     {% for event in events %}
     <div class="event-container" id="event-container">
     <div class="event">
-    <!--    <div class="rank">3</div>-->
         <div class="front">
             {% if event.event_image %}
                 <img class="thumbnail" src="{{ event.event_image.url }}" alt="event's picture">
             {% else %}
                 <img class="thumbnail" src="{% static 'block2.jpg' %}" alt="event's picture">
             {% endif %}
-<!--            <div id="event-name-container">-->
                 <h4 class="event-name">{{ event.event_name }}</h4>
                 <div class="stats">
                     <p class="host-name">by {{ event.event_host.all.0 }}</p>
@@ -34,7 +32,6 @@
                         <img src="{{ event.event_host.all.0.profile_pic.url }}" alt="">
                     </div>
                 </div>
-<!--            </div>-->
         </div>
 
         <div class="back">
@@ -60,7 +57,6 @@
     </div>
 {% endfor %}
     </div>
-<!--    </div>-->
 </body>
 
 {% endblock %}

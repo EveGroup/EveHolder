@@ -19,14 +19,12 @@
     {% for event in events %}
     <div class="event-container" id="event-container">
     <div class="event">
-    <!--    <div class="rank">3</div>-->
         <div class="front">
             {% if event.event_image %}
                 <img class="thumbnail" src="{{ event.event_image.url }}" alt="event's picture">
             {% else %}
                 <img class="thumbnail" src="{% static 'block2.jpg' %}" alt="event's picture">
             {% endif %}
-<!--            <div id="event-name-container">-->
                 <h4 class="event-name">{{ event.event_name }}</h4>
                 <div class="stats">
                     <p class="host-name">by {{ event.event_host.all.0 }}</p>
@@ -34,7 +32,6 @@
                         <img src="{{ event.event_host.all.0.profile_pic.url }}" alt="">
                     </div>
                 </div>
-<!--            </div>-->
         </div>
 
         <div class="back">
@@ -55,25 +52,7 @@
                 {% endif %}
             </div>
             <a class="more-detail" href="{% url 'eve_holder:event_detail'  event.id %}">See more detail</a>
-    <!--        <div class="streamers">-->
-    <!--            <div class="streamer">-->
-    <!--                <div class="icon"><img src="{% static '/images/block1.jpg' %}"></div>-->
-    <!--                <p class="name">Gamer1</p>-->
-    <!--                <p class="number">500k</p>-->
-    <!--            </div>-->
-    <!--            <div class="streamer">-->
-    <!--                <div class="icon"><img src="{% static '/images/block1.jpg' %}"></div>-->
-    <!--                <p class="name">Gamer2</p>-->
-    <!--                <p class="number">10.6k</p>-->
-    <!--            </div>-->
-    <!--            <div class="streamer">-->
-    <!--                <div class="icon"><img src="{% static '/images/block1.jpg' %}"></div>-->
-    <!--                <p class="name">Gamer3</p>-->
-    <!--                <p class="number">11.4k</p>-->
-    <!--            </div>-->
-    <!--        </div>-->
         </div>
-<!--        <div class="background"></div>-->
     </div>
     </div>
 {% endfor %}
