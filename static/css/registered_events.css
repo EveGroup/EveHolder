@@ -53,11 +53,13 @@
 }
 
 .event-cards{
+    margin-right: 20px;
+    margin-left: 20px;
     padding-top: 100px;
     grid-column-gap: 30px;
     display: grid;
     grid-auto-rows: minmax(350px, auto);
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     /*place-items: start center;*/
     justify-items: center;
     grid-row-gap: 70px;
