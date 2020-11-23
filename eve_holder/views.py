@@ -240,7 +240,7 @@ def events(request):
 
 @login_required(login_url='eve_holder:login')
 @host_only
-def create_event(request):
+def creat_event(request):
     """Host create event.
 
     Args:
@@ -262,7 +262,7 @@ def create_event(request):
 
     context = {'form': form, 'host': request.user}
 
-    return render(request, 'eve_holder/event_form.html', context)
+    return render(request, 'eve_holder/create_event.html', context)
 
 
 @login_required(login_url='eve_holder:login')
@@ -297,7 +297,7 @@ def edit_event(request, pk):
 
     context = {'form': form}
 
-    return render(request, 'eve_holder/event_form.html', context)
+    return render(request, 'eve_holder/create_event.html', context)
 
 
 @login_required(login_url='eve_holder:login')
@@ -375,7 +375,7 @@ def event_register(request, pk_event):
             messages.success(request, "You have registered the event")
             return redirect('eve_holder:visitor')
     context = {'form': form}
-    return render(request, 'eve_holder/event_registration.html', context)
+    return render(request, 'eve_holder/join_event.html', context)
 
 
 @login_required(login_url='login')

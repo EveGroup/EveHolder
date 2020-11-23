@@ -106,7 +106,6 @@ class Visitor(models.Model):
     phone_num = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=100, null=True)
     event = models.ManyToManyField(Event, blank=True)
-    profile_pic = models.ImageField(null=True, blank=True)
 
     profile_pic = models.ImageField(default='avatar.jpg',null=True, blank=True)
 
