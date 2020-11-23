@@ -1,4 +1,5 @@
 {% load static %}
+{% load group_tags %}
 <html lang="en">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,71 +21,81 @@
             <a id="navbar-signup" href="{% url 'eve_holder:register' %}">SIGNUP</a>
         </div>
     {% else %}
-        {% if user.group.all == "Visitors" %}
+        {% if user|has_group:"Visitor" %}
             <div id="navbar-content-right-visitor">
-                <a id="navbar-visitor" href="{% url 'eve_holder:visitor' %}">let's go!</a>
+                <a id="navbar-visitor" href="{% url 'eve_holder:visitor_registered_events' %}">let's go!</a>
             </div>
-        {% else %}
+        {% elif user|has_group:"Host" %}
             <div id="navbar-content-right-host">
                 <a id="navbar-host" href="{% url 'eve_holder:host' %}">let's go!</a>
+            </div>
+        {% else %}
+            <div id="invalid-account">please use the correct user type <a
+                    href="{% url 'eve_holder:logout' %}">Logout</a>
             </div>
         {% endif %}
 
     {% endif %}
 </nav>
-<div id="content">
-    <div id="block1">
-        <div id="block1-text">
-            <div id="block1-welcome">
-                welcome
+<form method="POSt" action="">
+    {% csrf_token %}
+    <div id="content">
+        <div id="block1">
+            <div id="block1-text">
+                <div id="block1-welcome">
+                    welcome
+                </div>
+                <div id="block1-to">
+                    to
+                </div>
+                <div id="block1-brand">
+                    EVEHOLDER
+                </div>
             </div>
-            <div id="block1-to">
-                to
-            </div>
-            <div id="block1-brand">
-                EVEHOLDER
-            </div>
+            <img src="{% static '/images/homepage/block1.jpg' %}" alt="Welcome to EveHolder">
         </div>
-        <img src="{% static 'images/block1.jpg' %}" alt="Welcome to EveHolder">
-    </div>
-    <div id="brand-information">
-        <div id="brand-information-text">
-            <div id="brand-information-headline" data-aos="fade-up" data-aos-duration="1100">
-                EVEHOLDER
+        <div id="brand-information">
+            <div id="brand-information-text">
+                <div id="brand-information-headline" data-aos="fade-up" data-aos-duration="1100">
+                    EVEHOLDER
+                </div>
+                <div id="brand-information-description" data-aos="fade-up" data-aos-duration="1300">
+                    A web application for creating and joining events.
+                </div>
             </div>
-            <div id="brand-information-description" data-aos="fade-up" data-aos-duration="1300">
-                A web application for creating and joining events.
-            </div>
+            <img src="{% static 'images/homepage/brandinfo.jpg' %}" alt="EveHolder info pic">
         </div>
-        <img src="{% static 'images/brandinfo.jpg' %}" alt="EveHolder info pic">
-    </div>
-    <div id="block2">
-        <div id="block2-text">
-            <div id="block2-headline" data-aos="fade-up" data-aos-duration="1100">
-                HOST
+        <div id="block2">
+            <div id="block2-text">
+                <div id="block2-headline" data-aos="fade-up" data-aos-duration="1100">
+                    HOST
+                </div>
+                <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
+                    Start being a host in a blink by filling your event's information.
+                    <br> Your event is now ready to go.
+                </div>
+                <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
+                </div>
             </div>
-            <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
-                Start being a host in a blink by filling your event's information.
-                <br> Your event is now ready to go.
-            </div>
+            <img src="{% static 'images/homepage/block2.jpg' %}" alt="Host Block pic">
         </div>
-        <img src="{% static 'images/block2.jpg' %}" alt="Host Block pic">
-    </div>
-    <div id="block3">
-        <div id="block3-text">
-            <div id="block3-headline" data-aos="fade-up" data-aos-duration="1100">
-                VISITOR
+        <div id="block3">
+            <div id="block3-text">
+                <div id="block3-headline" data-aos="fade-up" data-aos-duration="1100">
+                    VISITOR
+                </div>
+                <div id="block3-description" data-aos="fade-up" data-aos-duration="1300">
+                    “Somewhere, something incredible is waiting to be known.” – Sharon Begley <br>
+                    Are you ready to discover a new thing?
+                </div>
+                <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
+                </div>
             </div>
-            <div id="block3-description" data-aos="fade-up" data-aos-duration="1300">
-                “Somewhere, something incredible is waiting to be known.” – Sharon Begley <br>
-                Are you ready to discover a new thing?
-            </div>
+            <img src="{% static 'images/homepage/lastblock.jpg' %}" alt="Visitors block pic">
         </div>
-        <img src="{% static 'images/lastblock.jpg' %}" alt="Visitors block pic">
-    </div>
 
-</div>
-
+    </div>
+</form>
 </body>
 
 

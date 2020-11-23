@@ -23,4 +23,4 @@ class Command(BaseCommand):
         host_permissions = [Permission.objects.get(name=name) for name in host_perm_names]
         visitors_permissions = [Permission.objects.get(name=name) for name in visitor_perm_names]
         group_strategy("Host", host_permissions)
-        group_strategy("Visitors", visitors_permissions)
+        group_strategy("Visitor", visitors_permissions)

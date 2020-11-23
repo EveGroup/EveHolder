@@ -16,8 +16,6 @@
                                 <div class="userData ml-3">
                                     <h2 class="d-block"
                                         style="font-size: 1.5rem; font-weight: bold">{{ event.event_name }}</h2>
-                                    <!--                                    <h6 class="d-block">Host by: <a href="javascript:void(0)">{{ host_name }}</a>-->
-                                    <!--                                    </h6>-->
                                     <h6 class="d-block">Host by: {{ host_name }}
                                     </h6>
                                 </div>
@@ -140,7 +138,7 @@
                                             {% endif %}
                                             <div>
                                                 <a class="btn btn-sm btn-secondary"
-                                                   href="{% url 'eve_holder:visitor' %}">Back</a>
+                                                   href="{% url 'eve_holder:visitor_registered_events' %}">Back</a>
                                             </div>
 
                                             </div>
