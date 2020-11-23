@@ -31,15 +31,30 @@
                                 <input type="text" name="username" placeholder=" Username..." class="username my-3">
                             </div>
                         </div>
+<<<<<<< HEAD
                     <div class="form-row">
                         <div class="col-lg-8">
                             <input type="password" name="password" placeholder=" Password..." class="username my-3">
+=======
+                        <div class="form-row">
+                            <div class="col-lg-8">
+                                <input type="password" name="password" placeholder=" Password..." class="username my-3">
+                            </div>
+>>>>>>> ebd26f821fa84bd6ac1b0092f8871d44542a3e41
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-lg-9">
-                            <button type="submit" class="btn1 mt-3 mb-3">Login</button>
+                        <div class="form-row">
+                            <div class="col-lg-9">
+                                <button type="submit" class="btn1 mt-3 mb-3">Login</button>
+                            </div>
+                            {% for message in messages %}
+                            <p id="messages">{{ message }}</p>
+                            {% endfor %}
+                            <hr>
+                            <a href="#">Forget Password</a>
+                             or <a href="{% url 'eve_holder:homepage' %}">Back</a>
+                            <p>Don't have an account? <a href="{% url 'eve_holder:register' %}">Register here</a></p>
                         </div>
+<<<<<<< HEAD
                         {% for message in messages %}
                         <p id="messages">{{ message }}</p>
                         {% endfor %}
@@ -47,6 +62,8 @@
                         <a href="#">Forget Password</a>
                           or <a href="{% url 'eve_holder:homepage' %}">Back</a>
                         <p>Don't have an account? <a href="{% url 'eve_holder:register' %}">Register here</a></p>
+=======
+>>>>>>> ebd26f821fa84bd6ac1b0092f8871d44542a3e41
                     </form>
                 </div>
             </div>

@@ -63,7 +63,7 @@
     justify-content: flex-end;
 }
 
-#navbar-visitor, #navbar-host {
+#navbar-visitor, #navbar-host, #invalid-account{
     font-family: 'Kalam', cursive;
     text-decoration: none;
     color: black;
@@ -71,12 +71,13 @@
     padding-left: 10px;
 }
 
-#navbar-visitor:hover, #navbar-host:hover {
+#navbar-visitor:hover, #navbar-host:hover, #invalid-account:hover{
     transition: 1s;
     /*transition-timing-function: linear;*/
     background-color: #ffc93c;
     border-radius: 10px;
 }
+
 
 /*content*/
 img {

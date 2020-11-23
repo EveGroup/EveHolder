@@ -1,4 +1,5 @@
 {% load static %}
+{% load group_tags %}
 <html lang="en">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -25,9 +26,17 @@
                 <a id="navbar-visitor" href="{% url 'eve_holder:visitor' %}">let's go!</a>
             </div>
         {% else %}
-            <div id="navbar-content-right-host">
-                <a id="navbar-host" href="{% url 'eve_holder:host' %}">let's go!</a>
-            </div>
+            {% if user|has_group:"Visitors" %}
+                <div id="navbar-content-right-visitor">
+                    <a id="navbar-visitor" href="{% url 'eve_holder:visitor' %}">let's go!</a>
+                </div>
+            {% elif user|has_group:"Host" %}
+                <div id="navbar-content-right-host">
+                    <a id="navbar-host" href="{% url 'eve_holder:host' %}">let's go!</a>
+                </div>
+            {% else %}
+                <div id="invalid-account">please use the correct user type <a href="{% url 'eve_holder:logout' %}">Logout</a></div>
+            {% endif %}
         {% endif %}
 
     {% endif %}

@@ -27,14 +27,14 @@
                     </div>
                     <div class="form-group col-md-3 ">
                         {{ form.first_name }}
-                        <label for="" class="namesm label">First Name</label>
+                        <label for="" class="namesm">First Name</label>
                     </div>
                     <div class="form-group col-md-3 ">
                         {{ form.last_name }}
-                        <label class="namesm label" style="top: 2px">Last Name</label>
+                        <label class="namesm" style="top: 2px">Last Name</label>
                     </div>
                 </div>
-                <div></div>
+
                 <div class="form-group col-md-4">
                     <label class="col-md-2 col-form-label namecol">Username: </label>
                 </div>
@@ -48,13 +48,6 @@
                 <div class="form-group col-md-6">
                     {{ form.email }}
                 </div>
-
-{#                <div class="form-group col-md-4">#}
-{#                    <label class="col-md-2 col-form-label namecol">Group: </label>#}
-{#                </div>#}
-{#                <div class="form-group col-md-6">#}
-{#                    {{ form.groups }}#}
-{#                </div>#}
 
                 <div class="form-group col-md-4">
                     <label class="col-md-2 col-form-label namecol">Phone: </label>
@@ -74,22 +67,19 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="col-mid-2 col-form-label namecol">Password: </label>
+                    <label class="col-md-2 col-form-label namecol">Password: </label>
                 </div>
                 <div class="form-group col-md-6">
                     {{ form.password1 }}
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="col-mid-2 col-form-label namecol">Confirm Password: </label>
+                    <label class="col-md-2 col-form-label namecol">Confirm Password: </label>
                 </div>
                 <div class="form-group col-md-6">
                     {{ form.password2 }}
                 </div>
 
-{#                {% for message in messages %}#}
-{#                <p id="messages">{{ message }}</p>#}
-{#                {% endfor %}#}
                 <hr>
                 <div class="col-md-6">
                     <div class="backtext">
@@ -98,7 +88,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" class="btn1 mt-3 mb-3" name="click">Register</button>
+                    <button type="submit" class="btn1 mt-3 mb-3" name="click" style="">Register</button>
                 </div>
             </form>
         </div>

@@ -1,0 +1,84 @@
+{% extends 'eve_holder/main.html' %}
+{% load static %}
+
+<html lang="en">
+
+{% block content %}
+<head>
+    <title>Registration</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/create_event.css' %}">
+</head>
+<br>
+<div class="container">
+    <div class="regform">
+            <span style="font-size: 16px; font-weight: bold">Register Form</span>
+    </div>
+    <div class="main">
+        <form action="" method="post">
+            {% csrf_token %}
+
+{#            <div class="fill">#}
+            <div class="form-group col-md-4" style="margin-top: 10px">
+                <label for="" class="col-form-label namecol fill">Event Name: </label>
+            </div>
+            <div class="form-group col-md-6" style="margin-top: -10px">
+                {{ form.event_name }}
+            </div>
+{#            </div>#}
+
+            <div class="fill" style="margin-top: -25px">
+            <div class="form-group col-md-4" style="margin-top: -10px">
+                <label for="" class="col-form-label namecol fill" >Description: </label>
+            </div>
+            <div class="form-group col-md-6 fill" style="margin-top: -10px">
+                {{ form.event_description }}
+            </div>
+            </div>
+
+            <div class="fill">
+            <div class="form-group col-md-4">
+                <label for="" class="col-form-label namecol fill">Location: </label>
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.event_location }}
+            </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="col-form-label namecol fill">Event Date: </label>
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.event_date }}
+            </div>
+
+            <div class="row">
+                 <div class="form-group col-md-4">
+                    <label for="" class="col-form-label namecol fill">Date: </label>
+                 </div>
+                <div class="form-group col-md-3">
+                    {{ form.pub_date }}
+                    <label for="" class="namesm label">Publish Date</label>
+                </div>
+                <div class="form-group col-md-3">
+                    {{ form.end_date }}
+                    <label for="" class="namesm label">End Date</label>
+                </div>
+            </div>
+
+            <div class="form-group col-md-4" style="top: -10px">
+                <label class="col-form-label namecol fill" style="top: -20px">Event Amount Accept: </label>
+            </div>
+            <div class="form-group col-md-6" style="top: -35px">
+                {{ form.amount_accepted }}
+            </div>
+            <div class="col-md-10" style="margin-top: -20px; top: -25px">
+                <button type="submit" class="btn1 mt-3 mb-3" name="click" style="line-height: 28px">Create event</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+{% endblock %}
+</html>
