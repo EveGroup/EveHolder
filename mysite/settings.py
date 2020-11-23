@@ -33,14 +33,17 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
 # Application definition
 
 INSTALLED_APPS = [
-    'eve_holder.apps.EveHolderConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'eve_holder.apps.EveHolderConfig',
     'crispy_forms',
+
+    'storages',
+
 ]
 
 MIDDLEWARE = [
@@ -127,8 +130,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = os.path.join(BASE_DIR, 'static/images/')
+MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+# S3 BUCKET CONFIG
+
+AWS_ACCESS_KEY_ID = 'AKIA53OY5OB43MNVXCGS'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'eve-holder-bucket'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
