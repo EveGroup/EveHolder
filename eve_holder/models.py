@@ -26,11 +26,9 @@ class Host(models.Model):
         phone_num: host's phone number.
     """
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=150, null=True)
-    email = models.EmailField(max_length=200, null=True)
-    phone_num = models.CharField(max_length=100, null=True)
-    # profile_pic = models.ImageField(null=True, blank=True)
-
+    name = models.CharField(max_length=20, null=True)
+    email = models.EmailField(max_length=30, null=True)
+    phone_num = models.CharField(max_length=20, null=True)
     profile_pic = models.ImageField(default='avatar.jpg', null=True, blank=True)
 
     def __str__(self):
@@ -51,14 +49,23 @@ class Event(models.Model):
         pub_date: date that let the visitors registration into the event.
         end_date: ending date of the event.
     """
-    event_name = models.CharField(max_length=500, null=True)
+    event_name = models.CharField(max_length=50, null=True)
     event_description = models.CharField(max_length=500, null=True, blank=True)
     event_host = models.ManyToManyField(Host)
     event_location = models.CharField(max_length=1000, null=True )
     pub_date = models.DateTimeField('published date', null=True, default=timezone.now)
-    end_date = models.DateTimeField('ending date', null=True, default=get_now_with_delta_two)
+    end_date = models.DateTimeField('ending date', null=True)
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
-    event_date = models.DateField('event date', null=True, default=get_now_with_delta_one)
+    event_date = models.DateField('event date', null=True)
+    event_image = models.ImageField(null=True, blank=True, default="block2.jpg")
+
+    def check_date(self):
+        """Check if event validation.
+
+        Returns:
+            bool: True if event's date are valid.
+        """
+        return self.end_date > self.pub_date and self.end_date >= self.event_date > self.pub_date
 
     def can_register(self):
         """Check if the event can be registered.
@@ -106,8 +113,8 @@ class Visitor(models.Model):
     phone_num = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=100, null=True)
     event = models.ManyToManyField(Event, blank=True)
+    profile_pic = models.ImageField(default='avatar.jpg', null=True, blank=True)
 
-    profile_pic = models.ImageField(default='avatar.jpg',null=True, blank=True)
 
     private = models.BooleanField(default=False, null=True)
 
