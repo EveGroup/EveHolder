@@ -28,7 +28,7 @@ SECRET_KEY = env('SECRET_KEY', default='missing-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['127.0.0.1'])
 
 # Application definition
 
@@ -131,11 +131,12 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-# S3 BUCKET CONFIG
+# S3 BUCKET CONFIG For anyone who has S3 Bucket.
+# For anyone who don't have you can comment this.
 
-AWS_ACCESS_KEY_ID = 'AKIA53OY5OB43MNVXCGS'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'eve-holder-bucket'
+AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env.str('AWS_STORAGE_BUCKET_NAME', default="eve-holder-bucket")
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
