@@ -240,7 +240,7 @@ def events(request):
 
 @login_required(login_url='eve_holder:login')
 @host_only
-def creat_event(request):
+def create_event(request):
     """Host create event.
 
     Args:

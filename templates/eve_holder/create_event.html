@@ -1,16 +1,15 @@
+{% extends 'eve_holder/main.html' %}
 {% load static %}
 
-<!DOCTYPE html>
 <html lang="en">
+
+{% block content %}
 <head>
     <title>Registration</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/create_event.css' %}">
 </head>
-
-<body>
-{% include 'eve_holder/navbar.html' %}
 <br>
 <div class="container">
     <div class="regform">
@@ -75,12 +74,11 @@
                 {{ form.amount_accepted }}
             </div>
             <div class="col-md-10" style="margin-top: -20px; top: -25px">
-                <button type="submit" class="btn1 mt-3 mb-3" name="click" style="line-height: 28px">Creat event</button>
+                <button type="submit" class="btn1 mt-3 mb-3" name="click" style="line-height: 28px">Create event</button>
             </div>
         </form>
     </div>
     <div class="col-md-3"></div>
 </div>
-</body>
-
+{% endblock %}
 </html>
