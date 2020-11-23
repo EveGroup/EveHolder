@@ -31,7 +31,6 @@
                                 <input type="text" name="username" placeholder=" Username..." class="username my-3">
                             </div>
                         </div>
-                    </div>
                     <div class="form-row">
                         <div class="col-lg-8">
                             <input type="password" name="password" placeholder=" Password..." class="username my-3">
@@ -46,7 +45,7 @@
                         {% endfor %}
                         <hr>
                         <a href="#">Forget Password</a>
-                         or <a href="{% url 'eve_holder:homepage' %}">Back</a>
+                          or <a href="{% url 'eve_holder:homepage' %}">Back</a>
                         <p>Don't have an account? <a href="{% url 'eve_holder:register' %}">Register here</a></p>
                     </form>
                 </div>

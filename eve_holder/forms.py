@@ -62,12 +62,6 @@ class CreateUserForm(UserCreationForm):
         "placeholder": "Confirm Password...",
         'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
     }), label="Password confirm: ")
-    # groups = forms.CharField(widget=forms.TextInput(attrs={
-    #     # "class": "form-control my-3",
-    #     "type": "text",
-    #     "placeholder": "choose type",
-    #     'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 100%; padding: 5ppx'
-    # }), label="Username: ")
 
     class Meta:
         model = User
