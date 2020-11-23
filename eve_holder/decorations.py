@@ -4,7 +4,15 @@ from django.shortcuts import redirect
 
 
 def unauthenticated_user(view_func):
-    """TODO: Add docstring for this class/function."""
+    """Let all user that not register or login can use that method.
+
+    Args:
+        view_func:
+
+    Returns:
+
+    """
+
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('eve_holder:dashboard')
@@ -15,7 +23,14 @@ def unauthenticated_user(view_func):
 
 
 def allowed_users(allowed_roles=None):
-    """TODO: Add docstring for this class/function."""
+    """
+
+    Args:
+        allowed_roles:
+
+    Returns:
+
+    """
     if allowed_roles is None:
         allowed_roles = []
 
@@ -35,7 +50,15 @@ def allowed_users(allowed_roles=None):
 
 
 def host_only(view_func):
-    """TODO: Add docstring for this class/function."""
+    """
+
+    Args:
+        view_func:
+
+    Returns:
+
+    """
+
     def wrapper_func(request, *args, **kwargs):
         group = None
         if request.user.groups.exists():

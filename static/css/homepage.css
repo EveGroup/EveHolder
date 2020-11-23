@@ -8,27 +8,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant&family=Dancing+Script:wght@500&family=Zilla+Slab&display=swap');
 
-#navbar{
+#navbar {
     position: sticky;
     z-index: 2;
     top: 0;
 }
 
-#navbar-content{
+#navbar-content {
     display: flex;
 }
 
-#navbar-content-right{
+#navbar-content-right {
     display: flex;
     justify-content: flex-end;
 }
 
-#navbar-brand{
+#navbar-brand {
     font-family: 'Kalam', cursive;
     color: #035aa6;
 }
 
-#navbar-login{
+#navbar-login {
     font-family: 'Kalam', cursive;
     text-decoration: none;
     color: black;
@@ -43,7 +43,7 @@
     border-radius: 10px;
 }
 
-#navbar-signup{
+#navbar-signup {
     font-family: 'Kalam', cursive;
     text-decoration: none;
     color: black;
@@ -58,7 +58,7 @@
     border-radius: 10px;
 }
 
-#navbar-content-right-visitor, #navbar-content-right-host{
+#navbar-content-right-visitor, #navbar-content-right-host {
     display: flex;
     justify-content: flex-end;
 }
@@ -88,7 +88,7 @@ img {
     filter: brightness(40%);
 }
 
-#content{
+#content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -97,13 +97,13 @@ img {
 
 /* block 1 */
 
-#block1{
+#block1 {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#block1-text{
+#block1-text {
     /*display: flex;*/
     justify-items: center;
     align-items: center;
@@ -111,21 +111,21 @@ img {
     position: absolute;
 }
 
-#block1-welcome{
+#block1-welcome {
     font-size: 120px;
     color: white;
     text-align: center;
     font-family: 'Dancing Script', cursive;
 }
 
-#block1-to{
+#block1-to {
     font-size: 50px;
     color: white;
     text-align: center;
     font-family: 'Zilla Slab', serif;
 }
 
-#block1-brand{
+#block1-brand {
     font-size: 90px;
     color: #ffc93c;
     text-align: center;
@@ -134,28 +134,29 @@ img {
 }
 
 /* block 2 */
-#block2{
+#block2 {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#block2-text{
+#block2-text {
     display: flex;
     justify-items: center;
     align-items: center;
     position: absolute;
     flex-direction: column;
-
 }
-#block2-headline{
+
+#block2-headline {
     font-size: 100px;
     display: flex;
     color: #12cad6;
     z-index: 1;
     font-family: 'Kaushan Script', cursive;
 }
-#block2-description{
+
+#block2-description {
     font-size: 20px;
     display: flex;
     color: white;
@@ -165,13 +166,13 @@ img {
 }
 
 /* block 3 */
-#block3{
+#block3 {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#block3-text{
+#block3-text {
     display: flex;
     justify-items: center;
     align-items: center;
@@ -179,7 +180,7 @@ img {
     flex-direction: column;
 }
 
-#block3-headline{
+#block3-headline {
     font-size: 100px;
     display: flex;
     color: #efb1ff;
@@ -187,7 +188,7 @@ img {
     font-family: 'Kaushan Script', cursive;
 }
 
-#block3-description{
+#block3-description {
     font-size: 20px;
     display: flex;
     color: white;
@@ -195,14 +196,15 @@ img {
     text-align: center;
     font-family: 'Nanum Myeongjo', serif;
 }
- /*short description about brand*/
-#brand-information{
+
+/*short description about brand*/
+#brand-information {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#brand-information-text{
+#brand-information-text {
     display: flex;
     justify-items: center;
     align-items: center;
@@ -210,7 +212,7 @@ img {
     flex-direction: column;
 }
 
-#brand-information-headline{
+#brand-information-headline {
     font-size: 100px;
     display: flex;
     color: #21bf73;
@@ -218,11 +220,53 @@ img {
     font-family: 'Kaushan Script', cursive;
 }
 
-#brand-information-description{
+#brand-information-description {
     font-size: 20px;
     display: flex;
     color: white;
     z-index: 1;
     text-align: center;
     font-family: 'Nanum Myeongjo', serif;
+}
+
+.btn1{
+    border: none;
+    outline: none;
+    height: 30px;
+    width: 200px;
+    background: None;
+    border-radius: 15px;
+    font-weight: bold;
+    font-family: 'Nanum Myeongjo', serif;
+    color: white;
+    padding: 5px 2px 2px 5px;
+}
+
+.btn1:hover{
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid;
+    color: white;
+    font-family: 'Nanum Myeongjo', serif;
+    text-align: center;
+}
+
+.btn2{
+    border: none;
+    outline: none;
+    height: 30px;
+    width: 200px;
+    background: None;
+    border-radius: 15px;
+    font-weight: bold;
+    font-family: 'Nanum Myeongjo', serif;
+    color: white;
+    padding: 5px 2px 2px 5px;
+}
+
+.btn2:hover{
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid;
+    color: white;
+    font-family: 'Nanum Myeongjo', serif;
+    text-align: center;
 }

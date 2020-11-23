@@ -7,6 +7,14 @@ from django.db import models
 from django.utils import timezone
 
 
+def get_now_with_delta_one():
+    return timezone.now() + timedelta(days=1)
+
+
+def get_now_with_delta_two():
+    return timezone.now() + timedelta(days=2)
+
+
 class Host(models.Model):
     """Create host table in database.
 
@@ -44,7 +52,7 @@ class Event(models.Model):
     event_name = models.CharField(max_length=50, null=True)
     event_description = models.CharField(max_length=500, null=True, blank=True)
     event_host = models.ManyToManyField(Host)
-    event_location = models.CharField(max_length=1000, null=True)
+    event_location = models.CharField(max_length=1000, null=True )
     pub_date = models.DateTimeField('published date', null=True, default=timezone.now)
     end_date = models.DateTimeField('ending date', null=True)
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
@@ -107,6 +115,7 @@ class Visitor(models.Model):
     event = models.ManyToManyField(Event, blank=True)
     profile_pic = models.ImageField(default='avatar.jpg', null=True, blank=True)
 
+
     private = models.BooleanField(default=False, null=True)
 
     def is_private(self):
@@ -116,3 +125,25 @@ class Visitor(models.Model):
     def __str__(self):
         """Display visitor's name."""
         return self.name
+
+
+class Notification(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(max_length=75, null=True)
+    level = models.TextField(max_length=150, null=True)
+    visitor = models.ManyToManyField(Visitor, through='NotificationUser')
+
+    def __str__(self):
+        """Return Notification's text"""
+        return self.text
+
+
+class NotificationUser(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    visitor = models.ForeignKey(Visitor, on_delete=models.CASCADE, null=True)
+    notification = models.ForeignKey(Notification, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        """Return Notification's text"""
+        return str(self.notification)
