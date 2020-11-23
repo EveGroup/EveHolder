@@ -1,36 +1,70 @@
-#eve_logo {
-    max-width: 100%;
-    height: auto;
-}
-
 body {
     background-color: #ebeff5;
-}
-
-#total-events {
-    background-color: #4cb4c7;
-}
-
-#events-registered {
-    background-color: #7abecc;
-}
-
-#history-events {
-    background-color: #7cd1c0;
-}
-
-#recent-event-table {
-    margin-right: auto;
-    margin-left: auto;
-}
-
-#hello-msg {
-    font-size: 16px;
-    color: white;
-    margin-right: 20px;
 }
 
 .login-msg {
     color: white;
     margin-right: 20px;
+}
+
+.alert {
+    padding: 10px;
+    background-color: #ffa31a;
+    color: white;
+    width: fit-content;
+    z-index: 1;
+    margin-top: 5px;
+    margin-bottom: 1px;
+}
+
+.danger {
+    padding: 10px;
+    background-color: #f44336;
+    color: white;
+    width: fit-content;
+    z-index: 1;
+    margin-top: 5px;
+}
+
+.success {
+    padding: 10px;
+    background-color: #5cd65c;
+    color: white;
+    width: fit-content;
+    z-index: 1;
+    margin-top: 5px;
+}
+
+.info {
+    padding: 10px;
+    background-color: #33adff;
+    color: white;
+    width: fit-content;
+    z-index: 1;
+    margin-top: 5px;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+
+.scroll {
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: justify;
+}
+
+.bs-logout-modal-sm {
+    color: black;
 }

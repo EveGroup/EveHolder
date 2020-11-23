@@ -1,10 +1,18 @@
 """This module contain models to set layout for database."""
-from datetime import date, timedelta
+from datetime import timedelta
 
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils import timezone
-from django.core.validators import MinValueValidator
+
+
+def get_now_with_delta_one():
+    return timezone.now() + timedelta(days=1)
+
+
+def get_now_with_delta_two():
+    return timezone.now() + timedelta(days=2)
 
 
 class Host(models.Model):
@@ -18,9 +26,10 @@ class Host(models.Model):
         phone_num: host's phone number.
     """
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=150, null=True)
-    email = models.EmailField(max_length=200, null=True)
-    phone_num = models.CharField(max_length=100, null=True)
+    name = models.CharField(max_length=20, null=True)
+    email = models.EmailField(max_length=30, null=True)
+    phone_num = models.CharField(max_length=20, null=True)
+    profile_pic = models.ImageField(default='avatar.jpg', null=True, blank=True)
 
     def __str__(self):
         """Display host's name."""
@@ -37,16 +46,26 @@ class Event(models.Model):
         event_name: name of that event.
         event_description: explain about event.
         event_host: defined who create that event.
-        pub_date: date that let the visitors registration into the event.
+        pub_date: date that let the visitor_registered_events registration into the event.
         end_date: ending date of the event.
     """
-    event_name = models.CharField(max_length=500, null=True)
+    event_name = models.CharField(max_length=50, null=True)
     event_description = models.CharField(max_length=500, null=True, blank=True)
-    event_host = models.ManyToManyField(Host, null=True)
-    pub_date = models.DateTimeField('published date', null=True, default=date.today())
-    end_date = models.DateTimeField('ending date', null=True, default=date.today())
+    event_host = models.ManyToManyField(Host)
+    event_location = models.CharField(max_length=1000, null=True)
+    pub_date = models.DateTimeField('published date', null=True, default=timezone.now)
+    end_date = models.DateTimeField('ending date', null=True)
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
-    event_date = models.DateField('event date', null=True, default=date.today() + timedelta(days=1))
+    event_date = models.DateField('event date', null=True)
+    event_image = models.ImageField(null=True, blank=True, default="block2.jpg")
+
+    def check_date(self):
+        """Check if event validation.
+
+        Returns:
+            bool: True if event's date are valid.
+        """
+        return self.end_date > self.pub_date and self.end_date >= self.event_date > self.pub_date
 
     def can_register(self):
         """Check if the event can be registered.
@@ -77,7 +96,7 @@ class Event(models.Model):
 
 
 class Visitor(models.Model):
-    """Create visitors' table in database.
+    """Create visitor_registered_events' table in database.
 
     Collect name, phone_num, email,
     event_already_regis, and event_history into database.
@@ -93,14 +112,31 @@ class Visitor(models.Model):
     name = models.CharField(max_length=150, null=True)
     phone_num = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=100, null=True)
-    event = models.ManyToManyField(Event, blank=True, null=True)
-
-    private = models.BooleanField(default=False, null=True)
-
-    def is_private(self):
-        """Return True if this visitor data is private."""
-        return self.private
+    event = models.ManyToManyField(Event, blank=True)
+    profile_pic = models.ImageField(default='avatar.jpg', null=True, blank=True)
 
     def __str__(self):
         """Display visitor's name."""
         return self.name
+
+
+class Notification(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(max_length=75, null=True)
+    level = models.TextField(max_length=150, null=True)
+    visitor = models.ManyToManyField(Visitor, through='NotificationUser')
+
+    def __str__(self):
+        """Return Notification's text"""
+        return self.text
+
+
+class NotificationUser(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    visitor = models.ForeignKey(Visitor, on_delete=models.CASCADE, null=True)
+    notification = models.ForeignKey(Notification, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        """Return Notification's text"""
+        return str(self.notification)

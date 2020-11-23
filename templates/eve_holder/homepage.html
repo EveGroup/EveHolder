@@ -1,132 +1,115 @@
 {% load static %}
-
+{% load group_tags %}
 <html lang="en">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static '/css/homepage.css' %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>Eve Holder Homepage</title>
+    <title>Homepage</title>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/homepage.css' %}">
 </head>
 <body>
 
-<div class="container">
-    <div class="nav-wrapper">
-        <div class="left-side">
-            <div class="brand">
-                <div>EVEHOLDER</div>
-            </div>
+<nav class="navbar navbar-light bg-light" id="navbar">
+    <span class="navbar-brand mb-0 h1" id="navbar-content">
+        <span id="navbar-brand">EVEHOLDER</span>
+        </span>
+    {% if not user.is_authenticated %}
+        <div id="navbar-content-right">
+            <a id="navbar-login" href="{% url 'eve_holder:login' %}">LOGIN</a>
+            <a id="navbar-signup" href="{% url 'eve_holder:register' %}">SIGNUP</a>
         </div>
-
-        <div class="right-side">
-            <div class="nav-link-wrapper">
-                <a href="{% url 'eve_holder:dashboard' %}">Go to our website</a>
+    {% else %}
+        {% if user|has_group:"Visitor" %}
+            <div id="navbar-content-right-visitor">
+                <a id="navbar-visitor" href="{% url 'eve_holder:visitor_registered_events' %}">let's go!</a>
             </div>
-            {% if not user.is_authenticated %}
-            <div class="nav-link-wrapper">
-                <a href="{% url 'eve_holder:login' %}"> Login</a>
+        {% elif user|has_group:"Host" %}
+            <div id="navbar-content-right-host">
+                <a id="navbar-host" href="{% url 'eve_holder:host' %}">let's go!</a>
             </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
-
-<div class="middle">
-    <div class="active_events">
-        <h1>Popular Events</h1>
-    </div>
-
-    <div class="events-txt">
-        {% if events %}
-
-            <ul>
-                {% for event in events %}
-                <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a> <p>{{ event.event_date }}</p>
-<!--
-<br>-->
-<!--                    <div class="event-txt">-->
-<!--                        <a href="{% url 'eve_holder:event_detail' event.id %}">{{ event.event_name }}</a>-->
-<!--                    </div>-->
-<!--                    <div class="end-date-container">-->
-<!--                        {{ event.event_date }}-->
-<!--                    </div>-->
-                {% endfor %}
-            </ul>
-
         {% else %}
-            <p>There is no event.</p>
+            <div id="invalid-account">please use the correct user type <a
+                    href="{% url 'eve_holder:logout' %}">Logout</a>
+            </div>
         {% endif %}
-    </div>
 
-    <div class="content-wrapper">
-        <div class="items-wrapper">
-            <div class="item-wrapper">
-                <div class="img-deco">
-                    <div class="pic1-container">
-                        <img src="{% static 'eve_holder/../../static/images/pic1.jpg' %}" alt="Create Event Pic">
-                    </div>
+    {% endif %}
+</nav>
+<form method="POSt" action="">
+    {% csrf_token %}
+    <div id="content">
+        <div id="block1">
+            <div id="block1-text">
+                <div id="block1-welcome">
+                    welcome
                 </div>
-                <div class="img-text-wrapper">
-                    <div class="subtitle">
-                        create your own event
-                    </div>
+                <div id="block1-to">
+                    to
                 </div>
-            </div>
-            <div class="text-information-wrapper">
-                <div class="text-information">
-                    <p>want to share your idea?</p>
+                <div id="block1-brand">
+                    EVEHOLDER
                 </div>
             </div>
+            <img src="{% static '/images/homepage/block1.jpg' %}" alt="Welcome to EveHolder">
+        </div>
+        <div id="brand-information">
+            <div id="brand-information-text">
+                <div id="brand-information-headline" data-aos="fade-up" data-aos-duration="1100">
+                    EVEHOLDER
+                </div>
+                <div id="brand-information-description" data-aos="fade-up" data-aos-duration="1300">
+                    A web application for creating and joining events.
+                </div>
+            </div>
+            <img src="{% static 'images/homepage/brandinfo.jpg' %}" alt="EveHolder info pic">
+        </div>
+        <div id="block2">
+            <div id="block2-text">
+                <div id="block2-headline" data-aos="fade-up" data-aos-duration="1100">
+                    HOST
+                </div>
+                <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
+                    Start being a host in a blink by filling your event's information.
+                    <br> Your event is now ready to go.
+                </div>
+                <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
+                </div>
+            </div>
+            <img src="{% static 'images/homepage/block2.jpg' %}" alt="Host Block pic">
+        </div>
+        <div id="block3">
+            <div id="block3-text">
+                <div id="block3-headline" data-aos="fade-up" data-aos-duration="1100">
+                    VISITOR
+                </div>
+                <div id="block3-description" data-aos="fade-up" data-aos-duration="1300">
+                    “Somewhere, something incredible is waiting to be known.” – Sharon Begley <br>
+                    Are you ready to discover a new thing?
+                </div>
+                <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
+                </div>
+            </div>
+            <img src="{% static 'images/homepage/lastblock.jpg' %}" alt="Visitors block pic">
+        </div>
 
-            <div class="text-information-wrapper">
-                <div class="text-information">
-                    <p>"This event is so cool, I want to join!"</p>
-                </div>
-            </div>
-            <div class="item-wrapper">
-                <div class="img-deco">
-                    <div class="pic2-container">
-                        <img src="{% static 'eve_holder/../../static/images/pic2.jpg' %}" alt="Join Event Pic">
-                    </div>
-                </div>
-                <div class="img-text-wrapper">
-                    <div class="subtitle">
-                        join event
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
-<div class="bottom-container">
-    <div class="bottom-content">
-        <div class="bottom-text-container">
-            <div class="bottom-msg">
-                start now
-            </div>
-            <div class="login-button-bottom">
-                <div class="login-button">
-                    <a href="{% url 'eve_holder:dashboard' %}" type="button" class="btn btn-outline-warning">Go to our website</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</form>
 </body>
-<!-- <script>
-    const items = document.querySelectorAll('.img-deco')
-    items.forEach(item => {
-        item.addEventListener('mouseover', () => {
-            console.log(item.childNodes[1].classList)
-            item.childNodes[1].classList.add('img-darken');
 
-        })
 
-        item.addEventListener('mouseout', () => {
-            item.childNodes[1].classList.remove('img-darken');
-
-        })
-    })
-</script> -->
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
 </html>

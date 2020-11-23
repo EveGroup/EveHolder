@@ -1,35 +1,124 @@
-"""Module for creating forms"""
+"""Module for creating forms."""
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import DateTimeField, ModelForm, CharField
+from django.forms import ModelForm
 
 from .models import *
 
 
 class EventForm(ModelForm):
-    # CharField.widget.attrs['readonly'] = True
-    pub_date = DateTimeField(widget=forms.widgets.DateTimeInput(format="%Y-%m-%d %H:%M:%S"))
-    end_date = DateTimeField(widget=forms.widgets.DateTimeInput(format="%Y-%m-%d %H:%M:%S"))
-    # event_host = CharField()
+    event_name = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        "placeholder": "Event Name...",
+        "style": "line-height: 30px"
+    }))
+    event_description = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        "placeholder": "Event description...",
+        "style": "line-height: 30px; margin-top: -10px"
+    }))
+
+    event_location = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        "placeholder": "Event Location...",
+        "style": "line-height: 30px; margin-top: -10px"
+    }))
+
+    pub_date = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "datetime-local",
+        "style": "line-height: 30px; margin-top: -10px; font-size: 10px"
+    }))
+
+    end_date = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "datetime-local",
+        "style": "font-size: 10px; line-height: 30px; margin-top: -10px;"
+    }))
+
+    event_date = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "date",
+        "style": "line-height: 30px; margin-top: -10px",
+    }))
+
+    # amount_accepted = forms.IntegerField(widget=forms.IntegerField(attrs={
+    #     "type": "text",
+    #     # "class": "form-group col-md-8 my-3",
+    #     "style": "line-height: 30px; margin-top: -10px",
+    # }))
 
     class Meta:
         model = Event
-        fields = '__all__'
-        # fields = ['event_name', 'event_description', 'pub_date', 'end_date']
-        # exclude = ['event_host']
-
-    # def __init__(self, *args, **kwargs):
-    #     self.Meta.fields['event_host'].queryset = Host.objects.filter(id=args[0].id)
-    #     super(EventForm, self).__init__(*args, **kwargs)
+        fields = ['event_name', 'event_description', 'event_location', 'amount_accepted', 'pub_date', 'event_date',
+                  'end_date']
 
 
 class CreateUserForm(UserCreationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        "placeholder": "Enter username...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="Username: ")
+    email = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "email",
+        "placeholder": "Enter email...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="Email: ")
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        "placeholder": "Enter First name...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="First name: ")
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        "placeholder": "Enter Last name...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="Last name: ")
+    password1 = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "password",
+        "placeholder": "Enter Password...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="Password: ")
+    password2 = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "password",
+        "placeholder": "Confirm Password...",
+        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+    }), label="Password confirm: ")
+
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'groups']
 
 
 class EventRegistrationForm(ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        'style': 'font-size: 12px; padding: 5px'
+    }), label="name: ")
+
+    email = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "email",
+        'style': 'font-size: 12px; padding: 5px'
+    }), label="Email: ")
+
+    phone = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        'style': 'font-size: 12px; padding: 5px'
+    }), label="phone: ")
+
     class Meta:
         model = Visitor
         fields = ['name', 'phone_num', 'email']

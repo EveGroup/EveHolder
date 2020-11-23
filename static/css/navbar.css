@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@200&display=swap');
+
+#logo {
+    font-family: 'Kalam', cursive;
+    color: #035aa6;
+    margin-right: 30px;
+    font-size: 25px;
+}
+
+.nav-link {
+    font-family: 'Commissioner', sans-serif;
+    font-size: 20px;
+
+}

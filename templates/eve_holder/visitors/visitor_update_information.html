@@ -1,0 +1,53 @@
+{% extends 'eve_holder/main.html' %}
+{% load static %}
+{% block content %}
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-body" style="width: fit-content; margin: 30px auto auto;">
+                <span><h5> Update Account Information: </h5></span>
+                <hr>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-sm-3 col-md-3 col-3">
+                                <label style="font-weight:bold;">First Name: </label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ user_form.first_name }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 col-md-3 col-3">
+                                <label style="font-weight:bold;">Last Name: </label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ user_form.last_name }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 col-md-3 col-3">
+                                <label style="font-weight:bold;">Phone Number: </label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ visitor_form.phone_num }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 col-md-3 col-3">
+                                <label style="font-weight:bold;">Email: </label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ visitor_form.email }}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <input class="btn btn-info" type="submit" name="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
