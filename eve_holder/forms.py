@@ -1,13 +1,12 @@
 """Module for creating forms."""
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import DateTimeField, ModelForm, DateTimeInput
+from django.forms import ModelForm
 
 from .models import *
 
 
 class EventForm(ModelForm):
-
     event_name = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
@@ -46,19 +45,19 @@ class EventForm(ModelForm):
         "style": "line-height: 30px; margin-top: -10px",
     }))
 
-    amount_accepted = forms.IntegerField(widget=forms.IntegerField(attrs={
-                                           "type": "text",
-                                            # "class": "form-group col-md-8 my-3",
-                                            "style": "line-height: 30px; margin-top: -10px",
-                                       }))
+    # amount_accepted = forms.IntegerField(widget=forms.IntegerField(attrs={
+    #     "type": "text",
+    #     # "class": "form-group col-md-8 my-3",
+    #     "style": "line-height: 30px; margin-top: -10px",
+    # }))
 
     class Meta:
         model = Event
-        fields = ['event_name', 'event_description', 'event_location', 'amount_accepted', 'pub_date', 'event_date', 'end_date']
+        fields = ['event_name', 'event_description', 'event_location', 'amount_accepted', 'pub_date', 'event_date',
+                  'end_date']
 
 
 class CreateUserForm(UserCreationForm):
-
     username = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
@@ -99,8 +98,6 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'groups']
-
-
 
 
 class EventRegistrationForm(ModelForm):

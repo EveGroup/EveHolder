@@ -10,38 +10,38 @@
 </head>
 <body>
 <div class="col-md-3"></div>
-    <div class="join-card col-md-6">
-        <form method="POST"action="">
+<div class="join-card col-md-6">
+    <form method="POST" action="">
         <div class="image-container">
-            <img src="/static/images/join_event.jpg" style="width: 100%">
+            <img src="{% static "images/join_event.jpg" %}" style="width: 100%" alt="join_event_images">
             <div class="title">
                 <h3>Join Event</h3>
             </div>
         </div>
-            {% csrf_token %}
-            <div class="main">
-                <div class="form-group col-md-4" style="top: -10px">
-                    <label class="col-form-label info" style="top: -20px">Username: </label>
-                </div>
-                <div class="form-group col-md-6" style="top: -35px">
-                    {{ form.name }}
-                </div>
-                <div class="form-group col-md-4" style="top: -10px">
-                    <label class="col-form-label info" style="top: -20px">Email: </label>
-                </div>
-                <div class="form-group col-md-6" style="top: -35px">
-                    {{ form.email }}
-                </div>
-                <div class="form-group col-md-4" style="top: -10px">
-                    <label class="col-form-label info" style="top: -20px">Phone: </label>
-                </div>
-                <div class="form-group col-md-6" style="top: -35px">
-                    {{ form.phone_num }}
-                </div>
+        {% csrf_token %}
+        <div class="main">
+            <div class="form-group col-md-4" style="top: -10px">
+                <label class="col-form-label info" style="top: -20px">Username: </label>
             </div>
-            <hr>
-        </form>
-    </div>
+            <div class="form-group col-md-6" style="top: -35px">
+                {{ form.name }}
+            </div>
+            <div class="form-group col-md-4" style="top: -10px">
+                <label class="col-form-label info" style="top: -20px">Email: </label>
+            </div>
+            <div class="form-group col-md-6" style="top: -35px">
+                {{ form.email }}
+            </div>
+            <div class="form-group col-md-4" style="top: -10px">
+                <label class="col-form-label info" style="top: -20px">Phone: </label>
+            </div>
+            <div class="form-group col-md-6" style="top: -35px">
+                {{ form.phone_num }}
+            </div>
+        </div>
+        <hr>
+    </form>
+</div>
 <div class="col-md-3"></div>
 </body>
 </html>

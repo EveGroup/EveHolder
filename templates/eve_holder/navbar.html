@@ -1,40 +1,22 @@
-
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static '/css/navbar.css' %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<style>
-        /* for nav bar */
-        @import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@200&display=swap');
-        #logo {
-            font-family: 'Kalam', cursive;
-            color: #035aa6;
-            margin-right: 30px;
-            font-size: 25px;
-        }
-        .nav-link{
-            font-family: 'Commissioner', sans-serif;
-            font-size: 20px;
-
-        }
-</style>
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
     <span id="logo">EVEHOLDER</span>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            {% if user.groups.all.0.name == "Visitors" %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'eve_holder:events' %}">Events</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'eve_holder:visitor' %}">Registered Events</a>
-            </li>
+            {% if user.groups.all.0.name == "Visitor" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'eve_holder:events' %}">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'eve_holder:visitor_registered_events' %}">Registered Events</a>
+                </li>
             {% elif user.groups.all.0.name == "Host" %}
-            <a class="nav-link" href="{% url 'eve_holder:create_event' %}">Create Event</a>
-            <a class="nav-link" href="{% url 'eve_holder:host' %}">My Events</a>
+                <a class="nav-link" href="{% url 'eve_holder:create_event' %}">Create Event</a>
+                <a class="nav-link" href="{% url 'eve_holder:host' %}">My Events</a>
             {% else %}
                 <li class="nav-item active">
                 <a class="nav-link" href="{% url 'eve_holder:homepage' %}">Homepage</a>
@@ -50,13 +32,13 @@
                     <a class="dropdown-item" href="{% url 'eve_holder:my_account' %}"
                        style="font-family: 'Commissioner', sans-serif;">Account</a>
                     <a class="dropdown-item" href="{% url 'eve_holder:logout' %}"
-                       style="font-family: 'Commissioner', sans-serif;" data-target=".bs-logout-modal-sm" 
+                       style="font-family: 'Commissioner', sans-serif;" data-target=".bs-logout-modal-sm"
                        data-toggle="modal">Logout</a>
                 </div>
             </li>
         </ul>
 
-        <div class="modal bs-logout-modal-sm">
+        <div class="modal bs-logout-modal-sm" id="logout-modal">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
@@ -75,7 +57,8 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search"
                    style="font-family: 'Commissioner', sans-serif;">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-                    style="font-family: 'Commissioner', sans-serif;">Search</button>
+                    style="font-family: 'Commissioner', sans-serif;">Search
+            </button>
         </form>
     </div>
 </nav>

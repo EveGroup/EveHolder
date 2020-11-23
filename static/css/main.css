@@ -1,25 +1,5 @@
-#eve_logo {
-    max-width: 100%;
-    height: auto;
-}
-
 body {
     background-color: #ebeff5;
-}
-
-#total-events {
-    background-color: #6172be;
-}
-
-#recent-event-table {
-    margin-right: auto;
-    margin-left: auto;
-}
-
-#hello-msg {
-    font-size: 16px;
-    color: white;
-    margin-right: 20px;
 }
 
 .login-msg {
@@ -28,40 +8,40 @@ body {
 }
 
 .alert {
-  padding: 10px;
-  background-color: #ffa31a;
-  color: white;
-  width: fit-content;
-  z-index: 1;
-  margin-top: 5px;
-  margin-bottom: 1px;
+    padding: 10px;
+    background-color: #ffa31a;
+    color: white;
+    width: fit-content;
+    z-index: 1;
+    margin-top: 5px;
+    margin-bottom: 1px;
 }
 
 .danger {
-  padding: 10px;
-  background-color: #f44336;
-  color: white;
-  width: fit-content;
-  z-index: 1;
-  margin-top: 5px;
-  }
+    padding: 10px;
+    background-color: #f44336;
+    color: white;
+    width: fit-content;
+    z-index: 1;
+    margin-top: 5px;
+}
 
 .success {
-  padding: 10px;
-  background-color:#5cd65c;
-  color: white;
-  width: fit-content;
-  z-index: 1;
-  margin-top: 5px;
+    padding: 10px;
+    background-color: #5cd65c;
+    color: white;
+    width: fit-content;
+    z-index: 1;
+    margin-top: 5px;
 }
 
 .info {
-  padding: 10px;
-  background-color: #33adff;
-  color: white;
-  width: fit-content;
-  z-index: 1;
-  margin-top: 5px;
+    padding: 10px;
+    background-color: #33adff;
+    color: white;
+    width: fit-content;
+    z-index: 1;
+    margin-top: 5px;
 }
 
 .closebtn {
@@ -80,7 +60,7 @@ body {
 }
 
 .scroll {
-    overflow-x: hidden; 
-    overflow-y: auto; 
-    text-align:justify; 
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: justify;
 } 

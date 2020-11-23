@@ -1,26 +1,26 @@
-body{
+body {
     font-family: Calisto MT;
     color: #031b88;
     background-color: #071255;
 }
 
-.profile-card{
+.profile-card {
     width: 500px;
     margin: auto;
     background-color: #ffffff;
-    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
 }
 
-.image-container{
+.image-container {
     width: 498px;
     position: relative;
 }
 
-.info{
+.info {
     color: #031b88;
     margin-right: 16px;
 }
 
-.main{
+.main {
     padding: 15px;
 }

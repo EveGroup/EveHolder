@@ -28,28 +28,9 @@ def homepage(request):
     return render(request, 'eve_holder/homepage.html', context)
 
 
-def dashboard(request):
-    """Main dashboard.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-
-    Returns:
-        render: Render the dashboard page with the context.
-    """
-    get_visitors = Visitor.objects.all()
-    get_events = Event.objects.all()
-
-    total_events = get_events.count()
-
-    context = {'visitors': get_visitors, 'events': get_events, 'total_events': total_events}
-
-    return render(request, 'eve_holder/dashboard.html', context)
-
-
 @unauthenticated_user
 def register_page(request):
-    """Register account for both visitors and host.
+    """Register account for both visitor_registered_events and host.
 
     Args:
         request: A HttpRequest object, which contains data about the request.
@@ -72,22 +53,22 @@ def register_page(request):
 
             login(request, user)
 
-            if group_name == 'Visitors':
+            if group_name == 'Visitor':
                 Visitor.objects.create(user=user, name=username, email=email, phone_num=phone_num)
-                return redirect('eve_holder:visitor')
+                return redirect('eve_holder:visitor_registered_events')
             elif group_name == 'Host':
                 Host.objects.create(user=user, name=username, email=email)
                 return redirect('eve_holder:host')
 
     context = {'form': form}
 
-    return render(request, 'eve_holder/register.html', context)
+    return render(request, 'eve_holder/accounts/register.html', context)
 
 
 # about login logout and register
 @unauthenticated_user
 def login_page(request):
-    """Login for both visitors and host.
+    """Login for both visitor_registered_events and host.
 
     Args:
         request: A HttpRequest object, which contains data about the request.
@@ -104,18 +85,18 @@ def login_page(request):
             group = request.user.groups.all()[0].name
             if group == 'Host':
                 return redirect('eve_holder:host')
-            elif group == 'Visitors':
-                return redirect('eve_holder:visitor')
+            elif group == 'Visitor':
+                return redirect('eve_holder:visitor_registered_events')
         else:
             messages.info(request, 'Username or Password is incorrect')
 
     context = {}
 
-    return render(request, 'eve_holder/login.html', context)
+    return render(request, 'eve_holder/accounts/login.html', context)
 
 
 def logout_page(request):
-    """Logged out for both visitors and host.
+    """Logged out for both visitor_registered_events and host.
 
     Args:
         request: A HttpRequest object, which contains data about the request.
@@ -151,13 +132,13 @@ def host(request):
                'events_count': events_count, 'my_filter': my_filter
                }
 
-    return render(request, 'eve_holder/host.html', context)
+    return render(request, 'eve_holder/hosts/host.html', context)
 
 
 # for host
 @login_required(login_url='eve_holder:login')
-@allowed_users(allowed_roles=['Visitors'])
-def visitors(request):
+@allowed_users(allowed_roles=['Visitor'])
+def visitor_registered_events(request):
     """Visitor dashboard.
 
     Args:
@@ -167,20 +148,20 @@ def visitors(request):
         render: Render the visitor page with the context.
     """
     visitor_id = request.user.visitor.id
-    get_visitors = Visitor.objects.get(id=visitor_id)
-    events_list = get_visitors.event.all()
+    get_visitor = Visitor.objects.get(id=visitor_id)
+    events_list = get_visitor.event.all()
     events_count = events_list.count()
-    notify = Notification.objects.filter(visitor=get_visitors)
+    notify = Notification.objects.filter(visitor=get_visitor)
 
     my_filter = EventFilter(request.GET, queryset=events_list)
     events_list = my_filter.qs
 
-    context = {'visitors': get_visitors, 'events': events_list,
+    context = {'visitor_registered_events': get_visitor, 'events': events_list,
                'events_count': events_count, 'my_filter': my_filter,
-               'notifications':notify,
+               'notifications': notify,
                }
 
-    return render(request, 'eve_holder/visitor.html', context)
+    return render(request, 'eve_holder/visitors/visitor_registered_events.html', context)
 
 
 @login_required(login_url='eve_holder:login')
@@ -197,7 +178,7 @@ def visitor_information(request, pk):
     """
     visitor = Visitor.objects.get(id=pk)
 
-    return render(request, 'eve_holder/visitor_info.html', {'visitor': visitor})
+    return render(request, 'eve_holder/visitors/visitor_info.html', {'visitor': visitor})
 
 
 @login_required(login_url='eve_holder:login')
@@ -210,16 +191,16 @@ def visitors_list(request, pk):
         pk: visitor's id.
 
     Returns:
-        render: Render the visitors list page with the context.
+        render: Render the visitor_registered_events list page with the context.
     """
     event = Event.objects.get(id=pk)
     list_visitors = Visitor.objects.filter(event=event)
-    context = {'event': event, 'visitors': list_visitors}
-    return render(request, 'eve_holder/visitors_list.html', context)
+    context = {'event': event, 'visitor_registered_events': list_visitors}
+    return render(request, 'eve_holder/visitors/visitors_list.html', context)
 
 
 @login_required(login_url='eve_holder:login')
-@allowed_users(allowed_roles=['Visitors'])
+@allowed_users(allowed_roles=['Visitor'])
 def events(request):
     """All events in the application.
 
@@ -235,7 +216,7 @@ def events(request):
     events_list = Event.objects.exclude(pk__in=registered_events_list)
     # return render(request, 'eve_holder/events.html', {'events': events_list, 'visitor_events':
     # registered_events_list})
-    return render(request, 'eve_holder/events.html', {'events': events_list})
+    return render(request, 'eve_holder/events/events.html', {'events': events_list})
 
 
 @login_required(login_url='eve_holder:login')
@@ -262,7 +243,7 @@ def create_event(request):
 
     context = {'form': form, 'host': request.user}
 
-    return render(request, 'eve_holder/create_event.html', context)
+    return render(request, 'eve_holder/hosts/create_event.html', context)
 
 
 @login_required(login_url='eve_holder:login')
@@ -284,7 +265,7 @@ def edit_event(request, pk):
         form = EventForm(request.POST, instance=events_list)
         if form.is_valid():
             text = f"Event Edited: {events_list}"
-            if (Notification.objects.filter(text=text).exists()):
+            if Notification.objects.filter(text=text).exists():
                 notify = Notification.objects.get(text=text, level='info')
                 notify.delete()
             notify = Notification.objects.create(text=text, level='info')
@@ -297,7 +278,7 @@ def edit_event(request, pk):
 
     context = {'form': form}
 
-    return render(request, 'eve_holder/create_event.html', context)
+    return render(request, 'eve_holder/hosts/create_event.html', context)
 
 
 @login_required(login_url='eve_holder:login')
@@ -317,7 +298,7 @@ def delete_event(request, pk):
     del_text = f"Event Deleted: {events_list}"
     edit_text = f"Event Edited: {events_list}"
     if request.user.groups.all()[0].name == 'Host':
-        if (Notification.objects.filter(text=edit_text).exists()):
+        if Notification.objects.filter(text=edit_text).exists():
             notify = Notification.objects.get(text=edit_text, level='info')
             notify.delete()
         notify = Notification.objects.create(text=del_text, level='warning')
@@ -343,17 +324,17 @@ def event_detail(request, pk):
     event = Event.objects.get(id=pk)
     get_first_host_name = event.event_host.values_list('name', flat=True)[0]
     user = request.user
-    if user.groups.filter(name='Visitors').exists():
+    if user.groups.filter(name='Visitor').exists():
         visitor = request.user.visitor
         context = {'event': event, 'host_name': get_first_host_name, 'visitor': visitor}
-        return render(request, 'eve_holder/event_detail.html', context)
+        return render(request, 'eve_holder/events/event_detail.html', context)
     elif user.groups.filter(name='Host').exists():
         context = {'event': event, 'host_name': get_first_host_name}
-        return render(request, 'eve_holder/host_event_detail.html', context)
+        return render(request, 'eve_holder/hosts/host_event_detail.html', context)
 
 
 @login_required(login_url='eve_holder:login')
-@allowed_users(allowed_roles=['Visitors'])
+@allowed_users(allowed_roles=['Visitor'])
 def event_register(request, pk_event):
     """For visitor register event.
 
@@ -373,13 +354,13 @@ def event_register(request, pk_event):
             visitor.event.add(event)
             form.save()
             messages.success(request, "You have registered the event")
-            return redirect('eve_holder:visitor')
+            return redirect('eve_holder:visitor_registered_events')
     context = {'form': form}
     return render(request, 'eve_holder/join_event.html', context)
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['Visitors'])
+@allowed_users(allowed_roles=['Visitor'])
 def cancel_event(request, pk_event):
     """For cancel the event use with visitor's accounts.
 
@@ -396,14 +377,14 @@ def cancel_event(request, pk_event):
     if request.method == 'POST':
         visitor.event.remove(my_event)
         messages.success(request, "Event Cancel Successfully")
-        return redirect('eve_holder:visitor')
+        return redirect('eve_holder:visitor_registered_events')
     events_list = Event.objects.get(id=pk_event)
     context = {'item': events_list}
-    return render(request, 'eve_holder/event_cancel.html', context)
+    return render(request, 'eve_holder/events/event_cancel.html', context)
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['Visitors'])
+@allowed_users(allowed_roles=['Visitor'])
 def visitor_update_information(request):
     """Update the visitor's information.
 
@@ -424,9 +405,9 @@ def visitor_update_information(request):
         visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
         visitor_form.save()
         messages.success(request, "Account Updated")
-        return redirect('eve_holder:visitor')
+        return redirect('eve_holder:visitor_registered_events')
     context = {'user_form': user_form, 'visitor_form': visitor_form}
-    return render(request, 'eve_holder/visitor_update_information.html', context)
+    return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
 
 
 @login_required(login_url='login')
@@ -453,7 +434,7 @@ def host_update_information(request):
         messages.success(request, "Account Updated")
         return redirect('eve_holder:host')
     context = {'user_form': user_form, 'host_form': host_form}
-    return render(request, 'eve_holder/host_update_information.html', context)
+    return render(request, 'eve_holder/hosts/host_update_information.html', context)
 
 
 @login_required(login_url='login')
@@ -481,13 +462,13 @@ def delete_account(request):
 @login_required(login_url='login')
 def my_account(request):
     user = request.user
-    if user.groups.filter(name='Visitors').exists():
+    if user.groups.filter(name='Visitor').exists():
         visitor_id = request.user.visitor.id
-        get_visitors = Visitor.objects.get(id=visitor_id)
-        events_list = get_visitors.event.all()
+        get_visitor = Visitor.objects.get(id=visitor_id)
+        events_list = get_visitor.event.all()
         events_count = events_list.count()
-        context = {'visitors': get_visitors, 'events_count': events_count}
-        return render(request, 'eve_holder/visitor_my_account.html', context)
+        context = {'visitor_registered_events': get_visitor, 'events_count': events_count}
+        return render(request, 'eve_holder/visitors/visitor_my_account.html', context)
     elif user.groups.filter(name='Host').exists():
         host_id = user.host.id
         get_host = Host.objects.get(id=host_id)
@@ -495,7 +476,7 @@ def my_account(request):
         events_count = events_list.count()
         context = {'host': get_host, 'events': events_list,
                    'events_count': events_count}
-        return render(request, 'eve_holder/host_my_account.html', context)
+        return render(request, 'eve_holder/hosts/host_my_account.html', context)
 
 
 def search_event(request):
@@ -518,8 +499,9 @@ def search_event(request):
     messages.warning(request, "Search field is Empty.")
     return redirect('eve_holder:dashboard')
 
+
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['Visitors'])
+@allowed_users(allowed_roles=['Visitor'])
 def close_notification(request, pk):
     notification = Notification.objects.get(id=pk)
     visitor = Visitor.objects.get(user=request.user)
@@ -528,4 +510,4 @@ def close_notification(request, pk):
     notification.visitor.remove(visitor)
     if not Visitor.objects.filter(notification=notification).exists():
         notification.delete()
-    return redirect('eve_holder:visitor')
+    return redirect('eve_holder:visitor_registered_events')

@@ -1,9 +1,9 @@
-*{
+* {
     padding: 0;
     margin: 0;
 }
 
-body{
+body {
     /*background-image: linear-gradient(45deg, rgba(7, 18, 85, 0.6), rgba(37, 67, 255, 0.7));*/
     /*background: #031b88;*/
     background-image: linear-gradient(45deg, #071255, #aab6fb);
@@ -14,48 +14,41 @@ body{
     /*background-repeat: no-repeat;*/
 }
 
-.regform{
+.regform {
     width: 580px;
     /*background-color: #fdebaa;*/
-    background-color: rgba(255,244,204, 0.8);
-    border-radius: 10px 10px 0px 0px;
-    margin: auto;
+    background-color: rgba(255, 244, 204, 0.8);
+    border-radius: 10px 10px 0 0;
     color: #031b88;
-    padding: 10px 0px 10px 0px;
+    padding: 10px 0 10px 0;
     text-align: center;
-    margin-top: -12px;
+    margin: -12px auto auto;
     height: 42px;
     top: 10px;
 }
 
-.main{
+.main {
     width: 580px;
     height: 450px;
-    border-radius: 0px 0px 10px 10px;
-    background-color: rgba(255,244,204, 0.6);
+    border-radius: 0 0 10px 10px;
+    background-color: rgba(255, 244, 204, 0.6);
     box-shadow: antiquewhite;
     display: flex;
     margin: auto;
     padding: 10px 10px 10px 10px;
 }
 
-.topic{
-    left: 15px;
-    color: #ffffff;
-    font-size: 15px;
-}
-
-.namecol{
+.namecol {
     color: #031b88;
     font-size: 15px;
     font-weight: bold;
 }
 
-.fill{
+.fill {
     line-height: 20px;
 }
 
-.row{
+.row {
     margin: auto;
     width: 650px;
     color: white;
@@ -64,12 +57,12 @@ body{
     align-content: center;
 }
 
-.namesm{
+.namesm {
     color: #031b88;
     font-size: 12px;
 }
 
-.btn1{
+.btn1 {
     border: none;
     outline: none;
     height: 26px;

@@ -46,13 +46,13 @@ class Event(models.Model):
         event_name: name of that event.
         event_description: explain about event.
         event_host: defined who create that event.
-        pub_date: date that let the visitors registration into the event.
+        pub_date: date that let the visitor_registered_events registration into the event.
         end_date: ending date of the event.
     """
     event_name = models.CharField(max_length=50, null=True)
     event_description = models.CharField(max_length=500, null=True, blank=True)
     event_host = models.ManyToManyField(Host)
-    event_location = models.CharField(max_length=1000, null=True )
+    event_location = models.CharField(max_length=1000, null=True)
     pub_date = models.DateTimeField('published date', null=True, default=timezone.now)
     end_date = models.DateTimeField('ending date', null=True)
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
@@ -96,7 +96,7 @@ class Event(models.Model):
 
 
 class Visitor(models.Model):
-    """Create visitors' table in database.
+    """Create visitor_registered_events' table in database.
 
     Collect name, phone_num, email,
     event_already_regis, and event_history into database.
@@ -114,10 +114,6 @@ class Visitor(models.Model):
     email = models.EmailField(max_length=100, null=True)
     event = models.ManyToManyField(Event, blank=True)
     profile_pic = models.ImageField(default='avatar.jpg', null=True, blank=True)
-
-    def is_private(self):
-        """Return True if this visitor data is private."""
-        return self.private
 
     def __str__(self):
         """Display visitor's name."""

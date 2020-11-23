@@ -1,10 +1,10 @@
-*{
+* {
     padding: 0;
     margin: 0;
 }
 
-body{
-    background-image: url("../images/pic4.jpg");
+body {
+    /*background-image: url("../images/account/register.jpg");*/
     background-position: center;
     max-height: 100%;
     max-width: 100%;
@@ -12,28 +12,26 @@ body{
     object-fit: cover;
 }
 
-.regform{
+.regform {
     width: 580px;
-    background-color: rgba(20,40,80,1);
-    margin: auto;
+    background-color: rgba(20, 40, 80, 1);
     color: #ffffff;
-    padding: 10px 0px 10px 0px;
+    padding: 10px 0 10px 0;
     text-align: center;
-    border-radius: 15px 15px 0px 0px;
-    margin-top: 4.5%;
+    border-radius: 15px 15px 0 0;
+    margin: 4.5% auto auto;
 }
 
-.main{
+.main {
     width: 580px;
-    background-color: rgba(20,40,80,0.8);
+    background-color: rgba(20, 40, 80, 0.8);
     display: flex;
     margin: auto;
     padding: 10px 10px 10px 10px;
 }
 
-.row{
-    margin: auto;
-    margin-top: 4px;
+.row {
+    margin: 4px auto auto;
     width: 650px;
     color: white;
     font-weight: bold;
@@ -42,18 +40,18 @@ body{
     align-content: center;
 }
 
-.namecol{
+.namecol {
     color: white;
     font-size: 15px;
     font-weight: bold;
 }
 
-.namesm{
+.namesm {
     color: white;
     font-size: 12px;
 }
 
-.btn1{
+.btn1 {
     border: none;
     outline: none;
     height: 26px;
@@ -70,20 +68,9 @@ body{
     color: white;
 }
 
-.btnrow{
-    margin: auto;
-    margin-top: 25px;
-    margin-left: 5%;
-    width: 650px;
-    align-self: center;
-}
-
-.backtext{
+.backtext {
     font-size: 12px;
     color: #cccccc;
     vertical-align: text-bottom;
-}
-.option {
-    position: relative;
 }
 
