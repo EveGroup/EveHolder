@@ -11,7 +11,7 @@ More information, visit our [Homepage](https://github.com/EveGroup/EveHolder/wik
 - Python3.6 or newer
 - pip
 - pipenv
-- postgres 9.6.2 or newer
+- postgres 9.6.2 or newer [optional]
 
 ## Setup for EveHolder Web applications
 
@@ -46,6 +46,12 @@ Download the code from the git using `git clone`. Do the following step to using
    DATABASE_URL=psql://postgres:postgrespassword@127.0.0.1:port/database_name
    TIME_ZONE=Asia/Bangkok
    ```
+
+   **Not use the postgre:**
+
+   You can not use the DATABASE_URL and use the default of our settings instead, but that mean you will use the sqlite3 database instead of Postgre.
+
+   **Use the postgre:**
 
    - At `DATABASE_URL` `postgrespassword` is password of your postgres that you create when you install the postgres program.
 
