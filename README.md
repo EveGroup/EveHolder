@@ -49,7 +49,7 @@ Download the code from the git using `git clone`. Do the following step to using
 
    **Not use the postgre:**
 
-   You not need to use the `DATABASE_URL` and use the default of our settings instead, but that mean you will use the sqlite3 database instead of Postgre.
+   You not need to use the `DATABASE_URL` and use the default of our settings instead, but that mean you will use the **sqlite3** database instead of **Postgre**.
 
    **Use the postgre:**
 
