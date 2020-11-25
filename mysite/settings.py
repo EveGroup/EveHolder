@@ -131,6 +131,7 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
+"""
 # S3 BUCKET CONFIG For anyone who has S3 Bucket.
 # For anyone who don't have you can comment this.
 
@@ -142,3 +143,4 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+"""
