@@ -43,13 +43,13 @@ Download the code from the git using `git clone`. Do the following step to using
    SECRET_KEY=any-random-string-will-work
    # set DEBUG to True for testing and local development
    DEBUG=False
-   DATABASE_URL=psql://postgres:postgrespassword@127.0.0.1:port/database_name
+   DATABASE_URL=psql://postgres:postgrespassword@127.0.0.1:port/database_name [optional if not use postgre]
    TIME_ZONE=Asia/Bangkok
    ```
 
    **Not use the postgre:**
 
-   You can not use the DATABASE_URL and use the default of our settings instead, but that mean you will use the sqlite3 database instead of Postgre.
+   You not need to use the `DATABASE_URL` and use the default of our settings instead, but that mean you will use the sqlite3 database instead of Postgre.
 
    **Use the postgre:**
 
