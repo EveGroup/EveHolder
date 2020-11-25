@@ -31,8 +31,7 @@
                                         <li class="nav-item">
                                             <a class="nav-link active" id="basicInfo-tab" data-toggle="tab"
                                                href="#basicInfo" role="tab" aria-controls="basicInfo"
-                                               aria-selected="true">Basic
-                                                Info</a>
+                                               aria-selected="true">Information</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content ml-1" id="myTabContent">
@@ -103,8 +102,6 @@
                                                     <label style="font-weight:bold;">Number of visitors</label>
                                                 </div>
                                                 <div class="col-md-8 col-6">
-                                                    <!--                                                    <a href=" {% url 'eve_holder:visitors_list' event.id %} ">see more-->
-                                                    <!--                                                        details</a>-->
                                                     {% if event.amount_accepted is not None %}
                                                         {{ event.visitor_set.all.count }} / {{ event.amount_accepted }}
                                                     {% else %}
@@ -133,6 +130,12 @@
                                                         <a class="btn btn-sm btn-info"
                                                            href="{% url 'eve_holder:event_register' event.id %}">Join
                                                             Now</a>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="row">
+                                                    <div class="col-sm-3 col-md-2 col-5">
+                                                        <a class="btn btn-sm btn-danger"
+                                                           href="{% url 'eve_holder:event_cancel' event.id %}">cancel</a>
                                                     </div>
                                                 {% endif %}
                                             {% endif %}
