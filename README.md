@@ -43,7 +43,7 @@ Download the code from the git using `git clone`. Do the following step to using
    SECRET_KEY=any-random-string-will-work
    # set DEBUG to True for testing and local development
    DEBUG=False
-   DATABASE_URL=psql://postgres:postgrespassword@127.0.0.1:port/database_name [optional if not use postgre]
+   DATABASE_URL=psql://postgres:postgrespassword@127.0.0.1:port/database_name [optional if use postgre]
    TIME_ZONE=Asia/Bangkok
    ```
 
