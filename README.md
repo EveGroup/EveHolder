@@ -34,7 +34,7 @@ Download the code from the git using `git clone`. Do the following step to using
 3. Install the requirements packages.
 
    ```bash
-   pipenv install
+   pipenv install -r requirements.txt
    ```
 
 4. In the project root directory/mysite, copy `sample.env` and change to `.env`(file name begin with "."). Then edit `.env` and set values of these variables as desired.
@@ -43,21 +43,27 @@ Download the code from the git using `git clone`. Do the following step to using
    SECRET_KEY=any-random-string-will-work
    # set DEBUG to True for testing and local development
    DEBUG=False
-   DATABASE_URL=psql://postgres:postgrespassword@127.0.0.1:port/database_name [optional if use postgre]
+   
+   # If you use postgre you need the DATABASE_URL in .env
+   DATABASE_URL=psql://postgres:postgrespassword@127.0.0.1:port/database_name 
+   
    TIME_ZONE=Asia/Bangkok
    ```
 
    **Not use the postgre:**
 
-   You not need to use the `DATABASE_URL` and use the default of our settings instead, but that mean you will use the **sqlite3** database instead of **Postgre**.
+   You not need to use the `DATABASE_URL` and use the default of our settings instead,  
+   but that mean you will use the **sqlite3** database instead of **Postgre**.
 
    **Use the postgre:**
 
-   - At `DATABASE_URL` `postgrespassword` is password of your postgres that you create when you install the postgres program.
+   - At `DATABASE_URL`
 
-   - `port` is port of your postgres database port.
+     - `postgrespassword` is password of your postgres that you create when you install the postgres program.
 
-   - `database_name` is name of your databse that you create.
+     - `port` is port of your postgres database port.
+
+     - `database_name` is name of your databse that you create.
 
    For more information about `.env` find in [Django-environ](https://django-environ.readthedocs.io/en/latest/) document.
 
