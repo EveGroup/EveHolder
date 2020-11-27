@@ -311,6 +311,7 @@ def delete_event(request, pk):
 
 
 @login_required(login_url='eve_holder:login')
+@allowed_users(['Host', 'Visitor'])
 def event_detail(request, pk):
     """Detail for each event.
 
@@ -438,6 +439,7 @@ def host_update_information(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Host', 'Visitor'])
 def delete_account(request):
     """Delete requested account.
 
@@ -460,6 +462,7 @@ def delete_account(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Host', 'Visitor'])
 def my_account(request):
     user = request.user
     if user.groups.filter(name='Visitor').exists():
@@ -479,6 +482,8 @@ def my_account(request):
         return render(request, 'eve_holder/hosts/host_my_account.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(['Host', 'Visitor'])
 def search_event(request):
     """Search for particular event.
 

@@ -6,9 +6,10 @@ from django.test import TestCase
 from django.utils import timezone
 
 from eve_holder.models import Event
+from eve_holder.tests import test_auth
 
 
-def create_event(name: str, duration: datetime):
+def create_event(name: str, duration):
     """Use to create event object to test the programs.
 
     Args:
@@ -24,7 +25,7 @@ def create_event(name: str, duration: datetime):
 
 
 class EventModelTest(TestCase):
-    """Class for tests the event model."""
+    """Class for testing the event model."""
 
     def setUp(self) -> None:
         """Use to set up the test cases for EventModelTest class."""
