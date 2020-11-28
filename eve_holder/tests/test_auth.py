@@ -10,8 +10,6 @@ class AuthenticationTests(TestCase):
 
     def setUp(self) -> None:
         """Set up user."""
-        # self.host = User.objects.create_user("Host", "test@gmail.com", "testPassword")
-        # self.visitor = User.objects.create_user("Visitor", "test@gmail.com", "testPassword")
         self.admin = User.objects.create_user("admin", "test@gmail.com", "testPassword")
 
     def test_admin_access_to_host(self):
