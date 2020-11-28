@@ -1,12 +1,9 @@
 """Module for testing visitor account."""
 
-import datetime
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import Group
-from django.utils import timezone
 
 from eve_holder.tests.test_event_models import create_event
 from eve_holder.models import Event, Visitor
