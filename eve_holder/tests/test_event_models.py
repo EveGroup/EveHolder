@@ -6,7 +6,6 @@ from django.test import TestCase
 from django.utils import timezone
 
 from eve_holder.models import Event
-from eve_holder.tests import test_auth
 
 
 def create_event(name: str, duration):

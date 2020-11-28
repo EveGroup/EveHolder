@@ -17,6 +17,7 @@
     <div class="event-cards">
 
         {% for event in events %}
+        {% if event.can_register %}
             <div class="event-container" id="event-container">
                 <div class="event">
                     <div class="front">
@@ -55,6 +56,7 @@
                     </div>
                 </div>
             </div>
+        {% endif %}
         {% endfor %}
     </div>
     </body>

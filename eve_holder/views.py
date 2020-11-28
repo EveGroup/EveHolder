@@ -457,7 +457,7 @@ def delete_account(request):
         user = User.objects.get(id=user.id)
         messages.success(request, f"Account Deleted ({user.username})")
         user.delete()
-        return redirect('eve_holder:dashboard')
+        return redirect('eve_holder:homepage')
     return render(request, 'eve_holder/delete_account.html', context)
 
 
@@ -495,6 +495,7 @@ def search_event(request):
         redirect: Redirect to homepage.
     """
     requested_events = request.POST['search']
+    previous_page = request.META['HTTP_REFERER']
     if requested_events != "":
         filtered_events = Event.objects.filter(event_name__contains=requested_events)
         if not filtered_events.exists():
@@ -502,7 +503,7 @@ def search_event(request):
         context = {'events': filtered_events, 'requested_events': requested_events}
         return render(request, 'eve_holder/search_event.html', context)
     messages.warning(request, "Search field is Empty.")
-    return redirect('eve_holder:dashboard')
+    return redirect(previous_page)
 
 
 @login_required(login_url='login')
