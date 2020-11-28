@@ -136,6 +136,15 @@ This is the sample accounts for login to the application.
 - For login as visitor: Username: `visitor1` password: `Hackpass`.
 - For login as host: Username: `Host1` password: `Hackpass`.
 
+## Team Members
+
+| Name | Lastname | Github |
+|:---:|:---:|:---:|
+| Kongtapp | Veerawattananun| [Kongtapp](https://github.com/KongtappV) |
+| Metaras | Charoenseang | [Metaras](https://github.com/metaras) |
+| Pattarin | Wongwaipanich | [Pattarin](https://github.com/pattarinn) |
+| Vichisorn | Wejsupakul | [Vichisorn](https://github.com/james31366) |
+
 ## Links to docs
 
 - [Requirements](https://github.com/EveGroup/EveHolder/wiki/Requirements)
@@ -146,5 +155,6 @@ This is the sample accounts for login to the application.
 - [Iteration 4 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-4-Plan)
 - [Iteration 5 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-5-Plan)
 - [Iteration 6 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-6-Plan)
+- [Iteration 7 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-7-Plan)
 - [Code Review Procedure](https://github.com/EveGroup/EveHolder/wiki/Code-Review-Procedure)
 - [Code Review Checklist](https://github.com/EveGroup/EveHolder/wiki/Code-Review-checklist)
