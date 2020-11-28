@@ -122,7 +122,7 @@ def host(request):
     """
     host_id = request.user.host.id
     get_host = Host.objects.get(id=host_id)
-    events_list = request.user.host.event_set.all()
+    events_list = request.user.host.event_set.all().order_by('-pub_date')
     events_count = events_list.count()
 
     my_filter = EventFilter(request.GET, queryset=events_list)
@@ -149,16 +149,14 @@ def visitor_registered_events(request):
     """
     visitor_id = request.user.visitor.id
     get_visitor = Visitor.objects.get(id=visitor_id)
-    events_list = get_visitor.event.all()
+    events_list = get_visitor.event.all().order_by('-pub_date')
     events_count = events_list.count()
-    notify = Notification.objects.filter(visitor=get_visitor)
 
     my_filter = EventFilter(request.GET, queryset=events_list)
     events_list = my_filter.qs
 
     context = {'visitor_registered_events': get_visitor, 'events': events_list,
                'events_count': events_count, 'my_filter': my_filter,
-               'notifications': notify,
                }
 
     return render(request, 'eve_holder/visitors/visitor_registered_events.html', context)
@@ -194,8 +192,9 @@ def visitors_list(request, pk):
         render: Render the visitor_registered_events list page with the context.
     """
     event = Event.objects.get(id=pk)
-    list_visitors = Visitor.objects.filter(event=event)
-    context = {'event': event, 'visitor_registered_events': list_visitors}
+    list_visitors = Visitor.objects.filter(event=event).order_by('id')
+    visitors_count = list_visitors.count()
+    context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count':visitors_count}
     return render(request, 'eve_holder/visitors/visitors_list.html', context)
 
 
@@ -212,7 +211,7 @@ def events(request):
     """
     visitor_id = request.user.visitor.id
     visitor = Visitor.objects.get(id=visitor_id)
-    registered_events_list = visitor.event.all()
+    registered_events_list = visitor.event.all().order_by('-pub_date')
     events_list = Event.objects.exclude(pk__in=registered_events_list)
     # return render(request, 'eve_holder/events.html', {'events': events_list, 'visitor_events':
     # registered_events_list})
@@ -467,7 +466,12 @@ def my_account(request):
         get_visitor = Visitor.objects.get(id=visitor_id)
         events_list = get_visitor.event.all()
         events_count = events_list.count()
-        context = {'visitor_registered_events': get_visitor, 'events_count': events_count}
+        notify = Notification.objects.filter(visitor=get_visitor)
+        context = {
+            'visitor_registered_events': get_visitor,
+            'events_count': events_count,
+            'notifications': notify,
+        }
         return render(request, 'eve_holder/visitors/visitor_my_account.html', context)
     elif user.groups.filter(name='Host').exists():
         host_id = user.host.id
@@ -510,4 +514,4 @@ def close_notification(request, pk):
     notification.visitor.remove(visitor)
     if not Visitor.objects.filter(notification=notification).exists():
         notification.delete()
-    return redirect('eve_holder:visitor_registered_events')
+    return redirect('eve_holder:my_account')

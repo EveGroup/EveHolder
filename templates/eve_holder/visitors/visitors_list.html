@@ -1,42 +1,72 @@
 {% extends 'eve_holder/main.html' %}
+{% load static %}
+
 
 {% block content %}
+
+    <link rel="stylesheet" type="text/css" href="{% static '/css/visitors_list.css' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <body>    
     <br>
-
-    <!-- Event Card -->
     <div class="row">
         <div class="col-md">
-            <div class="card card-body">
-                <h5>Event: {{ event.event_name }}</h5>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md">
-            <div class="card card-body">
-                <h5>All Participants/Visitors</h5>
-            </div>
-            <div class="card card-body">
-                <table class="table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>PhoneNumber</th>
-                    </tr>
-
-                    {% for visitor in visitors %}
-                        <tr>
-                        <td>{{ visitor.name }}</td>
-                        <td>{{ visitor.email }}</td>
-                        <td>{{ visitor.phone_num }}</td>
-                    {% endfor %}
-
-
+            <div class="card card-body" id="sm-event-detail">
+                <table>
+                    <th>
+                        <div class="event-container">
+                            <div class="event">
+                                <div class="front">
+                                    {% if event.event_image %}
+                                        <img class="event-pic" src="{{ event.event_image.url }}" alt="event's picture">
+                                    {% else %}
+                                        <img class="event-pic" src="{% static 'images/homepage/block2.jpg' %}"
+                                             alt="event's picture">
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <td>
+                            <h4>Event Name: {{ event.event_name }}</h4>
+                            <h6>Host by: {{ event.event_host.first }}</h6>
+                            <h6>Participants: {{visitors_count}}/{{event.amount_accepted}}</h6>
+                        </td>
+                    </th>
                 </table>
             </div>
         </div>
-
     </div>
-
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body scroll" id="table-card">
+                <h3 style="padding-left: 10px;">All Participants/Visitors</h3>
+                <table class="table-content w3-table">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>PhoneNumber</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {% for visitor in visitor_registered_events %}
+                        <tr>
+                            <td>{{ visitor.id }}</td>
+                            <td>{{ visitor.name }}</td>
+                            <td>{{ visitor.email }}</td>
+                            <td>{{ visitor.phone_num }}</td>
+                        </tr>
+                        {% endfor %}
+                        <!--- last table row --->
+                        <tr>
+                            <td colspan="4"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </body>
 {% endblock %}
