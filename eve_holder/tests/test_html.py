@@ -1,5 +1,7 @@
 """Module for testing rendering html."""
 
+import datetime
+
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
@@ -13,19 +15,19 @@ class HtmlTests(TestCase):
     def setUp(self) -> None:
         """Set up visitor and host."""
         # for visitor
-        self.user = User.objects.create_user("visitor", "test@gmail.com", "testPassword")
+        user = User.objects.create_user("visitor", "test@gmail.com", "testPassword")
         Group.objects.create(name='Visitor')
         visitor_group = Group.objects.get(name='Visitor')
-        visitor_group.user_set.add(self.user)
-        self.visitor = Visitor.objects.create(user=self.user)
+        visitor_group.user_set.add(user)
+        self.visitor = Visitor.objects.create(user=user)
         self.event1 = create_event(name='event1', duration=1)
 
         # for host
-        self.user2 = User.objects.create_user("host", "test@gmail.com", "testPassword")
+        user2 = User.objects.create_user("host", "test@gmail.com", "testPassword")
         Group.objects.create(name='Host')
         host_group = Group.objects.get(name='Host')
-        host_group.user_set.add(self.user)
-        self.host = Host.objects.create(user=self.user)
+        host_group.user_set.add(user2)
+        self.host = Host.objects.create(user=user2)
         self.event2 = create_event(name='event2', duration=1)
 
         self.event1_id = Event.objects.get(event_name=self.event1.event_name).id
@@ -82,8 +84,66 @@ class HtmlTests(TestCase):
     #     self.assertTemplateUsed(response, 'eve_holder/visitors/visitor_registered_events.html')
 
     # test render for host
-    # def test_render_host_myaccount_page(self):
-    #     self.client.login(username='host', password='testPassword')
-    #     url = reverse('eve_holder:my_account')
-    #     response = self.client.get(url)
-    #     self.assertTemplateUsed(response, 'eve_holder/hosts/host_my_account.html')
+    def test_render_host_myaccount_page(self):
+        self.client.login(username='host', password='testPassword')
+        url = reverse('eve_holder:my_account')
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'eve_holder/hosts/host_my_account.html')
+
+    def test_render_host_page(self):
+        self.client.login(username='host', password='testPassword')
+        url = reverse('eve_holder:host')
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'eve_holder/hosts/host.html')
+
+    def test_render_host_update_information(self):
+        self.client.login(username='host', password='testPassword')
+        url = reverse('eve_holder:host_update_information')
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'eve_holder/hosts/host_update_information.html')
+
+    def test_render_create_event(self):
+        self.client.login(username='host', password='testPassword')
+        url = reverse('eve_holder:create_event')
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'eve_holder/hosts/create_event.html')
+
+    def test_render_edit_event(self):
+        self.client.login(username='host', password='testPassword')
+        url = reverse('eve_holder:edit_event', args=(self.event1_id,))
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'eve_holder/hosts/create_event.html')
+
+    def test_render_delete_event(self):
+        self.client.login(username='host', password='testPassword')
+        url = reverse('eve_holder:delete_event', args=(self.event1_id,))
+        response = self.client.get(url)
+        self.assertRedirects(response, reverse('eve_holder:host'))
+
+    def test_render_visitor_list(self):
+        self.client.login(username='host', password='testPassword')
+        url = reverse('eve_holder:visitors_list', args=(self.event1_id,))
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'eve_holder/visitors/visitors_list.html')
+
+    # render for both host and visitor
+    def test_render_event_detail(self):
+        event = create_event(name='new_event', duration=3)
+        event.event_host.add(self.host)
+        self.client.login(username='host', password='testPassword')
+        url = reverse('eve_holder:event_detail', args=(event.pk,))
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'eve_holder/hosts/host_event_detail.html')
+        self.client.logout()
+        self.client.login(username='visitor', password='testPassword')
+        url = reverse('eve_holder:event_detail', args=(event.pk,))
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'eve_holder/events/event_detail.html')
+
+    def test_render_delete_account(self):
+        self.client.login(username='visitor', password='testPassword')
+        response = self.client.post(reverse('eve_holder:delete_account'), HTTP_REFERER=reverse('eve_holder:homepage'))
+        self.assertRedirects(response, reverse('eve_holder:homepage'))
+        self.client.login(username='host', password='testPassword')
+        response = self.client.post(reverse('eve_holder:delete_account'), HTTP_REFERER=reverse('eve_holder:homepage'))
+        self.assertRedirects(response, reverse('eve_holder:homepage'))
