@@ -63,7 +63,7 @@ Download the code from git using `git clone`. Do the following step to use this 
 
      - `port` is a port of your postgreSQL database port.
 
-     - `database_name` is the name of your databse that you created.
+     - `database_name` is the name of your database that you created.
 
    For more information about `.env`, see more at [Django-environ](https://django-environ.readthedocs.io/en/latest/).
 
