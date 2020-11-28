@@ -22,15 +22,16 @@ class VisitorTests(TestCase):
         visitor_group = Group.objects.get(name='Visitor')
         visitor_group.user_set.add(self.user)
         # create visitor pairing with user
-        self.visitor = Visitor.objects.create(user=self.user)
+        self.visitor = Visitor.objects.create(user=self.user, name='visitor')
 
         self.event1 = create_event(name='event1', duration=1)
         self.event2 = create_event(name='event2', duration=1)
         self.event3 = create_event(name='event3', duration=1)
 
+        self.client.login(username='visitor', password='testPassword')
+
     def test_visitor_access_to_host_pages(self):
         """Account type 'Visitor' must not be able to visit any host pages."""
-        self.client.login(username='visitor', password='testPassword')
         url = reverse('eve_holder:host')
         response = self.client.get(url)
         event_id = Event.objects.get(event_name=self.event1.event_name).id
@@ -73,7 +74,6 @@ class VisitorTests(TestCase):
 
     def test_visitor_registered_events_page(self):
         """registered_events_page should show all events that are registered."""
-        self.client.login(username='visitor', password='testPassword')
         self.visitor.event.add(self.event1)
         url = reverse('eve_holder:visitor_registered_events')
         response = self.client.get(url)
@@ -89,7 +89,6 @@ class VisitorTests(TestCase):
 
     def test_event_is_removed_from_events_page_after_join(self):
         """Visitor name should not appear in event visitor list when the event is cancelled."""
-        self.client.login(username='visitor', password='testPassword')
         event = Event.objects.get(event_name='event1')
         url = reverse('eve_holder:events')
         response = self.client.get(url)
@@ -102,71 +101,32 @@ class VisitorTests(TestCase):
     # prob with visitor_set
     def test_cancel_event(self):
         """Visitor name should not appear in event visitor list when the event is cancelled."""
-        user = User.objects.create_user("test", "test@gmail.com", "testPassword")
-        visitor_group = Group.objects.get(name='Visitor')
-        visitor_group.user_set.add(user)
-        test_visitor = Visitor.objects.create(user=user, name='test_visitor')
         event = Event.objects.get(event_name='event1')
         self.assertQuerysetEqual(event.visitor_set.all(), [])
-        test_visitor.event.add(event)
-        self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: test_visitor>'])
-        test_visitor.event.remove(event)
+        self.visitor.event.add(event)
+        self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: visitor>'])
+        self.visitor.event.remove(event)
         self.assertQuerysetEqual(event.visitor_set.all(), [])
-    #     self.client.login(username='visitor', password='testPassword')
-    #     event = Event.objects.get(event_name='event1')
-    #     self.assertQuerysetEqual(event.visitor_set.all(), [])
-    #     self.visitor.event.add(event)
-    #     # print()
-    #     # print("==========================")
-    #     # print(self.visitor.event.all())
-    #     # print(event.visitor_set.all())
-    #     self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: visitor>'])
-    #     self.visitor.event.remove(event)
-    #     self.assertQuerysetEqual(event.visitor_set.all(), [])
     #
 
-    # def test_events_page_contain_cancelled_event(self):
-    #     """When visitor cancel the event, events page should display it."""
-    #     user = User.objects.create_user("test", "test@gmail.com", "testPassword")
-    #     visitor_group = Group.objects.get(name='Visitor')
-    #     visitor_group.user_set.add(user)
-    #     test_visitor = Visitor.objects.create(user=user, name='test_visitor')
-    #     event = Event.objects.get(event_name='event1')
-    #     self.assertQuerysetEqual(event.visitor_set.all(), [])
-    #     test_visitor.event.add(event)
-    #     self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: test_visitor>'])
-    #     test_visitor.event.remove(event)
-    #     self.assertQuerysetEqual(event.visitor_set.all(), [])
-    #     url = reverse('eve_holder:events')
-    #     response = self.client.get(url)
-    #     self.assertQuerysetEqual(response.context['events'], ['<Event: event3>', '<Event: event2>', '<Event: event1>']
-    #                              , ordered=False)
-
-    #     self.client.login(username='visitor', password='testPassword')
-    #     event = Event.objects.get(event_name='event1')
-    #     self.assertQuerysetEqual(event.visitor_set.all(), [])
-    #     self.visitor.event.add(event)
-    #     self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: visitor>'])
-    #     self.visitor.event.remove(event)
-    #     self.assertQuerysetEqual(event.visitor_set.all(), [])
-    #     url = reverse('eve_holder:events')
-    #     response = self.client.get(url)
-    #     self.assertQuerysetEqual(response.context['events'], ['<Event: event3>', '<Event: event2>', '<Event: event1>']
-    #                              , ordered=False)
+    def test_events_page_contain_cancelled_event(self):
+        """When visitor cancel the event, events page should display it."""
+        event = Event.objects.get(event_name='event1')
+        self.assertQuerysetEqual(event.visitor_set.all(), [])
+        self.visitor.event.add(event)
+        self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: visitor>'])
+        self.visitor.event.remove(event)
+        self.assertQuerysetEqual(event.visitor_set.all(), [])
+        url = reverse('eve_holder:events')
+        response = self.client.get(url)
+        self.assertQuerysetEqual(response.context['events'], ['<Event: event3>', '<Event: event2>', '<Event: event1>']
+                                 , ordered=False)
 
     def test_join_event(self):
         """Visitor name should appear in event visitor list."""
-        # self.client.login(username='visitor', password='testPassword')
-        # event = Event.objects.get(event_name='event1')
-        # self.visitor.event.add(event)
-        # self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: visitor>'])
-        user = User.objects.create_user("test", "test@gmail.com", "testPassword")
-        visitor_group = Group.objects.get(name='Visitor')
-        visitor_group.user_set.add(user)
-        test_visitor = Visitor.objects.create(user=user, name='test_visitor')
         event = Event.objects.get(event_name='event1')
-        test_visitor.event.add(event)
-        self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: test_visitor>'])
+        self.visitor.event.add(event)
+        self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: visitor>'])
 
     def test_visitor_in_visitor_set_removed_after_account_is_deleted(self):
         """The name of the visitor who deletes their account should not appear in visitor_set."""

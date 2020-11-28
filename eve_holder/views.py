@@ -456,6 +456,10 @@ def delete_account(request):
     if request.method == 'POST':
         user = User.objects.get(id=user.id)
         messages.success(request, f"Account Deleted ({user.username})")
+        if user.groups.filter(name='Host').exists():
+            host = Host.objects.get(user=user)
+            host_events = host.event_set.all()
+            host_events.delete()
         user.delete()
         return redirect('eve_holder:homepage')
     return render(request, 'eve_holder/delete_account.html', context)
