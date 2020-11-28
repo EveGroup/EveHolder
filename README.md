@@ -140,10 +140,10 @@ This is the sample accounts for login to the application.
 
 | Name | Lastname | Github |
 |:---:|:---:|:---:|
-| Kongtapp | Veerawattananun| [Kongtapp](https://github.com/KongtappV) |
-| Metaras | Charoenseang | [Metaras](https://github.com/metaras) |
-| Pattarin | Wongwaipanich | [Pattarin](https://github.com/pattarinn) |
-| Vichisorn | Wejsupakul | [Vichisorn](https://github.com/james31366) |
+| Kongtapp | Veerawattananun| [KongtappV](https://github.com/KongtappV) |
+| Metaras | Charoenseang | [metaras](https://github.com/metaras) |
+| Pattarin | Wongwaipanich | [pattarinn](https://github.com/pattarinn) |
+| Vichisorn | Wejsupakul | [james31366](https://github.com/james31366) |
 
 ## Links to docs
 
