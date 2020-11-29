@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join {{ event.event_name }}</title>
+    <title>Join Event</title>
 </head>
 {% block content %}
     <br>
@@ -23,7 +23,7 @@
             <div class="login-element">
                 <form method="POST" action="">
                     {% csrf_token %}
-                    <h3>Join Event</h3>
+                    <h3>Join {{ event.event_name }}</h3>
                         <label class="join-label col-sm-6">Username</label>
                         {{ form.name }}
                         <label class="join-label col-sm-6">Email</label>
