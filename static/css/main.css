@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Castoro:ital@1&display=swap');
+
 body {
     /*background-color: #ebeff5;*/
     background-image: linear-gradient(45deg, #071255, #333d7c);
@@ -150,7 +152,28 @@ body {
 .top img{
     height: 35vh;
     width: 37vw;
-    /*margin-left: -15px;*/
+    filter: brightness(60%)
+}
+
+.inspiration-text {
+    display: flex;
+    justify-content: center;
+    font-family: 'Castoro', serif;
+    flex-direction: column;
+    z-index: 1;
+    position: absolute;
+    color: #ffe9ec;
+    /*color: #ffffff;*/
+    margin: 12.8% 10% 0 11.5%;
+}
+
+#sentence {
+    font-size: 20px;
+}
+
+.inspiration-text > .author {
+    font-size: 14px;
+    padding-top: 15px;
 }
 
 .bottom{
