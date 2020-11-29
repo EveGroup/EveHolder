@@ -23,6 +23,7 @@ body {
 #table-card {
     margin-left: 10%;
     margin-right: 10%;
+    background-color: #97a2d1;
 }
 
 .table-content {
@@ -37,7 +38,7 @@ body {
 
 .table-content thead tr {
     border-radius: 10px 10px;
-    background-color: #66d9ff;
+    background-color: #142e9f;
     color: #fff;
     text-align: left;
 }
@@ -46,12 +47,16 @@ body {
     padding: 12px 15px;
 }
 
+.table-content tbody tr:nth-of-type(odd) {
+    background-color: white;
+}
+
 .table-content tbody tr:nth-of-type(even) {
-    background-color: lightgray;
+    background-color: #e6e6e6;
 }
 
 .table-content tbody tr:last-of-type {
-    background-color: #66d9ff;
+    background-color: #031b88;
     border-top: 2px solid #fff;
 }
 
