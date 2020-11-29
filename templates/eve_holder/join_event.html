@@ -24,18 +24,12 @@
                 <form method="POST" action="">
                     {% csrf_token %}
                     <h3>Join Event</h3>
-{#                    <div class="row">#}
                         <label class="join-label col-sm-6">Username</label>
                         {{ form.name }}
-{#                    </div>#}
-{#                    <div class="row">#}
                         <label class="join-label col-sm-6">Email</label>
                         {{ form.email }}
-{#                    </div>#}
-{#                    <div class="row">#}
                         <label class="join-label col-sm-6">Phone number</label>
                         {{ form.phone_num }}
-{#                    </div>#}
                     <button type="submit" class="btn-join">Join</button>
                 </form>
             </div>
