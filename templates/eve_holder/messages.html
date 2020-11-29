@@ -1,27 +1,29 @@
 {% if messages %}
     {% for message in messages %}
 
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
-            <div class="alert w3-animate-opacity w3-round">
+        <div style="width: fit-content;">
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            <div class="warning w3-animate-opacity w3-round msg-box">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 <strong>Warning:</strong> {{ message }}
             </div>
-        {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-            <div class="success w3-animate-opacity w3-round">
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="success w3-animate-opacity w3-round msg-box">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 <strong>Success:</strong> {{ message }}
             </div>
-        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-            <div class="danger w3-animate-opacity w3-round">
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="danger w3-animate-opacity w3-round msg-box">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 <strong>Danger:</strong> {{ message }}
             </div>
-        {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-            <div class="info w3-animate-opacity w3-round">
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+            <div class="info w3-animate-opacity w3-round msg-box">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 <strong>Info:</strong> {{ message }}
             </div>
-        {% endif %}
-
+            {% endif %}
+        </div>
+            
     {% endfor %}
 {% endif %}
