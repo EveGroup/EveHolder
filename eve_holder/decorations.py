@@ -15,7 +15,7 @@ def unauthenticated_user(view_func):
 
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('eve_holder:dashboard')
+            return redirect('eve_holder:homepage')
         else:
             return view_func(request, *args, **kwargs)
 

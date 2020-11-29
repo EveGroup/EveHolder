@@ -72,7 +72,7 @@ body {
 
 .regform {
     width: 580px;
-    background-color: rgba(255, 255, 255, 1);
+    background-image: linear-gradient(60deg, #fff6dd, antiquewhite);
     border-radius: 10px 10px 0 0;
     color: #031b88;
     padding: 10px 0 10px 0;
@@ -85,7 +85,7 @@ body {
     width: 580px;
     height: 450px;
     border-radius: 0 0 10px 10px;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: #fff9ee;
     box-shadow: antiquewhite;
     display: flex;
     margin: auto;
@@ -123,15 +123,69 @@ body {
     outline: none;
     height: 26px;
     width: 100%;
-    background-color: #ffffff;
+    background-image: linear-gradient(120deg, #f0d4d0, #9adfff);
     font-weight: bold;
     margin: auto;
     border-radius: 20px;
     align-self: center;
+    color: darkblue;
 }
 
 .btn1:hover {
-    background: navy;
+    background-image: linear-gradient(45deg, #031b88, #faa7b8);
     border: 1px solid;
+    color: white;
+}
+
+.container-join{
+    height: 85vh;
+    width: 37vw;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+}
+
+.top img{
+    height: 35vh;
+    width: 37vw;
+    /*margin-left: -15px;*/
+}
+
+.bottom{
+    height: 50vh;
+    background-color: #ffffff;
+}
+
+.login-element{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-element h3{
+    margin-top: 18px;
+    margin-left: 38%;
+    color: #031b88;
+    font-weight: bold;
+}
+
+.btn-join{
+    width: 140px;
+    height: 28px;
+    background-image: linear-gradient(45deg, #6096fd, #fb7b8e);
+    display: inline-block;
+    text-align: center;
+    margin-top: 14px;
+    margin-left: 35%;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    align-self: center;
+}
+
+.btn-join:hover{
+    background-image: linear-gradient(45deg, #faa7b8,#96b7f7);
     color: white;
 }

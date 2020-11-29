@@ -1,47 +1,33 @@
+{% extends 'eve_holder/main.html' %}
+
 {% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Event</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/create_event.css' %}">
 </head>
-<body>
-<div class="col-md-3"></div>
-<div class="join-card col-md-6">
-    <form method="POST" action="">
-        <div class="image-container">
-            <img src="{% static "images/join_event.jpg" %}" style="width: 100%" alt="join_event_images">
-            <div class="title">
-                <h3>Join Event</h3>
+{% block content %}
+    <br>
+    <div class="container-join">
+        <div class="top">
+            <img src="{% static "images/join_event.jpg" %}">
+        </div>
+        <div class="bottom">
+            <div class="login-element">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <h3>Join Event</h3>
+                    {{ form.name }}
+                    {{ form.email }}
+                    {{ form.phone_num }}
+                    <button type="submit" class="btn-join">Join</button>
+                </form>
             </div>
         </div>
-        {% csrf_token %}
-        <div class="main">
-            <div class="form-group col-md-4" style="top: -10px">
-                <label class="col-form-label info" style="top: -20px">Username: </label>
-            </div>
-            <div class="form-group col-md-6" style="top: -35px">
-                {{ form.name }}
-            </div>
-            <div class="form-group col-md-4" style="top: -10px">
-                <label class="col-form-label info" style="top: -20px">Email: </label>
-            </div>
-            <div class="form-group col-md-6" style="top: -35px">
-                {{ form.email }}
-            </div>
-            <div class="form-group col-md-4" style="top: -10px">
-                <label class="col-form-label info" style="top: -20px">Phone: </label>
-            </div>
-            <div class="form-group col-md-6" style="top: -35px">
-                {{ form.phone_num }}
-            </div>
-        </div>
-        <hr>
-    </form>
-</div>
-<div class="col-md-3"></div>
-</body>
+    </div>
+{% endblock %}
+
 </html>

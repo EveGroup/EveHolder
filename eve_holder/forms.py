@@ -11,45 +11,52 @@ class EventForm(ModelForm):
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Event Name...",
-        "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black; border-radius: 0px"
+        "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black;"
+                 "border-radius: 0px"
     }))
     event_description = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Event description...",
-        "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black; border-radius: 0px"
+        "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black;"
+                 "border-radius: 0px"
     }))
 
     event_location = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Event Location...",
-        "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black; border-radius: 0px"
+        "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black;"
+                 "border-radius: 0px"
     }))
 
     pub_date = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "datetime-local",
-        "style": "line-height: 25px; margin-top: -10px; font-size: 10px; border: none; outline: none; background: none; border-bottom: 1px solid black; border-radius: 0px"
+        "style": "line-height: 25px; margin-top: -10px; font-size: 10px; border: none; outline: none; background: none;"
+                 "border-bottom: 1px solid black; border-radius: 0px"
     }))
 
     end_date = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "datetime-local",
-        "style": "font-size: 10px; line-height: 25px; margin-top: -10px; border: none; outline: none; background: none; border-bottom: 1px solid black; border-radius: 0px"
+        "style": "font-size: 10px; line-height: 25px; margin-top: -10px; border: none; outline: none; background:"
+                 "none; border-bottom: 1px solid black; border-radius: 0px"
     }))
 
     event_date = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "date",
-        "style": "line-height: 25px; margin-top: -10px; border: none; outline: none; background: none; border-bottom: 1px solid black; border-radius: 0px",
+        "style": "line-height: 25px; margin-top: -10px; border: none; outline: none; background: none;"
+                 "border-bottom: 1px solid black; border-radius: 0px",
     }))
 
     amount_accepted = forms.CharField(widget=forms.TextInput(attrs={
         "class": "form-control input my-3",
         "type": "text",
         "placeholder": "Amount accepted...",
-        "style": "line-height: 25px; margin-top: -10px; border: none; outline: none; background: none; border-bottom: 1px solid black; border-radius: 0px"
+        "style": "line-height: 25px; margin-top: -10px; border: none; outline: none; background: none;"
+                 "border-bottom: 1px solid black; border-radius: 0px"
     }))
 
     class Meta:
@@ -106,19 +113,25 @@ class EventRegistrationForm(ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
-        'style': 'font-size: 12px; padding: 5px'
+        'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: 10px; margin-left: 2.3%;'
+                 'border: none; border-radius: 15px; color: #031b88; text-align: center; height: 30px; '
+                 'width: 450px; background-color: rgba(173,186,211,0.4)'
     }), label="name: ")
 
     email = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "email",
-        'style': 'font-size: 12px; padding: 5px'
+        'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: 10px; margin-left: 2.3%;'
+                 'border: none; border-radius: 15px; color: #031b88; text-align: center; height: 30px; '
+                 'width: 450px; background-color: rgba(173,186,211,0.4)'
     }), label="Email: ")
 
-    phone = forms.CharField(widget=forms.TextInput(attrs={
+    phone_num = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
-        'style': 'font-size: 12px; padding: 5px'
+        'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: 10px; margin-left: 2.3%;'
+                 'border: none; border-radius: 15px; color: #031b88; text-align: center; height: 30px; '
+                 'width: 450px; background-color: rgba(173,186,211,0.4)'
     }), label="phone: ")
 
     class Meta:

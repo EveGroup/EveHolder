@@ -83,6 +83,7 @@ def login_page(request):
         if user is not None:
             login(request, user)
             group = request.user.groups.all()[0].name
+            print(group)
             if group == 'Host':
                 return redirect('eve_holder:host')
             elif group == 'Visitor':
@@ -360,6 +361,7 @@ def event_register(request, pk_event):
             form.save()
             messages.success(request, "You have registered the event")
             return redirect('eve_holder:visitor_registered_events')
+
     context = {'form': form}
     return render(request, 'eve_holder/join_event.html', context)
 
