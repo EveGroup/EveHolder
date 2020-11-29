@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Castoro:ital@1&display=swap');
+
 body {
-    background-color: #ebeff5;
+    /*background-color: #ebeff5;*/
+    background-image: linear-gradient(45deg, #071255, #333d7c);
 }
 
 .login-msg {
@@ -7,41 +10,28 @@ body {
     margin-right: 20px;
 }
 
-.alert {
+.msg-box {
     padding: 10px;
-    background-color: #ffa31a;
     color: white;
-    width: fit-content;
+    width: auto;
     z-index: 1;
     margin-top: 5px;
-    margin-bottom: 1px;
+}
+
+.warning {
+    background-color: #ffa31a;
 }
 
 .danger {
-    padding: 10px;
     background-color: #f44336;
-    color: white;
-    width: fit-content;
-    z-index: 1;
-    margin-top: 5px;
 }
 
 .success {
-    padding: 10px;
     background-color: #5cd65c;
-    color: white;
-    width: fit-content;
-    z-index: 1;
-    margin-top: 5px;
 }
 
 .info {
-    padding: 10px;
     background-color: #33adff;
-    color: white;
-    width: fit-content;
-    z-index: 1;
-    margin-top: 5px;
 }
 
 .closebtn {
@@ -67,4 +57,156 @@ body {
 
 .bs-logout-modal-sm {
     color: black;
+}
+
+.regform {
+    width: 580px;
+    background-image: linear-gradient(60deg, #fff6dd, antiquewhite);
+    border-radius: 10px 10px 0 0;
+    color: #031b88;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    margin: -8px auto auto;
+    height: 42px;
+    top: 10px;
+}
+.main {
+    width: 580px;
+    height: 480px;
+    border-radius: 0 0 10px 10px;
+    background-color: #fff9ee;
+    box-shadow: antiquewhite;
+    display: flex;
+    margin: auto;
+    padding: 10px 10px 10px 10px;
+}
+
+.namecol {
+    color: #031b88;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.fill {
+    line-height: 20px;
+}
+
+.row1 {
+    margin: auto;
+    margin-top: -10px;
+    width: 600px;
+    color: white;
+    font-weight: bold;
+    align-items: center;
+    align-content: center;
+}
+
+.namesm {
+    color: #031b88;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.btn1 {
+    border: none;
+    outline: none;
+    height: 26px;
+    width: 420px;
+    background-image: linear-gradient(120deg, #f0d4d0, #9adfff);
+    font-weight: bold;
+    margin: 20% 0 0 10%;
+    border-radius: 20px;
+    align-self: center;
+    color: darkblue;
+}
+
+.btn1:hover {
+    background-image: linear-gradient(45deg, #031b88, #faa7b8);
+    border: 1px solid;
+    color: white;
+}
+
+.container-join{
+    height: 87vh;
+    width: 37vw;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+    background-color: white;
+}
+
+.top img{
+    height: 29vh;
+    width: 37vw;
+    border-radius: 10px 10px 0 0;
+    filter: brightness(60%)
+}
+
+.inspiration-text-join {
+    display: flex;
+    justify-content: center;
+    font-family: 'Castoro', serif;
+    flex-direction: column;
+    z-index: 1;
+    position: absolute;
+    color: #ffe9ec;
+    /*color: #ffffff;*/
+    margin: 12% 10% 0 11.5%;
+}
+
+#sentence-join {
+    font-size: 20px;
+}
+
+.inspiration-text-join > .author-join {
+    font-size: 14px;
+    padding-top: 15px;
+}
+
+.bottom{
+    height: 52vh;
+    background-color: #ffffff;
+    border-radius: 0 0 10px 10px;
+}
+
+.login-element{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-element h3{
+    margin-top: 18px;
+    margin-left: 38%;
+    color: #031b88;
+    font-weight: bold;
+}
+
+.btn-join{
+    width: 140px;
+    height: 28px;
+    background-image: linear-gradient(45deg, #6096fd, #fb7b8e);
+    display: inline-block;
+    text-align: center;
+    margin-top: 14px;
+    margin-left: 35%;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    align-self: center;
+}
+
+.btn-join:hover{
+    background-image: linear-gradient(45deg, #faa7b8,#96b7f7);
+    color: white;
+}
+
+.join-label{
+    /*text-align: center;*/
+    color: #031b88;
+    /*margin-top: -17px;*/
+    margin-bottom: 0px;
+    bottom: -10px;
 }

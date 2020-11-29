@@ -83,6 +83,7 @@ def login_page(request):
         if user is not None:
             login(request, user)
             group = request.user.groups.all()[0].name
+            print(group)
             if group == 'Host':
                 return redirect('eve_holder:host')
             elif group == 'Visitor':
@@ -122,7 +123,7 @@ def host(request):
     """
     host_id = request.user.host.id
     get_host = Host.objects.get(id=host_id)
-    events_list = request.user.host.event_set.all()
+    events_list = request.user.host.event_set.all().order_by('-pub_date')
     events_count = events_list.count()
 
     my_filter = EventFilter(request.GET, queryset=events_list)
@@ -149,16 +150,14 @@ def visitor_registered_events(request):
     """
     visitor_id = request.user.visitor.id
     get_visitor = Visitor.objects.get(id=visitor_id)
-    events_list = get_visitor.event.all()
+    events_list = get_visitor.event.all().order_by('-pub_date')
     events_count = events_list.count()
-    notify = Notification.objects.filter(visitor=get_visitor)
 
     my_filter = EventFilter(request.GET, queryset=events_list)
     events_list = my_filter.qs
 
     context = {'visitor_registered_events': get_visitor, 'events': events_list,
                'events_count': events_count, 'my_filter': my_filter,
-               'notifications': notify,
                }
 
     return render(request, 'eve_holder/visitors/visitor_registered_events.html', context)
@@ -194,8 +193,9 @@ def visitors_list(request, pk):
         render: Render the visitor_registered_events list page with the context.
     """
     event = Event.objects.get(id=pk)
-    list_visitors = Visitor.objects.filter(event=event)
-    context = {'event': event, 'visitor_registered_events': list_visitors}
+    list_visitors = Visitor.objects.filter(event=event).order_by('name')
+    visitors_count = list_visitors.count()
+    context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count':visitors_count}
     return render(request, 'eve_holder/visitors/visitors_list.html', context)
 
 
@@ -212,7 +212,7 @@ def events(request):
     """
     visitor_id = request.user.visitor.id
     visitor = Visitor.objects.get(id=visitor_id)
-    registered_events_list = visitor.event.all()
+    registered_events_list = visitor.event.all().order_by('-pub_date')
     events_list = Event.objects.exclude(pk__in=registered_events_list)
     # return render(request, 'eve_holder/events.html', {'events': events_list, 'visitor_events':
     # registered_events_list})
@@ -232,16 +232,25 @@ def create_event(request):
     """
     host_id = request.user.host.id
     get_host = Host.objects.get(id=host_id)
-    form = EventForm(initial={'event_host': get_host})
+    form = EventForm()
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            text = f"Event Created: {form.cleaned_data.get('event_name')}"
-            messages.success(request, text)
-            return redirect('eve_holder:host')
+            event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
 
-    context = {'form': form, 'host': request.user}
+            if not event.check_pub_date():
+                messages.info(request, "End date cannot come before publish date.")
+            elif not event.check_event_date():
+                messages.info(request, "Event date cannot come before publish date.")
+            else:
+                # for person in get_host:
+                form.save()
+                event.event_host.add(get_host)
+                return redirect('eve_holder:host')
+
+    btn = "Create"
+    context = {'form': form, 'host': request.user, 'btn': btn}
 
     return render(request, 'eve_holder/hosts/create_event.html', context)
 
@@ -272,11 +281,11 @@ def edit_event(request, pk):
             for person in visitors_list:
                 notify.visitor.add(person)
             notify.save()
-            messages.info(request, text)
             form.save()
             return redirect('eve_holder:host')
 
-    context = {'form': form}
+    btn = "Edit"
+    context = {'form': form, 'btn':btn}
 
     return render(request, 'eve_holder/hosts/create_event.html', context)
 
@@ -311,6 +320,7 @@ def delete_event(request, pk):
 
 
 @login_required(login_url='eve_holder:login')
+@allowed_users(['Host', 'Visitor'])
 def event_detail(request, pk):
     """Detail for each event.
 
@@ -347,15 +357,15 @@ def event_register(request, pk_event):
     """
     visitor = Visitor.objects.get(user=request.user)
     form = EventRegistrationForm(instance=visitor)
+    event = Event.objects.get(id=pk_event)
     if request.method == 'POST':
         form = EventRegistrationForm(request.POST, instance=visitor)
         if form.is_valid():
-            event = Event.objects.get(id=pk_event)
             visitor.event.add(event)
             form.save()
-            messages.success(request, "You have registered the event")
             return redirect('eve_holder:visitor_registered_events')
-    context = {'form': form}
+
+    context = {'form': form, 'event': event}
     return render(request, 'eve_holder/join_event.html', context)
 
 
@@ -404,7 +414,6 @@ def visitor_update_information(request):
         user_form.save()
         visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
         visitor_form.save()
-        messages.success(request, "Account Updated")
         return redirect('eve_holder:visitor_registered_events')
     context = {'user_form': user_form, 'visitor_form': visitor_form}
     return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
@@ -431,13 +440,13 @@ def host_update_information(request):
         user_form.save()
         host_form = UpdateInformationHostForm(request.POST, instance=get_first_host_name)
         host_form.save()
-        messages.success(request, "Account Updated")
         return redirect('eve_holder:host')
     context = {'user_form': user_form, 'host_form': host_form}
     return render(request, 'eve_holder/hosts/host_update_information.html', context)
 
 
 @login_required(login_url='login')
+@allowed_users(['Host', 'Visitor'])
 def delete_account(request):
     """Delete requested account.
 
@@ -454,12 +463,17 @@ def delete_account(request):
     if request.method == 'POST':
         user = User.objects.get(id=user.id)
         messages.success(request, f"Account Deleted ({user.username})")
+        if user.groups.filter(name='Host').exists():
+            host = Host.objects.get(user=user)
+            host_events = host.event_set.all()
+            host_events.delete()
         user.delete()
-        return redirect('eve_holder:dashboard')
+        return redirect('eve_holder:homepage')
     return render(request, 'eve_holder/delete_account.html', context)
 
 
 @login_required(login_url='login')
+@allowed_users(['Host', 'Visitor'])
 def my_account(request):
     user = request.user
     if user.groups.filter(name='Visitor').exists():
@@ -467,7 +481,12 @@ def my_account(request):
         get_visitor = Visitor.objects.get(id=visitor_id)
         events_list = get_visitor.event.all()
         events_count = events_list.count()
-        context = {'visitor_registered_events': get_visitor, 'events_count': events_count}
+        notify = Notification.objects.filter(visitor=get_visitor)
+        context = {
+            'visitor_registered_events': get_visitor,
+            'events_count': events_count,
+            'notifications': notify,
+        }
         return render(request, 'eve_holder/visitors/visitor_my_account.html', context)
     elif user.groups.filter(name='Host').exists():
         host_id = user.host.id
@@ -479,6 +498,8 @@ def my_account(request):
         return render(request, 'eve_holder/hosts/host_my_account.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(['Host', 'Visitor'])
 def search_event(request):
     """Search for particular event.
 
@@ -490,6 +511,7 @@ def search_event(request):
         redirect: Redirect to homepage.
     """
     requested_events = request.POST['search']
+    previous_page = request.META['HTTP_REFERER']
     if requested_events != "":
         filtered_events = Event.objects.filter(event_name__contains=requested_events)
         if not filtered_events.exists():
@@ -497,7 +519,7 @@ def search_event(request):
         context = {'events': filtered_events, 'requested_events': requested_events}
         return render(request, 'eve_holder/search_event.html', context)
     messages.warning(request, "Search field is Empty.")
-    return redirect('eve_holder:dashboard')
+    return redirect(previous_page)
 
 
 @login_required(login_url='login')
@@ -510,4 +532,4 @@ def close_notification(request, pk):
     notification.visitor.remove(visitor)
     if not Visitor.objects.filter(notification=notification).exists():
         notification.delete()
-    return redirect('eve_holder:visitor_registered_events')
+    return redirect('eve_holder:my_account')
