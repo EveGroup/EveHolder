@@ -192,7 +192,7 @@ def visitors_list(request, pk):
         render: Render the visitor_registered_events list page with the context.
     """
     event = Event.objects.get(id=pk)
-    list_visitors = Visitor.objects.filter(event=event).order_by('id')
+    list_visitors = Visitor.objects.filter(event=event).order_by('name')
     visitors_count = list_visitors.count()
     context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count':visitors_count}
     return render(request, 'eve_holder/visitors/visitors_list.html', context)

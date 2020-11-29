@@ -55,6 +55,14 @@ body {
     border-top: 2px solid #fff;
 }
 
+.table-content tr {
+    counter-increment: rowNumber;
+}
+
+.table-content tbody tr td:first-child::before {
+    content: counter(rowNumber);
+}
+
 .scroll {
     overflow-x: auto;
     overflow-y: hidden;
