@@ -1,46 +1,44 @@
 {% extends 'eve_holder/main.html' %}
 
 {% block content %}
-
-    <br>
-
+<br>
+<body style="background-color: #035aa6">
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="card">
+                <div class="card" style="font-family: 'Commissioner', sans-serif">
 
                     <div class="card-body">
                         <div class="card-title mb-4">
                             <div class="d-flex justify-content-start">
-                                <div class="middle">
-                                </div>
+<!--                                <div class="middle">-->
+<!--                                </div>-->
                                 <div class="userData ml-3">
-                                    <h2 class="d-block"
-                                        style="font-size: 1.5rem; font-weight: bold">{{ event.event_name }}</h2>
-                                    <h6 class="d-block">Host by: {{ host_name }}
+                                    <h1 class="d-block"
+                                        style="font-size: 1.5rem; font-weight: bold; font-family: 'Commissioner', sans-serif">
+                                        {{ event.event_name }}</h1>
+                                    <h6 class="d-block" style="font-family: 'Commissioner', sans-serif">Host by: {{ host_name }}
                                     </h6>
-                                </div>
-                                <div class="ml-auto">
-                                    <input type="button" class="btn btn-primary d-none" id="btnDiscard"
-                                           value="Discard Changes"/>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-12">
                                     <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                                        <li class="nav-item">
+                                        <li class="nav-item" role="presentation">
                                             <a class="nav-link active" id="basicInfo-tab" data-toggle="tab"
                                                href="#basicInfo" role="tab" aria-controls="basicInfo"
-                                               aria-selected="true">Basic
-                                                Info</a>
+                                               aria-selected="true">Information</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link" id="picture-tab" data-toggle="tab" href="#picture"
+                                               role="tab" aria-controls="picture" aria-selected="false">Picture</a>
                                         </li>
                                     </ul>
+
                                     <div class="tab-content ml-1" id="myTabContent">
                                         <div class="tab-pane fade show active" id="basicInfo" role="tabpanel"
                                              aria-labelledby="basicInfo-tab">
-
-
                                             <div class="row">
                                                 <div class="col-sm-3 col-md-2 col-5">
                                                     <label style="font-weight:bold;"> Name </label>
@@ -95,8 +93,6 @@
                                                     <label style="font-weight:bold;">Number of visitors</label>
                                                 </div>
                                                 <div class="col-md-8 col-6">
-                                                    <!--                                                    <a href=" {% url 'eve_holder:visitors_list' event.id %} ">see more-->
-                                                    <!--                                                        details</a>-->
                                                     {% if event.amount_accepted is not None %}
                                                         {{ event.visitor_set.all.count }} / {{ event.amount_accepted }}
                                                     {% else %}
@@ -104,19 +100,26 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
+                                                <a class="btn btn-sm btn-warning" style="padding-right: 15px; padding-left: 15px"
+                                                   href="{% url 'eve_holder:edit_event' event.id %}">Edit</a>
+                                                </div>
+                                            </div>
 
+                                        </div>
+                                        <div class="tab-pane fade" id="picture" role="tabpanel" aria-labelledby="picture-tab">
+                                            <img src="{{ event.event_image.url }}" style="max-width: 100%">
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+</body>
 {% endblock %}

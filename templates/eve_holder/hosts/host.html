@@ -4,16 +4,17 @@
 
     <br>
 
-    <br>
+<body style="background-color: #035aa6">
     <div class="row">
-        <div class="col-md" >
-            <div class="card card-body" style="align-self: center">
-                <h5 style="color: #031b88">Your Events</h5>
+        <div class="col-md">
+            <div class="card card-body" style="font-family: 'Commissioner', sans-serif; align-self: center;">
+                <h3 style="font-family: 'Commissioner', sans-serif; color: #031b88;">My Events</h3>
+                <br>
                 <table class="table table-sm">
                     <tr>
-                        <th>Event</th>
-                        <th>Description</th>
+                        <th>Event Name</th>
                         <th>Event Date</th>
+                        <th>More Detail</th>
                         <th>Edit</th>
                         <th>Visitors</th>
                         <th>Delete ?</th>
@@ -22,8 +23,9 @@
                     {% for event in events %}
                         <tr>
                             <td>{{ event.event_name }}</td>
-                            <td>{{ event.event_description }}</td>
                             <td>{{ event.event_date }}</td>
+                            <td><a class="btn btn-sm btn-primary"
+                                   href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
                             <td><a class="btn btn-sm btn-warning"
                                    href="{% url 'eve_holder:edit_event' event.id %}">Edit</a></td>
                             <td><a class="btn btn-sm btn-info"
@@ -50,5 +52,5 @@
             </div>
         </div>
     </div>
-
+</body>
 {% endblock %}

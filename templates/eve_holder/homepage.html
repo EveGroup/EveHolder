@@ -37,8 +37,6 @@
 
     {% endif %}
 </nav>
-<form method="POSt" action="">
-    {% csrf_token %}
     <div id="content">
         <div id="block1">
             <div id="block1-text">
@@ -74,8 +72,6 @@
                     Start being a host in a blink by filling your event's information.
                     <br> Your event is now ready to go.
                 </div>
-                <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
-                </div>
             </div>
             <img src="{% static 'images/homepage/block2.jpg' %}" alt="Host Block pic">
         </div>
@@ -88,14 +84,11 @@
                     “Somewhere, something incredible is waiting to be known.” – Sharon Begley <br>
                     Are you ready to discover a new thing?
                 </div>
-                <div id="block2-description" data-aos="fade-up" data-aos-duration="1300">
-                </div>
             </div>
             <img src="{% static 'images/homepage/lastblock.jpg' %}" alt="Visitors block pic">
         </div>
 
     </div>
-</form>
 </body>
 
 
