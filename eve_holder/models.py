@@ -53,19 +53,26 @@ class Event(models.Model):
     event_description = models.CharField(max_length=500, null=True, blank=True)
     event_host = models.ManyToManyField(Host)
     event_location = models.CharField(max_length=1000, null=True)
-    pub_date = models.DateTimeField('published date', null=True, default=timezone.now)
-    end_date = models.DateTimeField('ending date', null=True)
+    pub_date = models.DateField('published date', null=True, default=timezone.now)
+    end_date = models.DateField('ending date', null=True)
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
     event_date = models.DateField('event date', null=True)
     event_image = models.ImageField(null=True, blank=True, default="/event/b1.jpg")
 
-    def check_date(self):
-        """Check if event validation.
+    def check_pub_date(self):
+        """Check register period is valid.
 
         Returns:
-            bool: True if event's date are valid.
+            bool: True if end date come after publish date.
         """
-        return self.end_date > self.pub_date and self.end_date >= self.event_date > self.pub_date
+        return self.end_date > self.pub_date
+
+    def check_event_date(self):
+        """Check if publish date come before event date.
+
+        Returns:
+            bool: True if publish date come before or in the same date with event date.
+        """
 
     def can_register(self):
         """Check if the event can be registered.

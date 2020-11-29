@@ -83,6 +83,7 @@ def login_page(request):
         if user is not None:
             login(request, user)
             group = request.user.groups.all()[0].name
+            print(group)
             if group == 'Host':
                 return redirect('eve_holder:host')
             elif group == 'Visitor':
@@ -231,16 +232,25 @@ def create_event(request):
     """
     host_id = request.user.host.id
     get_host = Host.objects.get(id=host_id)
-    form = EventForm(initial={'event_host': get_host})
+    form = EventForm()
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            text = f"Event Created: {form.cleaned_data.get('event_name')}"
-            messages.success(request, text)
-            return redirect('eve_holder:host')
+            event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
 
-    context = {'form': form, 'host': request.user}
+            if not event.check_pub_date():
+                messages.info(request, "End date cannot come before publish date.")
+            elif not event.check_event_date():
+                messages.info(request, "Event date cannot come before publish date.")
+            else:
+                # for person in get_host:
+                form.save()
+                event.event_host.add(get_host)
+                return redirect('eve_holder:host')
+
+    btn = "Create"
+    context = {'form': form, 'host': request.user, 'btn': btn}
 
     return render(request, 'eve_holder/hosts/create_event.html', context)
 
@@ -271,11 +281,11 @@ def edit_event(request, pk):
             for person in visitors_list:
                 notify.visitor.add(person)
             notify.save()
-            messages.info(request, text)
             form.save()
             return redirect('eve_holder:host')
 
-    context = {'form': form}
+    btn = "Edit"
+    context = {'form': form, 'btn':btn}
 
     return render(request, 'eve_holder/hosts/create_event.html', context)
 
@@ -347,15 +357,15 @@ def event_register(request, pk_event):
     """
     visitor = Visitor.objects.get(user=request.user)
     form = EventRegistrationForm(instance=visitor)
+    event = Event.objects.get(id=pk_event)
     if request.method == 'POST':
         form = EventRegistrationForm(request.POST, instance=visitor)
         if form.is_valid():
-            event = Event.objects.get(id=pk_event)
             visitor.event.add(event)
             form.save()
-            messages.success(request, "You have registered the event")
             return redirect('eve_holder:visitor_registered_events')
-    context = {'form': form}
+
+    context = {'form': form, 'event': event}
     return render(request, 'eve_holder/join_event.html', context)
 
 
@@ -404,7 +414,6 @@ def visitor_update_information(request):
         user_form.save()
         visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
         visitor_form.save()
-        messages.success(request, "Account Updated")
         return redirect('eve_holder:visitor_registered_events')
     context = {'user_form': user_form, 'visitor_form': visitor_form}
     return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
@@ -431,7 +440,6 @@ def host_update_information(request):
         user_form.save()
         host_form = UpdateInformationHostForm(request.POST, instance=get_first_host_name)
         host_form.save()
-        messages.success(request, "Account Updated")
         return redirect('eve_holder:host')
     context = {'user_form': user_form, 'host_form': host_form}
     return render(request, 'eve_holder/hosts/host_update_information.html', context)
