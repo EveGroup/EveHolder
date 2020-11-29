@@ -1,5 +1,6 @@
 body {
-    background-color: #ebeff5;
+    /*background-color: #ebeff5;*/
+    background-image: linear-gradient(45deg, #071255, #333d7c);
 }
 
 .login-msg {
@@ -67,4 +68,70 @@ body {
 
 .bs-logout-modal-sm {
     color: black;
+}
+
+.regform {
+    width: 580px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px 10px 0 0;
+    color: #031b88;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    margin: -8px auto auto;
+    height: 42px;
+    top: 10px;
+}
+.main {
+    width: 580px;
+    height: 450px;
+    border-radius: 0 0 10px 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: antiquewhite;
+    display: flex;
+    margin: auto;
+    padding: 10px 10px 10px 10px;
+}
+
+.namecol {
+    color: #031b88;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.fill {
+    line-height: 20px;
+}
+
+.row1 {
+    margin: auto;
+    margin-top: -10px;
+    width: 600px;
+    color: white;
+    font-weight: bold;
+    align-items: center;
+    align-content: center;
+}
+
+.namesm {
+    color: #031b88;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.btn1 {
+    border: none;
+    outline: none;
+    height: 26px;
+    width: 100%;
+    background-color: #ffffff;
+    font-weight: bold;
+    margin: auto;
+    border-radius: 20px;
+    align-self: center;
+}
+
+.btn1:hover {
+    background: navy;
+    border: 1px solid;
+    color: white;
 }

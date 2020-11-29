@@ -11,50 +11,52 @@ class EventForm(ModelForm):
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Event Name...",
-        "style": "line-height: 30px"
+        "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black; border-radius: 0px"
     }))
     event_description = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Event description...",
-        "style": "line-height: 30px; margin-top: -10px"
+        "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black; border-radius: 0px"
     }))
 
     event_location = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Event Location...",
-        "style": "line-height: 30px; margin-top: -10px"
+        "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black; border-radius: 0px"
     }))
 
     pub_date = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "datetime-local",
-        "style": "line-height: 30px; margin-top: -10px; font-size: 10px"
+        "style": "line-height: 25px; margin-top: -10px; font-size: 10px; border: none; outline: none; background: none; border-bottom: 1px solid black; border-radius: 0px"
     }))
 
     end_date = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "datetime-local",
-        "style": "font-size: 10px; line-height: 30px; margin-top: -10px;"
+        "style": "font-size: 10px; line-height: 25px; margin-top: -10px; border: none; outline: none; background: none; border-bottom: 1px solid black; border-radius: 0px"
     }))
 
     event_date = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "date",
-        "style": "line-height: 30px; margin-top: -10px",
+        "style": "line-height: 25px; margin-top: -10px; border: none; outline: none; background: none; border-bottom: 1px solid black; border-radius: 0px",
     }))
 
-    # amount_accepted = forms.IntegerField(widget=forms.IntegerField(attrs={
-    #     "type": "text",
-    #     # "class": "form-group col-md-8 my-3",
-    #     "style": "line-height: 30px; margin-top: -10px",
-    # }))
+    amount_accepted = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "form-control input my-3",
+        "type": "text",
+        "placeholder": "Amount accepted...",
+        "style": "line-height: 25px; margin-top: -10px; border: none; outline: none; background: none; border-bottom: 1px solid black; border-radius: 0px"
+    }))
 
     class Meta:
         model = Event
         fields = ['event_name', 'event_description', 'event_location', 'amount_accepted', 'pub_date', 'event_date',
                   'end_date']
+        # exclude = ['event_host']
 
 
 class CreateUserForm(UserCreationForm):

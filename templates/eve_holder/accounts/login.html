@@ -49,13 +49,6 @@
                         or <a href="{% url 'eve_holder:homepage' %}">Back</a>
                         <p>Don't have an account? <a href="{% url 'eve_holder:register' %}">Register here</a></p>
                     </div>
-                    {% for message in messages %}
-                        <p id="messages">{{ message }}</p>
-                    {% endfor %}
-                    <hr>
-                    <a href="#">Forget Password</a>
-                    or <a href="{% url 'eve_holder:homepage' %}">Back</a>
-                    <p>Don't have an account? <a href="{% url 'eve_holder:register' %}">Register here</a></p>
                 </form>
             </div>
         </div>

@@ -232,16 +232,20 @@ def create_event(request):
     """
     host_id = request.user.host.id
     get_host = Host.objects.get(id=host_id)
-    form = EventForm(initial={'event_host': get_host})
+    # form = EventForm(initial={'event_host': get_host})
+    form = EventForm()
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
+            event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
+            # for person in get_host:
+            event.event_host.add(get_host)
             text = f"Event Created: {form.cleaned_data.get('event_name')}"
             messages.success(request, text)
             return redirect('eve_holder:host')
-
-    context = {'form': form, 'host': request.user}
+    btn = "Create"
+    context = {'form': form, 'host': request.user, 'btn': btn}
 
     return render(request, 'eve_holder/hosts/create_event.html', context)
 
@@ -276,7 +280,8 @@ def edit_event(request, pk):
             form.save()
             return redirect('eve_holder:host')
 
-    context = {'form': form}
+    btn = "Edit"
+    context = {'form': form, 'btn':btn}
 
     return render(request, 'eve_holder/hosts/create_event.html', context)
 
