@@ -214,8 +214,6 @@ def events(request):
     visitor = Visitor.objects.get(id=visitor_id)
     registered_events_list = visitor.event.all().order_by('-pub_date')
     events_list = Event.objects.exclude(pk__in=registered_events_list)
-    # return render(request, 'eve_holder/events.html', {'events': events_list, 'visitor_events':
-    # registered_events_list})
     return render(request, 'eve_holder/events/events.html', {'events': events_list})
 
 

@@ -1,5 +1,5 @@
 """This module contain models to set layout for database."""
-from datetime import timedelta
+from datetime import timedelta, datetime, date
 
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
@@ -73,6 +73,7 @@ class Event(models.Model):
         Returns:
             bool: True if publish date come before or in the same date with event date.
         """
+        return self.event_date >= self.pub_date
 
     def can_register(self):
         """Check if the event can be registered.
@@ -80,7 +81,7 @@ class Event(models.Model):
         Returns:
              bool: true if the event can be registered.
         """
-        now = timezone.now()
+        now = timezone.now().date()
         return self.pub_date <= now <= self.end_date
 
     def is_expired(self):
@@ -89,7 +90,7 @@ class Event(models.Model):
         Returns:
              bool: true if now was more than end_date.
         """
-        now = timezone.now()
+        now = timezone.now().date()
         return now > self.end_date
 
     def is_full(self, amount):
