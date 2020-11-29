@@ -11,15 +11,15 @@ More information, visit our [Homepage](https://github.com/EveGroup/EveHolder/wik
 - Python3.6 or newer
 - pip
 - pipenv
-- postgres 9.6.2 or newer
+- postgreSQL 9.6.2 or newer [optional]
 
-## Setup for EveHolder Web applications
+## Setup for EveHolder Web application
 
-Download the code from the git using `git clone`. Do the following step to using this application.
+Download the code from git using `git clone`. Do the following step to use this application.
 
-`python3` refers to the Python 3 command using in Linux and Mac system. For windows use `python` or `py`.
+`python3` refers to the Python 3 command using in Linux and Mac system. For window use `python` or `py`.
 
-1. Check the python version are 3.6 or newer.
+1. Check python version (it should be 3.6 or newer).
 
    ```bash
    python --version
@@ -28,13 +28,13 @@ Download the code from the git using `git clone`. Do the following step to using
 2. Install `pipenv`
 
    ```bash
-   python pip install pipenv
+   pip install pipenv
    ```
 
-3. Install the requirements packages.
+3. Install all required packages.
 
    ```bash
-   pipenv install
+   pipenv install -r requirements.txt
    ```
 
 4. In the project root directory/mysite, copy `sample.env` and change to `.env`(file name begin with "."). Then edit `.env` and set values of these variables as desired.
@@ -43,25 +43,37 @@ Download the code from the git using `git clone`. Do the following step to using
    SECRET_KEY=any-random-string-will-work
    # set DEBUG to True for testing and local development
    DEBUG=False
+
+   # If you use postgreSQL you need the DATABASE_URL in .env
    DATABASE_URL=psql://postgres:postgrespassword@127.0.0.1:port/database_name
+
    TIME_ZONE=Asia/Bangkok
    ```
 
-   - At `DATABASE_URL` `postgrespassword` is password of your postgres that you create when you install the postgres program.
+   **Not use postgreSQL:**
 
-   - `port` is port of your postgres database port.
+   You don't have to use `DATABASE_URL` and use the default setting instead,  
+   which means you will use **sqlite3** database instead of **PostgreSQL**.
 
-   - `database_name` is name of your databse that you create.
+   **Use postgreSQL:**
 
-   For more information about `.env` find in [Django-environ](https://django-environ.readthedocs.io/en/latest/) document.
+   - At `DATABASE_URL`
 
-5. Activate the `pipenv`
+     - `postgrespassword` is a password of your postgreSQL that you created when you install the postgreSQL program.
+
+     - `port` is a port of your postgreSQL database port.
+
+     - `database_name` is the name of your database that you created.
+
+   For more information about `.env`, see more at [Django-environ](https://django-environ.readthedocs.io/en/latest/).
+
+5. Activate `pipenv`
 
    ```bash
    pipenv shell
    ```
 
-6. Run migrations to initialize the database:
+6. Initialize database:
 
    ```bash
    python manage.py makemigrations
@@ -93,7 +105,7 @@ Download the code from the git using `git clone`. Do the following step to using
 
    This starts the web server at port 8000.
 
-2. You should see this message printed from the terminal windows.
+2. You should see this messages printed from the terminal.
 
    ```bash
    System check identified no issues (0 silenced).
@@ -103,7 +115,7 @@ Download the code from the git using `git clone`. Do the following step to using
    Quit the server with CTRL-BREAK.
    ```
 
-   If you get a message the message that the port is busy you can change port by specify port after the run command.
+   If you get a message about the port is busy, you can change port by specify a port after run command.
 
    ```bash
    python manage.py 8080
@@ -119,10 +131,19 @@ Download the code from the git using `git clone`. Do the following step to using
 
 ## Username and password of initial user
 
-This is the sample accounts for login the web.
+This is the sample accounts for login to the application.
 
 - For login as visitor: Username: `visitor1` password: `Hackpass`.
 - For login as host: Username: `Host1` password: `Hackpass`.
+
+## Team Members
+
+| Name | Lastname | Github |
+|:---:|:---:|:---:|
+| Kongtapp | Veerawattananun| [KongtappV](https://github.com/KongtappV) |
+| Metaras | Charoenseang | [metaras](https://github.com/metaras) |
+| Pattarin | Wongwaipanich | [pattarinn](https://github.com/pattarinn) |
+| Vichisorn | Wejsupakul | [james31366](https://github.com/james31366) |
 
 ## Links to docs
 
@@ -134,5 +155,6 @@ This is the sample accounts for login the web.
 - [Iteration 4 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-4-Plan)
 - [Iteration 5 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-5-Plan)
 - [Iteration 6 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-6-Plan)
+- [Iteration 7 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-7-Plan)
 - [Code Review Procedure](https://github.com/EveGroup/EveHolder/wiki/Code-Review-Procedure)
 - [Code Review Checklist](https://github.com/EveGroup/EveHolder/wiki/Code-Review-checklist)
