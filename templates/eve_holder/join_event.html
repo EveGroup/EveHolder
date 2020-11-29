@@ -7,15 +7,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Event</title>
+    <title>Join {{ event.event_name }}</title>
 </head>
 {% block content %}
     <br>
     <div class="container-join">
         <div class="top">
-            <div class="inspiration-text">
-                <div id="sentence">"The journey of a thousand miles begins with one step."</div>
-                <div class="author">-Lao Tzu-</div>
+            <div class="inspiration-text-join">
+                <div id="sentence-join">"The only impossible journey is the one you never begin."</div>
+                <div class="author-join">-Tony Robbins-</div>
             </div>
             <img src="{% static "images/join_event.jpg" %}">
         </div>
@@ -24,9 +24,18 @@
                 <form method="POST" action="">
                     {% csrf_token %}
                     <h3>Join Event</h3>
-                    {{ form.name }}
-                    {{ form.email }}
-                    {{ form.phone_num }}
+{#                    <div class="row">#}
+                        <label class="join-label col-sm-6">Username</label>
+                        {{ form.name }}
+{#                    </div>#}
+{#                    <div class="row">#}
+                        <label class="join-label col-sm-6">Email</label>
+                        {{ form.email }}
+{#                    </div>#}
+{#                    <div class="row">#}
+                        <label class="join-label col-sm-6">Phone number</label>
+                        {{ form.phone_num }}
+{#                    </div>#}
                     <button type="submit" class="btn-join">Join</button>
                 </form>
             </div>

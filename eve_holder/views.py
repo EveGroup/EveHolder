@@ -233,17 +233,23 @@ def create_event(request):
     """
     host_id = request.user.host.id
     get_host = Host.objects.get(id=host_id)
-    # form = EventForm(initial={'event_host': get_host})
     form = EventForm()
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
             event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
-            # for person in get_host:
-            event.event_host.add(get_host)
-            text = f"Event Created: {form.cleaned_data.get('event_name')}"
-            return redirect('eve_holder:host')
+
+            if not event.check_pub_date():
+                messages.info(request, "End date cannot come before publish date.")
+            elif not event.check_event_date():
+                messages.info(request, "Event date cannot come before publish date.")
+            else:
+                # for person in get_host:
+                form.save()
+                event.event_host.add(get_host)
+                return redirect('eve_holder:host')
+
     btn = "Create"
     context = {'form': form, 'host': request.user, 'btn': btn}
 
@@ -351,15 +357,15 @@ def event_register(request, pk_event):
     """
     visitor = Visitor.objects.get(user=request.user)
     form = EventRegistrationForm(instance=visitor)
+    event = Event.objects.get(id=pk_event)
     if request.method == 'POST':
         form = EventRegistrationForm(request.POST, instance=visitor)
         if form.is_valid():
-            event = Event.objects.get(id=pk_event)
             visitor.event.add(event)
             form.save()
             return redirect('eve_holder:visitor_registered_events')
 
-    context = {'form': form}
+    context = {'form': form, 'event': event}
     return render(request, 'eve_holder/join_event.html', context)
 
 

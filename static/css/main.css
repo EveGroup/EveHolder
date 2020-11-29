@@ -85,7 +85,7 @@ body {
 }
 .main {
     width: 580px;
-    height: 450px;
+    height: 480px;
     border-radius: 0 0 10px 10px;
     background-color: #fff9ee;
     box-shadow: antiquewhite;
@@ -124,10 +124,10 @@ body {
     border: none;
     outline: none;
     height: 26px;
-    width: 100%;
+    width: 420px;
     background-image: linear-gradient(120deg, #f0d4d0, #9adfff);
     font-weight: bold;
-    margin: auto;
+    margin: 20% 0 0 10%;
     border-radius: 20px;
     align-self: center;
     color: darkblue;
@@ -140,22 +140,24 @@ body {
 }
 
 .container-join{
-    height: 85vh;
+    height: 87vh;
     width: 37vw;
     position: absolute;
     top: 55%;
     left: 50%;
+    border-radius: 10px;
     transform: translate(-50%, -50%);
     background-color: white;
 }
 
 .top img{
-    height: 35vh;
+    height: 29vh;
     width: 37vw;
+    border-radius: 10px 10px 0 0;
     filter: brightness(60%)
 }
 
-.inspiration-text {
+.inspiration-text-join {
     display: flex;
     justify-content: center;
     font-family: 'Castoro', serif;
@@ -164,21 +166,22 @@ body {
     position: absolute;
     color: #ffe9ec;
     /*color: #ffffff;*/
-    margin: 12.8% 10% 0 11.5%;
+    margin: 12% 10% 0 11.5%;
 }
 
-#sentence {
+#sentence-join {
     font-size: 20px;
 }
 
-.inspiration-text > .author {
+.inspiration-text-join > .author-join {
     font-size: 14px;
     padding-top: 15px;
 }
 
 .bottom{
-    height: 50vh;
+    height: 52vh;
     background-color: #ffffff;
+    border-radius: 0 0 10px 10px;
 }
 
 .login-element{
@@ -211,4 +214,12 @@ body {
 .btn-join:hover{
     background-image: linear-gradient(45deg, #faa7b8,#96b7f7);
     color: white;
+}
+
+.join-label{
+    /*text-align: center;*/
+    color: #031b88;
+    /*margin-top: -17px;*/
+    margin-bottom: 0px;
+    bottom: -10px;
 }
