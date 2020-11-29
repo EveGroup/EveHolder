@@ -243,7 +243,6 @@ def create_event(request):
             # for person in get_host:
             event.event_host.add(get_host)
             text = f"Event Created: {form.cleaned_data.get('event_name')}"
-            messages.success(request, text)
             return redirect('eve_holder:host')
     btn = "Create"
     context = {'form': form, 'host': request.user, 'btn': btn}
@@ -277,7 +276,6 @@ def edit_event(request, pk):
             for person in visitors_list:
                 notify.visitor.add(person)
             notify.save()
-            messages.info(request, text)
             form.save()
             return redirect('eve_holder:host')
 
@@ -359,7 +357,6 @@ def event_register(request, pk_event):
             event = Event.objects.get(id=pk_event)
             visitor.event.add(event)
             form.save()
-            messages.success(request, "You have registered the event")
             return redirect('eve_holder:visitor_registered_events')
 
     context = {'form': form}
@@ -411,7 +408,6 @@ def visitor_update_information(request):
         user_form.save()
         visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
         visitor_form.save()
-        messages.success(request, "Account Updated")
         return redirect('eve_holder:visitor_registered_events')
     context = {'user_form': user_form, 'visitor_form': visitor_form}
     return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
@@ -438,7 +434,6 @@ def host_update_information(request):
         user_form.save()
         host_form = UpdateInformationHostForm(request.POST, instance=get_first_host_name)
         host_form.save()
-        messages.success(request, "Account Updated")
         return redirect('eve_holder:host')
     context = {'user_form': user_form, 'host_form': host_form}
     return render(request, 'eve_holder/hosts/host_update_information.html', context)
