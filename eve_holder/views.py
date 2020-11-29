@@ -311,6 +311,7 @@ def delete_event(request, pk):
 
 
 @login_required(login_url='eve_holder:login')
+@allowed_users(['Host', 'Visitor'])
 def event_detail(request, pk):
     """Detail for each event.
 
@@ -438,6 +439,7 @@ def host_update_information(request):
 
 
 @login_required(login_url='login')
+@allowed_users(['Host', 'Visitor'])
 def delete_account(request):
     """Delete requested account.
 
@@ -454,12 +456,17 @@ def delete_account(request):
     if request.method == 'POST':
         user = User.objects.get(id=user.id)
         messages.success(request, f"Account Deleted ({user.username})")
+        if user.groups.filter(name='Host').exists():
+            host = Host.objects.get(user=user)
+            host_events = host.event_set.all()
+            host_events.delete()
         user.delete()
-        return redirect('eve_holder:dashboard')
+        return redirect('eve_holder:homepage')
     return render(request, 'eve_holder/delete_account.html', context)
 
 
 @login_required(login_url='login')
+@allowed_users(['Host', 'Visitor'])
 def my_account(request):
     user = request.user
     if user.groups.filter(name='Visitor').exists():
@@ -479,6 +486,8 @@ def my_account(request):
         return render(request, 'eve_holder/hosts/host_my_account.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(['Host', 'Visitor'])
 def search_event(request):
     """Search for particular event.
 
@@ -490,6 +499,7 @@ def search_event(request):
         redirect: Redirect to homepage.
     """
     requested_events = request.POST['search']
+    previous_page = request.META['HTTP_REFERER']
     if requested_events != "":
         filtered_events = Event.objects.filter(event_name__contains=requested_events)
         if not filtered_events.exists():
@@ -497,7 +507,7 @@ def search_event(request):
         context = {'events': filtered_events, 'requested_events': requested_events}
         return render(request, 'eve_holder/search_event.html', context)
     messages.warning(request, "Search field is Empty.")
-    return redirect('eve_holder:dashboard')
+    return redirect(previous_page)
 
 
 @login_required(login_url='login')

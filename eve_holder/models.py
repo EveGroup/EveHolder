@@ -57,7 +57,7 @@ class Event(models.Model):
     end_date = models.DateTimeField('ending date', null=True)
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
     event_date = models.DateField('event date', null=True)
-    event_image = models.ImageField(null=True, blank=True, default="block2.jpg")
+    event_image = models.ImageField(null=True, blank=True, default="/event/b1.jpg")
 
     def check_date(self):
         """Check if event validation.
