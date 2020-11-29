@@ -90,7 +90,7 @@ class Event(models.Model):
         Returns:
              bool: true if now was more than end_date.
         """
-        now = timezone.now().date()
+        now = timezone.now()
         return now > self.end_date
 
     def is_full(self, amount):
