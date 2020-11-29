@@ -76,13 +76,6 @@ class HtmlTests(TestCase):
         response = self.client.get(url)
         self.assertTemplateUsed(response, 'eve_holder/events/event_cancel.html')
 
-    # def test_render_visitor_close_notification_redirect_registered_page(self):
-    #     """Should render eve_holder/visitors/visitor_registered_events.html"""
-    #     self.client.login(username='visitor', password='testPassword')
-    #     url = reverse('eve_holder:close_notification', args=(self.event1_id,))
-    #     response = self.client.get(url)
-    #     self.assertTemplateUsed(response, 'eve_holder/visitors/visitor_registered_events.html')
-
     # test render for host
     def test_render_host_myaccount_page(self):
         """Should render eve_holder/hosts/host_my_account.html."""
