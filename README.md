@@ -37,7 +37,8 @@ Download the code from git using `git clone`. Do the following step to use this 
    pipenv install -r requirements.txt
    ```
 
-4. In the project root directory/mysite, copy `sample.env` and change to `.env`(file name begin with "."). Then edit `.env` and set values of these variables as desired.
+4. In the project root directory/mysite, copy `sample.env` and change to `.env`(file name begin with "."). Then
+   edit `.env` and set values of these variables as desired.
 
    ```env
    SECRET_KEY=any-random-string-will-work
@@ -57,13 +58,13 @@ Download the code from git using `git clone`. Do the following step to use this 
 
    **Use postgreSQL:**
 
-   - At `DATABASE_URL`
+    - At `DATABASE_URL`
 
-     - `postgrespassword` is a password of your postgreSQL that you created when you install the postgreSQL program.
+        - `postgrespassword` is a password of your postgreSQL that you created when you install the postgreSQL program.
 
-     - `port` is a port of your postgreSQL database port.
+        - `port` is a port of your postgreSQL database port.
 
-     - `database_name` is the name of your database that you created.
+        - `database_name` is the name of your database that you created.
 
    For more information about `.env`, see more at [Django-environ](https://django-environ.readthedocs.io/en/latest/).
 
@@ -131,10 +132,10 @@ Download the code from git using `git clone`. Do the following step to use this 
 
 ## Username and password of initial user
 
-This is the sample accounts for login to the application.
+This is the sample accounts for the login to the application.
 
-- For login as visitor: Username: `visitor1` password: `Hackpass`.
-- For login as host: Username: `Host1` password: `Hackpass`.
+- For the login as visitor: Username: `visitor1` password: `Hackpass`.
+- For the login as host: Username: `Host1` password: `Hackpass`.
 
 ## Team Members
 

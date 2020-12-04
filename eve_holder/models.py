@@ -1,5 +1,5 @@
 """This module contain models to set layout for database."""
-from datetime import timedelta, datetime, date
+from datetime import timedelta
 
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator

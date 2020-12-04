@@ -1,5 +1,5 @@
 body {
-    font-family: Commissioner;
+    font-family: Commissioner, serif;
     color: #ffffff;
     background-color: #233f74;
 }
@@ -9,10 +9,6 @@ html {
     padding: 0;
     height: 100%;
     background: #6172be !important;
-}
-
-#form-title {
-    color: #fff;
 }
 
 #messages {

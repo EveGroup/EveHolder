@@ -5,11 +5,6 @@ body {
     background-image: linear-gradient(45deg, #071255, #333d7c);
 }
 
-.login-msg {
-    color: white;
-    margin-right: 20px;
-}
-
 .msg-box {
     padding: 10px;
     color: white;
@@ -70,6 +65,7 @@ body {
     height: 42px;
     top: 10px;
 }
+
 .main {
     width: 580px;
     height: 480px;
@@ -87,13 +83,8 @@ body {
     font-weight: bold;
 }
 
-.fill {
-    line-height: 20px;
-}
-
 .row1 {
-    margin: auto;
-    margin-top: -10px;
+    margin: -10px auto auto;
     width: 600px;
     color: white;
     font-weight: bold;
@@ -126,7 +117,7 @@ body {
     color: white;
 }
 
-.container-join{
+.container-join {
     height: 87vh;
     width: 37vw;
     position: absolute;
@@ -137,7 +128,7 @@ body {
     background-color: white;
 }
 
-.top img{
+.top img {
     height: 29vh;
     width: 37vw;
     border-radius: 10px 10px 0 0;
@@ -165,26 +156,26 @@ body {
     padding-top: 15px;
 }
 
-.bottom{
+.bottom {
     height: 52vh;
     background-color: #ffffff;
     border-radius: 0 0 10px 10px;
 }
 
-.login-element{
+.login-element {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.login-element h3{
+.login-element h3 {
     margin-top: 18px;
     margin-left: 38%;
     color: #031b88;
     font-weight: bold;
 }
 
-.btn-join{
+.btn-join {
     width: 140px;
     height: 28px;
     background-image: linear-gradient(45deg, #6096fd, #fb7b8e);
@@ -198,15 +189,15 @@ body {
     align-self: center;
 }
 
-.btn-join:hover{
-    background-image: linear-gradient(45deg, #faa7b8,#96b7f7);
+.btn-join:hover {
+    background-image: linear-gradient(45deg, #faa7b8, #96b7f7);
     color: white;
 }
 
-.join-label{
+.join-label {
     /*text-align: center;*/
     color: #031b88;
     /*margin-top: -17px;*/
-    margin-bottom: 0px;
+    margin-bottom: 0;
     bottom: -10px;
 }

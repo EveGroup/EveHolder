@@ -1,13 +1,12 @@
 """Module for testing rendering html."""
 
-import datetime
-
+from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import Group
-from eve_holder.tests.test_event_models import create_event
+
 from eve_holder.models import Event, Visitor, Host
+from eve_holder.tests.test_event_models import create_event
 
 
 class HtmlTests(TestCase):

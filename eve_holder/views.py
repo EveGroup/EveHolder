@@ -195,7 +195,7 @@ def visitors_list(request, pk):
     event = Event.objects.get(id=pk)
     list_visitors = Visitor.objects.filter(event=event).order_by('name')
     visitors_count = list_visitors.count()
-    context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count':visitors_count}
+    context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count': visitors_count}
     return render(request, 'eve_holder/visitors/visitors_list.html', context)
 
 
@@ -283,7 +283,7 @@ def edit_event(request, pk):
             return redirect('eve_holder:host')
 
     btn = "Edit"
-    context = {'form': form, 'btn':btn}
+    context = {'form': form, 'btn': btn}
 
     return render(request, 'eve_holder/hosts/create_event.html', context)
 

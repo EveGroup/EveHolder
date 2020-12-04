@@ -65,7 +65,7 @@ def host_only(view_func):
             group = request.user.groups.all()[0].name
 
         if group == 'Visitor':
-            return redirect('eve_holder:visitor')
+            return HttpResponse("You are not authorize to view the page!")
         if group == 'Host':
             return view_func(request, *args, **kwargs)
         else:
