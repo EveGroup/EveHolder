@@ -6,7 +6,7 @@
         {% for notify in notifications %}
             {% if notify.level == 'info' %}
                 <div class="info w3-animate-opacity w3-round msg-box">
-                    <strong>Info Updated: </strong> {{ notify }}
+                    <strong>Info: </strong> {{ notify }}
                     <a class="closebtn" href="{% url 'eve_holder:close_notification' notify.id %}"
                        onclick="this.parentElement.style.display='none';">&times;</a>
                 </div>

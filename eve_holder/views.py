@@ -1,4 +1,6 @@
 """This module contains views of the website."""
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -83,7 +85,6 @@ def login_page(request):
         if user is not None:
             login(request, user)
             group = request.user.groups.all()[0].name
-            print(group)
             if group == 'Host':
                 return redirect('eve_holder:host')
             elif group == 'Visitor':
@@ -234,18 +235,18 @@ def create_event(request):
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
-            form.save()
-            event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
+            event = form.save()
 
             if not event.check_pub_date():
                 messages.info(request, "End date cannot come before publish date.")
+                event.delete()
             elif not event.check_event_date():
                 messages.info(request, "Event date cannot come before publish date.")
+                event.delete()
             else:
-                # for person in get_host:
                 form.save()
                 event.event_host.add(get_host)
-                return redirect('eve_holder:host')
+                return HttpResponseRedirect(reverse("eve_holder:host"))
 
     btn = "Create"
     context = {'form': form, 'host': request.user, 'btn': btn}
