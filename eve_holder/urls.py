@@ -1,13 +1,14 @@
 from django.urls import path
 
+import eve_holder.views.accounts
 from . import views
 
 app_name = 'eve_holder'
 urlpatterns = [
     # authenticate part
-    path('login/', views.login_page, name="login"),
-    path('logout/', views.logout_page, name="logout"),
-    path('register/', views.register_page, name="register"),
+    path('login/', eve_holder.views.accounts.login_page, name="login"),
+    path('logout/', eve_holder.views.accounts.logout_page, name="logout"),
+    path('register/', eve_holder.views.accounts.register_page, name="register"),
 
     # unauthenticated user
     path('', views.homepage, name='homepage'),

@@ -2,16 +2,23 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-from .decorations import unauthenticated_user, allowed_users, host_only
+from .decorations import allowed_users, host_only
 from .filters import EventFilter
-from .forms import EventForm, CreateUserForm, EventRegistrationForm, UpdateInformationUserForm, \
+from .forms import EventForm, EventRegistrationForm, UpdateInformationUserForm, \
     UpdateInformationVisitorForm, UpdateInformationHostForm
 from .models import Visitor, Event, Host, Notification, NotificationUser
+
+
+def get_visitors(visitor_id=None, user=None):
+    if visitor_id is None and user is not None:
+        visitor = Visitor.objects.get(user=user)
+    else:
+        visitor = Visitor.objects.get(id=visitor_id)
+    return visitor
 
 
 # Any one can view this below page.
@@ -30,91 +37,7 @@ def homepage(request):
     return render(request, 'eve_holder/homepage.html', context)
 
 
-@unauthenticated_user
-def register_page(request):
-    """Register account for both visitor_registered_events and host.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-
-    Returns:
-        render: Render the register page with the context.
-    """
-    form = CreateUserForm()
-    if request.method == 'POST':
-        # fill the form with information from POST data
-        # which Main model is User
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            # get the cleaned data from the form for creating Visitor and Host objects
-            username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
-            phone_num = request.POST.get('phone_number')
-            group_name = request.POST.get('type')
-
-            # add group to User [Host, Visitor]
-            group = Group.objects.get(name=group_name)
-            user.groups.add(group)
-
-            login(request, user)
-
-            if group_name == 'Visitor':
-                Visitor.objects.create(user=user, name=username, email=email, phone_num=phone_num)
-                return redirect('eve_holder:visitor_registered_events')
-            elif group_name == 'Host':
-                Host.objects.create(user=user, name=username, email=email)
-                return redirect('eve_holder:host')
-
-    context = {'form': form}
-
-    return render(request, 'eve_holder/accounts/register.html', context)
-
-
 # about login logout and register
-@unauthenticated_user
-def login_page(request):
-    """Login for both visitor_registered_events and host.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-
-    Returns:
-        render: Render the login page with the context.
-    """
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        # check if the user is valid (if there is no user with this username & password return None)
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            group = request.user.groups.all()[0].name
-            if group == 'Host':
-                return redirect('eve_holder:host')
-            elif group == 'Visitor':
-                return redirect('eve_holder:visitor_registered_events')
-        else:
-            messages.info(request, 'Username or Password is incorrect')
-
-    context = {}
-
-    return render(request, 'eve_holder/accounts/login.html', context)
-
-
-def logout_page(request):
-    """Logged out for both visitor_registered_events and host.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-
-    Returns:
-        render: Render the logout page with the context.
-    """
-    logout(request)
-
-    return redirect('eve_holder:homepage')
 
 
 @login_required(login_url='eve_holder:login')
@@ -143,9 +66,9 @@ def host(request):
                }
 
     return render(request, 'eve_holder/hosts/host.html', context)
-
-
 # for host
+
+
 @login_required(login_url='eve_holder:login')
 @allowed_users(allowed_roles=['Visitor'])
 def visitor_registered_events(request):
@@ -290,16 +213,16 @@ def edit_event(request, pk):
             # create string text for the notification
             text = f"Event Edited: {events_list}"
 
-            # if there is notification with the same text (same name for event) delete the previous one
-            # this is the part that create the bug that you change the event name and old notification doesn't get delete
-            # because the text is base on current event name.
+            # if there is notification with the same text (same name for event) delete the previous one this is the
+            # part that create the bug that you change the event name and old notification doesn't get delete because
+            # the text is base on current event name.
             if Notification.objects.filter(text=text).exists():
                 notify = Notification.objects.get(text=text, level='info')
                 notify.delete()
             # create new notification object
             notify = Notification.objects.create(text=text, level='info')
 
-            # add each person to the ManytoMany relationship one-by-one
+            # add each person to the Many to Many relationship one-by-one
             for person in visitors_list:
                 notify.visitor.add(person)
 
@@ -342,7 +265,7 @@ def delete_event(request, pk):
         # create new notification with level 'warning'
         notify = Notification.objects.create(text=del_text, level='warning')
 
-        # add each person to the ManytoMany relationship one-by-one
+        # add each person to the Many to Many relationship one-by-one
         for person in visitors_list:
             notify.visitor.add(person)
 
@@ -388,7 +311,7 @@ def event_register(request, pk_event):
         render: Render the event_registration page with the context.
     """
     # get visitor by checking user
-    visitor = Visitor.objects.get(user=request.user)
+    visitor = get_visitors(user=request.user)
     form = EventRegistrationForm(instance=visitor)
     event = Event.objects.get(id=pk_event)
     if request.method == 'POST':
@@ -416,7 +339,7 @@ def cancel_event(request, pk_event):
 
     """
     # get visitor by checking user
-    visitor = Visitor.objects.get(user=request.user)
+    visitor = get_visitors(user=request.user)
     my_event = Event.objects.get(id=pk_event)
     if request.method == 'POST':
         visitor.event.remove(my_event)
@@ -440,7 +363,7 @@ def visitor_update_information(request):
     """
     # get visitor by checking user
     user = request.user
-    visitor = Visitor.objects.get(user=user)
+    visitor = get_visitors(user=user)
     visitor_form = UpdateInformationVisitorForm(instance=visitor)
     user_form = UpdateInformationUserForm(instance=user)
     if request.method == 'POST':
@@ -467,14 +390,14 @@ def host_update_information(request):
     """
     # get host by checking user
     user = request.user
-    get_first_host_name = Host.objects.get(user=user)
+    get_first_host = Host.objects.get(user=user)
 
-    host_form = UpdateInformationHostForm(instance=get_first_host_name)
+    host_form = UpdateInformationHostForm(instance=get_first_host)
     user_form = UpdateInformationUserForm(instance=user)
     if request.method == 'POST':
         user_form = UpdateInformationUserForm(request.POST, instance=user)
         user_form.save()
-        host_form = UpdateInformationHostForm(request.POST, instance=get_first_host_name)
+        host_form = UpdateInformationHostForm(request.POST, instance=get_first_host)
         host_form.save()
         return redirect('eve_holder:host')
     context = {'user_form': user_form, 'host_form': host_form}
@@ -516,13 +439,13 @@ def my_account(request):
     if user.groups.filter(name='Visitor').exists():
         # get visitor by visitor's id from user
         visitor_id = request.user.visitor.id
-        get_visitor = Visitor.objects.get(id=visitor_id)
+        visitor = get_visitors(visitor_id)
 
-        events_list = get_visitor.event.all()
+        events_list = visitor.event.all()
         events_count = events_list.count()
-        notify = Notification.objects.filter(visitor=get_visitor)
+        notify = Notification.objects.filter(visitor=visitor)
         context = {
-            'visitor_registered_events': get_visitor,
+            'visitor_registered_events': visitor,
             'events_count': events_count,
             'notifications': notify,
         }
@@ -577,7 +500,7 @@ def close_notification(request, pk):
     """
     notification = Notification.objects.get(id=pk)
     # get visitor object from user
-    visitor = Visitor.objects.get(user=request.user)
+    visitor = get_visitors(user=request.user)
     # get the correct NotificationUser (the middle-man connect between Notification and Visitor) and delete
     notify = NotificationUser.objects.get(notification=notification, visitor=visitor)
     notify.delete()
