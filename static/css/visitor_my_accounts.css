@@ -33,13 +33,14 @@ img {
 }
 
 .row {
-    margin: 25% auto auto;
+    margin: 25% 10% 10% 5%;
     width: 640px;
     border-radius: 30px;
+    align: center;
 }
 
 .card-body {
-    margin: auto;
+    margin: 10% 10% 5% 10%;
     align-content: center;
 }
 

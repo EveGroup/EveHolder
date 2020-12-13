@@ -59,30 +59,30 @@ body {
     color: black;
 }
 
-.regform {
+.regform-create {
     width: 580px;
-    background-image: linear-gradient(60deg, #fff6dd, antiquewhite);
+    background-image: linear-gradient(60deg, #3a5a8f, #1f376a);
     border-radius: 10px 10px 0 0;
-    color: #031b88;
+    color: #ffffff;
     padding: 10px 0 10px 0;
     text-align: center;
     margin: -8px auto auto;
     height: 42px;
     top: 10px;
 }
-.main {
+.main-create {
     width: 580px;
-    height: 480px;
+    height: 530px;
     border-radius: 0 0 10px 10px;
-    background-color: #fff9ee;
+    background-image: linear-gradient(60deg, #1f376a, #3a5a8f);
     box-shadow: antiquewhite;
     display: flex;
     margin: auto;
     padding: 10px 10px 10px 10px;
 }
 
-.namecol {
-    color: #031b88;
+.create-label {
+    color: #ffffff;
     font-size: 15px;
     font-weight: bold;
 }
@@ -102,7 +102,7 @@ body {
 }
 
 .namesm {
-    color: #031b88;
+    color: #ffffff;
     font-size: 12px;
     margin-left: 10px;
 }
@@ -110,11 +110,12 @@ body {
 .btn1 {
     border: none;
     outline: none;
-    height: 26px;
+    height: 31px;
     width: 420px;
+    font-size: 14px;
     background-image: linear-gradient(120deg, #f0d4d0, #9adfff);
     font-weight: bold;
-    margin: 20% 0 0 10%;
+    margin: 30% 0 0 10%;
     border-radius: 20px;
     align-self: center;
     color: darkblue;
@@ -125,6 +126,8 @@ body {
     border: 1px solid;
     color: white;
 }
+
+/*Join event style */
 
 .container-join{
     height: 87vh;
@@ -209,4 +212,52 @@ body {
     /*margin-top: -17px;*/
     margin-bottom: 0px;
     bottom: -10px;
+}
+
+/* update account style */
+
+#update-header{
+    width: 580px;
+    background-image: linear-gradient(180deg,#0b153d, #20396d);
+    border-radius: 3px 3px 0 0;
+    color: #ffffff;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    margin: -8px auto auto;
+    height: 42px;
+    top: 10px;
+}
+
+#update-main {
+    width: 580px;
+    height: 480px;
+    border-radius: 0px 0px 3px 3px;
+    background-image: linear-gradient(180deg, #294b7e, #0b153d);
+    box-shadow: antiquewhite;
+    display: flex;
+    margin: auto;
+    padding: 10px 10px 10px 10px;
+    color: #ffffff
+}
+
+.btn-update {
+    border: none;
+    outline: none;
+    height: 26px;
+    width: 420px;
+    background-image: linear-gradient(120deg, #9adfff, #ffffff);
+    font-weight: bold;
+    margin: 20% 0 0 10%;
+    border-radius: 20px;
+    align-self: center;
+    color: darkblue;
+}
+
+.btn-update:hover {
+    background-image: linear-gradient(45deg, #ffffff, #9adfff);
+    border: 1px solid;
+}
+
+.update-label {
+    margin-top: 9px;
 }

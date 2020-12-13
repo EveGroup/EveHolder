@@ -232,7 +232,9 @@ def create_event(request):
     get_host = Host.objects.get(id=host_id)
     form = EventForm()
     if request.method == 'POST':
-        form = EventForm(request.POST)
+        form = EventForm(request.POST, request.FILES)
+        print("error")
+        print(form.errors)
         if form.is_valid():
             form.save()
             event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
@@ -410,9 +412,13 @@ def visitor_update_information(request):
     if request.method == 'POST':
         user_form = UpdateInformationUserForm(request.POST, instance=user)
         user_form.save()
-        visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
-        visitor_form.save()
-        return redirect('eve_holder:visitor_registered_events')
+        visitor_form = UpdateInformationVisitorForm(request.POST, request.FILES, instance=visitor)
+        print("error")
+        print(visitor_form.errors)
+        if visitor_form.is_valid():
+            visitor_form.save()
+            return redirect('eve_holder:my_account')
+
     context = {'user_form': user_form, 'visitor_form': visitor_form}
     return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
 
@@ -438,7 +444,7 @@ def host_update_information(request):
         user_form.save()
         host_form = UpdateInformationHostForm(request.POST, instance=get_first_host_name)
         host_form.save()
-        return redirect('eve_holder:host')
+        return redirect('eve_holder:my_account')
     context = {'user_form': user_form, 'host_form': host_form}
     return render(request, 'eve_holder/hosts/host_update_information.html', context)
 
@@ -481,7 +487,7 @@ def my_account(request):
         events_count = events_list.count()
         notify = Notification.objects.filter(visitor=get_visitor)
         context = {
-            'visitor_registered_events': get_visitor,
+            'visitor': get_visitor,
             'events_count': events_count,
             'notifications': notify,
         }
