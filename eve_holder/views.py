@@ -413,8 +413,6 @@ def visitor_update_information(request):
         user_form = UpdateInformationUserForm(request.POST, instance=user)
         user_form.save()
         visitor_form = UpdateInformationVisitorForm(request.POST, request.FILES, instance=visitor)
-        print("error")
-        print(visitor_form.errors)
         if visitor_form.is_valid():
             visitor_form.save()
             return redirect('eve_holder:my_account')
