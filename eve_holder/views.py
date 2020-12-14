@@ -386,7 +386,7 @@ def cancel_event(request, pk_event):
     my_event = Event.objects.get(id=pk_event)
     if request.method == 'POST':
         visitor.event.remove(my_event)
-        messages.success(request, "Event Cancel Successfully")
+        # messages.success(request, "Event Cancel Successfully")
         return redirect('eve_holder:visitor_registered_events')
     event = Event.objects.get(id=pk_event)
     text = 'Are you sure you want to cancel " '+event.event_name+'" ?'
@@ -419,7 +419,7 @@ def visitor_update_information(request):
             return redirect('eve_holder:my_account')
 
     context = {'user_form': user_form, 'form': visitor_form}
-    return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
+    return render(request, 'eve_holder/update_information.html', context)
 
 
 @login_required(login_url='login')
@@ -447,7 +447,7 @@ def host_update_information(request):
             return redirect('eve_holder:my_account')
             
     context = {'user_form': user_form, 'form': host_form}
-    return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
+    return render(request, 'eve_holder/update_information.html', context)
 
 
 @login_required(login_url='login')
