@@ -272,10 +272,10 @@ def edit_event(request, pk):
         form = EventForm(request.POST, instance=events_list)
         if form.is_valid():
             text = f"Event Edited: {events_list}"
-            if Notification.objects.filter(text=text).exists():
-                notify = Notification.objects.get(text=text, level='info')
+            if Notification.objects.filter(event=events_list).exists():
+                notify = Notification.objects.get(event=events_list)
                 notify.delete()
-            notify = Notification.objects.create(text=text, level='info')
+            notify = Notification.objects.create(text=text, level='info', event=events_list)
             for person in visitors_list:
                 notify.visitor.add(person)
             notify.save()
@@ -303,15 +303,13 @@ def delete_event(request, pk):
     events_list = Event.objects.get(id=pk)
     visitors_list = Visitor.objects.filter(event=events_list)
     del_text = f"Event Deleted: {events_list}"
-    edit_text = f"Event Edited: {events_list}"
     if request.user.groups.all()[0].name == 'Host':
-        if Notification.objects.filter(text=edit_text).exists():
-            notify = Notification.objects.get(text=edit_text, level='info')
+        if Notification.objects.filter(event=events_list).exists():
+            notify = Notification.objects.get(level='info', event=events_list)
             notify.delete()
         notify = Notification.objects.create(text=del_text, level='warning')
         for person in visitors_list:
             notify.visitor.add(person)
-        messages.success(request, del_text)
         events_list.delete()
         notify.save()
     return redirect('eve_holder:host')
@@ -384,7 +382,6 @@ def cancel_event(request, pk_event):
     my_event = Event.objects.get(id=pk_event)
     if request.method == 'POST':
         visitor.event.remove(my_event)
-        messages.success(request, "Event Cancel Successfully")
         return redirect('eve_holder:visitor_registered_events')
     events_list = Event.objects.get(id=pk_event)
     context = {'item': events_list}
@@ -460,7 +457,6 @@ def delete_account(request):
     context = {'previous_page': previous_page}
     if request.method == 'POST':
         user = User.objects.get(id=user.id)
-        messages.success(request, f"Account Deleted ({user.username})")
         if user.groups.filter(name='Host').exists():
             host = Host.objects.get(user=user)
             host_events = host.event_set.all()

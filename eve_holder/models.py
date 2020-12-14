@@ -133,6 +133,7 @@ class Notification(models.Model):
     text = models.TextField(max_length=75, null=True)
     level = models.TextField(max_length=150, null=True)
     visitor = models.ManyToManyField(Visitor, through='NotificationUser')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         """Return Notification's text"""
