@@ -195,7 +195,7 @@ def visitors_list(request, pk):
     event = Event.objects.get(id=pk)
     list_visitors = Visitor.objects.filter(event=event).order_by('name')
     visitors_count = list_visitors.count()
-    context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count':visitors_count}
+    context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count': visitors_count}
     return render(request, 'eve_holder/visitors/visitors_list.html', context)
 
 
@@ -276,7 +276,7 @@ def edit_event(request, pk):
             return redirect('eve_holder:host')
 
     btn = "Edit"
-    context = {'form': form, 'btn':btn}
+    context = {'form': form, 'btn': btn}
 
     return render(request, 'eve_holder/hosts/create_event.html', context)
 
@@ -505,8 +505,7 @@ def search_event(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Visitor'])
 def close_notification(request, pk):
-    """Close the specified notification for the user, if that notification is
-    the last one delete the notification object.
+    """Close the specified notification for the user.
 
     Arguments:
         pk: the primary keys of the notification objects
@@ -524,16 +523,16 @@ def close_notification(request, pk):
     return redirect('eve_holder:my_account')
 
 def create_notification(event: Event, visitors_list, level: str):
-    """Find the specified notification from the event if found delete it.
-    
+    """Create new notification for event and add visitor in notification.
+
     Arguments:
         event: Event object to filter the notification
         visitors_list: Visitor objects as queryset to add in notification
-        level: "info" - for edited event, "warning" - for deleted event
+        level: string indicated the level of message ["info", "warning"]
 
     Exceptions:
         ValueError: raise when get unknown level of notification as arguments
-    
+
     """
     if Notification.objects.filter(event=event).exists():
         notify = Notification.objects.get(level='info', event=event)
