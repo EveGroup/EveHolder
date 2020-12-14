@@ -528,6 +528,11 @@ def create_notification(event: Event, visitors_list, level: str):
     
     Arguments:
         event: Event object to filter the notification
+        visitors_list: Visitor objects as queryset to add in notification
+        level: "info" - for edited event, "warning" - for deleted event
+
+    Exceptions:
+        ValueError: raise when get unknown level of notification as arguments
     
     """
     if Notification.objects.filter(event=event).exists():
@@ -535,15 +540,12 @@ def create_notification(event: Event, visitors_list, level: str):
         notify.delete()
 
     if level == 'info':
-        print("info level")
         notify = Notification.objects.create(text=f"Event Edited: {event}", level='info', event=event)
     elif level == 'warning':
-        print("warning level")
         notify = Notification.objects.create(text=f"Event Deleted: {event}", level='warning')
     else:
         raise ValueError("Unknown level of notifications")
 
     for person in visitors_list:
-        print(f"{person} added")
         notify.visitor.add(person)
     notify.save()
