@@ -41,12 +41,15 @@ def register_page(request):
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
+        print(form.is_valid())
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             phone_num = request.POST.get('phone_number')
             group_name = request.POST.get('type')
+
+            print(group_name)
 
             group = Group.objects.get(name=group_name)
             user.groups.add(group)
@@ -417,7 +420,7 @@ def visitor_update_information(request):
             visitor_form.save()
             return redirect('eve_holder:my_account')
 
-    context = {'user_form': user_form, 'visitor_form': visitor_form}
+    context = {'user_form': user_form, 'form': visitor_form}
     return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
 
 
@@ -440,11 +443,13 @@ def host_update_information(request):
     if request.method == 'POST':
         user_form = UpdateInformationUserForm(request.POST, instance=user)
         user_form.save()
-        host_form = UpdateInformationHostForm(request.POST, instance=get_first_host_name)
-        host_form.save()
-        return redirect('eve_holder:my_account')
-    context = {'user_form': user_form, 'host_form': host_form}
-    return render(request, 'eve_holder/hosts/host_update_information.html', context)
+        host_form = UpdateInformationHostForm(request.POST, request.FILES, instance=get_first_host_name)
+        if host_form.is_valid():
+            host_form.save()
+            return redirect('eve_holder:my_account')
+            
+    context = {'user_form': user_form, 'form': host_form}
+    return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
 
 
 @login_required(login_url='login')
