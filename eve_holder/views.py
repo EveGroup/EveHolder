@@ -195,7 +195,7 @@ def visitors_list(request, pk):
     event = Event.objects.get(id=pk)
     list_visitors = Visitor.objects.filter(event=event).order_by('name')
     visitors_count = list_visitors.count()
-    context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count':visitors_count}
+    context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count': visitors_count}
     return render(request, 'eve_holder/visitors/visitors_list.html', context)
 
 
@@ -388,9 +388,10 @@ def cancel_event(request, pk_event):
         visitor.event.remove(my_event)
         messages.success(request, "Event Cancel Successfully")
         return redirect('eve_holder:visitor_registered_events')
-    events_list = Event.objects.get(id=pk_event)
-    context = {'item': events_list}
-    return render(request, 'eve_holder/events/event_cancel.html', context)
+    event = Event.objects.get(id=pk_event)
+    text = 'Are you sure you want to cancel " '+event.event_name+'" ?'
+    context = {'text': text}
+    return render(request, 'eve_holder/delete_account.html', context)
 
 
 @login_required(login_url='login')
@@ -463,16 +464,18 @@ def delete_account(request):
     """
     user = request.user
     previous_page = request.META['HTTP_REFERER']
-    context = {'previous_page': previous_page}
+    text = "Are you sure you want to delete this account ?"
+    context = {'previous_page': previous_page, 'text': text}
     if request.method == 'POST':
         user = User.objects.get(id=user.id)
-        messages.success(request, f"Account Deleted ({user.username})")
+        # messages.success(request, f"Account Deleted ({user.username})")
         if user.groups.filter(name='Host').exists():
             host = Host.objects.get(user=user)
             host_events = host.event_set.all()
             host_events.delete()
         user.delete()
         return redirect('eve_holder:homepage')
+
     return render(request, 'eve_holder/delete_account.html', context)
 
 
@@ -537,3 +540,5 @@ def close_notification(request, pk):
     if not Visitor.objects.filter(notification=notification).exists():
         notification.delete()
     return redirect('eve_holder:my_account')
+
+

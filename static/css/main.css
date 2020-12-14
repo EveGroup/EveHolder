@@ -265,8 +265,8 @@ body {
 /*Delete account style*/
 
 .container-delete {
-    height: 150px;
-    width: 400px;
+    height: 180px;
+    width: 460px;
     position: absolute;
     top: 40%;
     left: 50%;
