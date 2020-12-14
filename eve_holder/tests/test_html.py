@@ -59,24 +59,17 @@ class HtmlTests(TestCase):
         self.client.login(username='visitor', password='testPassword')
         url = reverse('eve_holder:events')
         response = self.client.get(url)
-        self.assertTemplateUsed(response, 'eve_holder/events/events.html')
+        self.assertTemplateUsed(response, 'eve_holder/visitors/events.html')
 
     def test_render_visitor_join_event_page(self):
         """Should render eve_holder/join_event.html"""
         self.client.login(username='visitor', password='testPassword')
         url = reverse('eve_holder:event_register', args=(self.event1_id,))
         response = self.client.get(url)
-        self.assertTemplateUsed(response, 'eve_holder/join_event.html')
-
-    def test_render_visitor_cancel_event_page(self):
-        """Should render eve_holder/events/event_cancel.html"""
-        self.client.login(username='visitor', password='testPassword')
-        url = reverse('eve_holder:event_cancel', args=(self.event1_id,))
-        response = self.client.get(url)
-        self.assertTemplateUsed(response, 'eve_holder/events/event_cancel.html')
+        self.assertTemplateUsed(response, 'eve_holder/visitors/join_event.html')
 
     # test render for host
-    def test_render_host_myaccount_page(self):
+    def test_render_host_my_account_page(self):
         """Should render eve_holder/hosts/host_my_account.html."""
         self.client.login(username='host', password='testPassword')
         url = reverse('eve_holder:my_account')
@@ -89,13 +82,6 @@ class HtmlTests(TestCase):
         url = reverse('eve_holder:host')
         response = self.client.get(url)
         self.assertTemplateUsed(response, 'eve_holder/hosts/host.html')
-
-    def test_render_host_update_information(self):
-        """Should render eve_holder/hosts/host_update_information.html."""
-        self.client.login(username='host', password='testPassword')
-        url = reverse('eve_holder:host_update_information')
-        response = self.client.get(url)
-        self.assertTemplateUsed(response, 'eve_holder/hosts/host_update_information.html')
 
     def test_render_create_event(self):
         """Should render eve_holder/hosts/create_event.html."""
@@ -123,7 +109,7 @@ class HtmlTests(TestCase):
         self.client.login(username='host', password='testPassword')
         url = reverse('eve_holder:visitors_list', args=(self.event1_id,))
         response = self.client.get(url)
-        self.assertTemplateUsed(response, 'eve_holder/visitors/visitors_list.html')
+        self.assertTemplateUsed(response, 'eve_holder/hosts/visitors_list.html')
 
     # render for both host and visitor
     def test_render_event_detail(self):
@@ -138,7 +124,7 @@ class HtmlTests(TestCase):
         self.client.login(username='visitor', password='testPassword')
         url = reverse('eve_holder:event_detail', args=(event.pk,))
         response = self.client.get(url)
-        self.assertTemplateUsed(response, 'eve_holder/events/event_detail.html')
+        self.assertTemplateUsed(response, 'eve_holder/host_and_visitor/event_detail.html')
 
     def test_render_delete_account(self):
         """Should redirect to homepage."""
