@@ -3,17 +3,19 @@
 {% block content %}
     <body>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card card-body">
+    <div class="row container-delete">
+{#        <div style="align-self: center">#}
+{#            <div class="card card-body">#}
                 <form action="">
                     {% csrf_token %}
-                    <p>Are you sure you want to delete this account ?</p>
-                    <input class="btn btn-danger" formmethod="post" type="submit" value="Yes">
-                    <a href="{{ previous_page }}" type="submit" class="btn btn-warning">No</a>
+                    <div class="text">
+                        <p>Are you sure you want to delete this account ?</p>
+                        <input class="btn btn-danger" formmethod="post" type="submit" value="Yes">
+                        <a href="{{ previous_page }}" type="submit" class="btn btn-warning">No</a>
+                    </div>
                 </form>
-            </div>
-        </div>
+{#            </div>#}
+{#        </div>#}
     </div>
 
     </body>

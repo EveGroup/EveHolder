@@ -129,7 +129,7 @@ body {
 
 /*Join event style */
 
-.container-join{
+.container-join {
     height: 87vh;
     width: 37vw;
     position: absolute;
@@ -140,7 +140,7 @@ body {
     background-color: white;
 }
 
-.top img{
+.top img {
     height: 29vh;
     width: 37vw;
     border-radius: 10px 10px 0 0;
@@ -260,4 +260,21 @@ body {
 
 .update-label {
     margin-top: 9px;
+}
+
+/*Delete account style*/
+
+.container-delete {
+    height: 150px;
+    width: 400px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    border-radius: 3px;
+    transform: translate(-50%, -50%);
+    background-color: white;
+}
+
+.text {
+    margin: 10%;
 }

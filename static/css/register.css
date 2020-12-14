@@ -58,17 +58,17 @@ body {
     padding: 5px;
 }
 
-.btn-login {
+.btn-register {
     border: none;
     outline: none;
-    height: 26px;
+    height: 30px;
     width: 400px;
     color: #ffffff;
     background-image: linear-gradient(120deg, #031b88, #2c6ed5);
     font-weight: bold;
     font-size: 14px;
     margin: auto;
-    margin-left: 35%;
+    margin-left: 12%;
     border-radius: 20px;
 }
 

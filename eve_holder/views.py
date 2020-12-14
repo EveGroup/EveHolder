@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from .decorations import unauthenticated_user, allowed_users, host_only
 from .filters import EventFilter
 from .forms import EventForm, CreateUserForm, EventRegistrationForm, UpdateInformationUserForm, \
-    UpdateInformationVisitorForm, UpdateInformationHostForm
+    UpdateInformationVisitorForm, UpdateInformationHostForm, RegisterForm
 from .models import Visitor, Event, Host, Notification, NotificationUser
 
 
@@ -41,15 +41,12 @@ def register_page(request):
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
-        print(form.is_valid())
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             phone_num = request.POST.get('phone_number')
             group_name = request.POST.get('type')
-
-            print(group_name)
 
             group = Group.objects.get(name=group_name)
             user.groups.add(group)

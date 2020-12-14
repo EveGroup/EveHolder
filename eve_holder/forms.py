@@ -70,42 +70,52 @@ class EventForm(ModelForm):
                   'end_date', 'event_image']
 
 
+class RegisterForm(forms.Form):
+    profile_pic = forms.ImageField()
+
+
 class CreateUserForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Enter username...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 300px'
     }), label="Username: ")
     email = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "email",
         "placeholder": "Enter email...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 300px'
     }), label="Email: ")
     first_name = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Enter First name...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 140px'
     }), label="First name: ")
     last_name = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Enter Last name...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 140px'
     }), label="Last name: ")
     password1 = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "password",
         "placeholder": "Enter Password...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 300px'
     }), label="Password: ")
     password2 = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "password",
         "placeholder": "Confirm Password...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 300px'
     }), label="Password confirm: ")
 
     class Meta:
@@ -117,6 +127,7 @@ class EventRegistrationForm(ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
+        "placeholder": "Username...",
         'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px; margin-left: 2.3%;'
                  'border: none; border-radius: 5px; color: #031b88; text-align: center; height: 30px; '
                  'width: 450px; background-color: rgba(173,186,211,0.4)'
@@ -125,6 +136,7 @@ class EventRegistrationForm(ModelForm):
     email = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "email",
+        "placeholder": "Email...",
         'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px; margin-left: 2.3%;'
                  'border: none; border-radius: 5px; color: #031b88; text-align: center; height: 30px; '
                  'width: 450px; background-color: rgba(173,186,211,0.4)'
@@ -133,6 +145,7 @@ class EventRegistrationForm(ModelForm):
     phone_num = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
+        "placeholder": "Phone number...",
         'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px; margin-left: 2.3%;'
                  'border: none; border-radius: 5px; color: #031b88; text-align: center; height: 30px; '
                  'width: 450px; top: -10px; background-color: rgba(173,186,211,0.4)'

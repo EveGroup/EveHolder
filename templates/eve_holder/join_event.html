@@ -19,11 +19,12 @@
             </div>
             <img src="{% static "images/join_event.jpg" %}">
         </div>
-        <div class="bottom">
+        <div class="bottom scroll">
             <div class="login-element">
                 <form method="POST" action="">
                     {% csrf_token %}
-                    <h3>Join {{ event.event_name }}</h3>
+                    <div class="col-sm-12" style="align-items: center"><h3>{{ event.event_name }}</h3></div>
+
                         <label class="join-label col-sm-6">Username</label>
                         {{ form.name }}
                         <label class="join-label col-sm-6">Email</label>
