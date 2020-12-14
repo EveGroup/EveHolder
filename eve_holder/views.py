@@ -125,35 +125,7 @@ def logout_page(request):
     return redirect('eve_holder:homepage')
 
 
-@login_required(login_url='eve_holder:login')
-@host_only
-def host(request):
-    """Host dashboard.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-
-    Returns:
-        render: Render the host page with the context.
-    """
-    # get the host_id to search for the host (this part could create as function to get the host)
-    host_id = request.user.host.id
-    get_host = Host.objects.get(id=host_id)
-
-    events_list = request.user.host.event_set.all().order_by('-pub_date')
-    events_count = events_list.count()
-
-    my_filter = EventFilter(request.GET, queryset=events_list)
-    events_list = my_filter.qs
-
-    context = {'host': get_host, 'events': events_list,
-               'events_count': events_count, 'my_filter': my_filter
-               }
-
-    return render(request, 'eve_holder/hosts/host.html', context)
-
-
-# for host
+# for Visitor
 @login_required(login_url='eve_holder:login')
 @allowed_users(allowed_roles=['Visitor'])
 def visitor_registered_events(request):
@@ -182,40 +154,31 @@ def visitor_registered_events(request):
     return render(request, 'eve_holder/visitors/visitor_registered_events.html', context)
 
 
-@login_required(login_url='eve_holder:login')
-@host_only
-def visitor_information(request, pk):
-    """Host view visitor that register event information.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Visitor'])
+def visitor_update_information(request):
+    """Update the visitor's information.
 
     Args:
         request: A HttpRequest object, which contains data about the request.
-        pk: visitor's id.
 
     Returns:
-        render: Render the visitor information page with the context.
+        render: Render the update information page with the context.
+
     """
-    visitor = Visitor.objects.get(id=pk)
-
-    return render(request, 'eve_holder/visitors/visitor_info.html', {'visitor': visitor})
-
-
-@login_required(login_url='eve_holder:login')
-@host_only
-def visitors_list(request, pk):
-    """All visitor that register in that event.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-        pk: visitor's id.
-
-    Returns:
-        render: Render the visitor_registered_events list page with the context.
-    """
-    event = Event.objects.get(id=pk)
-    list_visitors = Visitor.objects.filter(event=event).order_by('name')
-    visitors_count = list_visitors.count()
-    context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count': visitors_count}
-    return render(request, 'eve_holder/visitors/visitors_list.html', context)
+    # get visitor by checking user
+    user = request.user
+    visitor = get_visitors(user=user)
+    visitor_form = UpdateInformationVisitorForm(instance=visitor)
+    user_form = UpdateInformationUserForm(instance=user)
+    if request.method == 'POST':
+        user_form = UpdateInformationUserForm(request.POST, instance=user)
+        user_form.save()
+        visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
+        visitor_form.save()
+        return redirect('eve_holder:visitor_registered_events')
+    context = {'user_form': user_form, 'visitor_form': visitor_form}
+    return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
 
 
 @login_required(login_url='eve_holder:login')
@@ -238,6 +201,140 @@ def events(request):
     return render(request, 'eve_holder/events/events.html', {'events': events_list})
 
 
+@login_required(login_url='eve_holder:login')
+@allowed_users(allowed_roles=['Visitor'])
+def event_register(request, pk_event):
+    """For visitor register event.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk_event: event's id
+
+    Returns:
+        render: Render the event_registration page with the context.
+    """
+    # get visitor by checking user
+    visitor = get_visitors(user=request.user)
+    form = EventRegistrationForm(instance=visitor)
+    event = Event.objects.get(id=pk_event)
+    if request.method == 'POST':
+        form = EventRegistrationForm(request.POST, instance=visitor)
+        if form.is_valid():
+            visitor.event.add(event)
+            form.save()
+            return redirect('eve_holder:visitor_registered_events')
+
+    context = {'form': form, 'event': event}
+    return render(request, 'eve_holder/join_event.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Visitor'])
+def cancel_event(request, pk_event):
+    """For cancel the event use with visitor's accounts.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk_event: event's id.
+
+    Returns:
+        render: Render the cancel event page with the context.
+
+    """
+    # get visitor by checking user
+    visitor = get_visitors(user=request.user)
+    my_event = Event.objects.get(id=pk_event)
+    if request.method == 'POST':
+        visitor.event.remove(my_event)
+        return redirect('eve_holder:visitor_registered_events')
+    events_list = Event.objects.get(id=pk_event)
+    context = {'item': events_list}
+    return render(request, 'eve_holder/events/event_cancel.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Visitor'])
+def close_notification(request, pk):
+    """Close the specific notification.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk: primary key of the notification object.
+
+    Returns:
+        redirect: Redirect to my_account page.
+    """
+    notification = Notification.objects.get(id=pk)
+    # get visitor object from user
+    visitor = get_visitors(user=request.user)
+    # get the correct NotificationUser (the middle-man connect between Notification and Visitor) and delete
+    notify = NotificationUser.objects.get(notification=notification, visitor=visitor)
+    notify.delete()
+    notification.visitor.remove(visitor)
+    # check if the notification still have visitor to notify if not delete the notification object
+    if not Visitor.objects.filter(notification=notification).exists():
+        notification.delete()
+    return redirect('eve_holder:my_account')
+
+
+# for host
+@login_required(login_url='eve_holder:login')
+@host_only
+def host(request):
+    """Host dashboard.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the host page with the context.
+    """
+    # get the host_id to search for the host (this part could create as function to get the host)
+    host_id = request.user.host.id
+    get_host = Host.objects.get(id=host_id)
+
+    events_list = request.user.host.event_set.all().order_by('-pub_date')
+    events_count = events_list.count()
+
+    my_filter = EventFilter(request.GET, queryset=events_list)
+    events_list = my_filter.qs
+
+    context = {'host': get_host, 'events': events_list,
+               'events_count': events_count, 'my_filter': my_filter
+               }
+
+    return render(request, 'eve_holder/hosts/host.html', context)
+
+
+@login_required(login_url='login')
+@host_only
+def host_update_information(request):
+    """Update the host's information.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the update information page with the context.
+
+    """
+    # get host by checking user
+    user = request.user
+    get_first_host = Host.objects.get(user=user)
+
+    host_form = UpdateInformationHostForm(instance=get_first_host)
+    user_form = UpdateInformationUserForm(instance=user)
+    if request.method == 'POST':
+        user_form = UpdateInformationUserForm(request.POST, instance=user)
+        user_form.save()
+        host_form = UpdateInformationHostForm(request.POST, instance=get_first_host)
+        host_form.save()
+        return redirect('eve_holder:host')
+    context = {'user_form': user_form, 'host_form': host_form}
+    return render(request, 'eve_holder/hosts/host_update_information.html', context)
+
+
+# for host event
 @login_required(login_url='eve_holder:login')
 @host_only
 def create_event(request):
@@ -359,6 +456,44 @@ def delete_event(request, pk):
     return redirect('eve_holder:host')
 
 
+# for visitor registered events in event
+@login_required(login_url='eve_holder:login')
+@host_only
+def visitors_list(request, pk):
+    """All visitor that register in that event.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk: visitor's id.
+
+    Returns:
+        render: Render the visitor_registered_events list page with the context.
+    """
+    event = Event.objects.get(id=pk)
+    list_visitors = Visitor.objects.filter(event=event).order_by('name')
+    visitors_count = list_visitors.count()
+    context = {'event': event, 'visitor_registered_events': list_visitors, 'visitors_count': visitors_count}
+    return render(request, 'eve_holder/visitors/visitors_list.html', context)
+
+
+@login_required(login_url='eve_holder:login')
+@host_only
+def visitor_information(request, pk):
+    """Host view visitor that register event information.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk: visitor's id.
+
+    Returns:
+        render: Render the visitor information page with the context.
+    """
+    visitor = Visitor.objects.get(id=pk)
+
+    return render(request, 'eve_holder/visitors/visitor_info.html', {'visitor': visitor})
+
+
+# for host and visitor
 @login_required(login_url='eve_holder:login')
 @allowed_users(['Host', 'Visitor'])
 def event_detail(request, pk):
@@ -381,112 +516,6 @@ def event_detail(request, pk):
     elif user.groups.filter(name='Host').exists():
         context = {'event': event, 'host_name': get_first_host_name}
         return render(request, 'eve_holder/hosts/host_event_detail.html', context)
-
-
-@login_required(login_url='eve_holder:login')
-@allowed_users(allowed_roles=['Visitor'])
-def event_register(request, pk_event):
-    """For visitor register event.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-        pk_event: event's id
-
-    Returns:
-        render: Render the event_registration page with the context.
-    """
-    # get visitor by checking user
-    visitor = get_visitors(user=request.user)
-    form = EventRegistrationForm(instance=visitor)
-    event = Event.objects.get(id=pk_event)
-    if request.method == 'POST':
-        form = EventRegistrationForm(request.POST, instance=visitor)
-        if form.is_valid():
-            visitor.event.add(event)
-            form.save()
-            return redirect('eve_holder:visitor_registered_events')
-
-    context = {'form': form, 'event': event}
-    return render(request, 'eve_holder/join_event.html', context)
-
-
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['Visitor'])
-def cancel_event(request, pk_event):
-    """For cancel the event use with visitor's accounts.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-        pk_event: event's id.
-
-    Returns:
-        render: Render the cancel event page with the context.
-
-    """
-    # get visitor by checking user
-    visitor = get_visitors(user=request.user)
-    my_event = Event.objects.get(id=pk_event)
-    if request.method == 'POST':
-        visitor.event.remove(my_event)
-        return redirect('eve_holder:visitor_registered_events')
-    events_list = Event.objects.get(id=pk_event)
-    context = {'item': events_list}
-    return render(request, 'eve_holder/events/event_cancel.html', context)
-
-
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['Visitor'])
-def visitor_update_information(request):
-    """Update the visitor's information.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-
-    Returns:
-        render: Render the update information page with the context.
-
-    """
-    # get visitor by checking user
-    user = request.user
-    visitor = get_visitors(user=user)
-    visitor_form = UpdateInformationVisitorForm(instance=visitor)
-    user_form = UpdateInformationUserForm(instance=user)
-    if request.method == 'POST':
-        user_form = UpdateInformationUserForm(request.POST, instance=user)
-        user_form.save()
-        visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
-        visitor_form.save()
-        return redirect('eve_holder:visitor_registered_events')
-    context = {'user_form': user_form, 'visitor_form': visitor_form}
-    return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
-
-
-@login_required(login_url='login')
-@host_only
-def host_update_information(request):
-    """Update the host's information.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-
-    Returns:
-        render: Render the update information page with the context.
-
-    """
-    # get host by checking user
-    user = request.user
-    get_first_host = Host.objects.get(user=user)
-
-    host_form = UpdateInformationHostForm(instance=get_first_host)
-    user_form = UpdateInformationUserForm(instance=user)
-    if request.method == 'POST':
-        user_form = UpdateInformationUserForm(request.POST, instance=user)
-        user_form.save()
-        host_form = UpdateInformationHostForm(request.POST, instance=get_first_host)
-        host_form.save()
-        return redirect('eve_holder:host')
-    context = {'user_form': user_form, 'host_form': host_form}
-    return render(request, 'eve_holder/hosts/host_update_information.html', context)
 
 
 @login_required(login_url='login')
@@ -569,28 +598,3 @@ def search_event(request):
         return render(request, 'eve_holder/search_event.html', context)
     messages.warning(request, "Search field is Empty.")
     return redirect(previous_page)
-
-
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['Visitor'])
-def close_notification(request, pk):
-    """Close the specific notification.
-
-    Args:
-        request: A HttpRequest object, which contains data about the request.
-        pk: primary key of the notification object.
-
-    Returns:
-        redirect: Redirect to my_account page.
-    """
-    notification = Notification.objects.get(id=pk)
-    # get visitor object from user
-    visitor = get_visitors(user=request.user)
-    # get the correct NotificationUser (the middle-man connect between Notification and Visitor) and delete
-    notify = NotificationUser.objects.get(notification=notification, visitor=visitor)
-    notify.delete()
-    notification.visitor.remove(visitor)
-    # check if the notification still have visitor to notify if not delete the notification object
-    if not Visitor.objects.filter(notification=notification).exists():
-        notification.delete()
-    return redirect('eve_holder:my_account')
