@@ -271,14 +271,7 @@ def edit_event(request, pk):
     if request.method == 'POST':
         form = EventForm(request.POST, instance=events_list)
         if form.is_valid():
-            text = f"Event Edited: {events_list}"
-            if Notification.objects.filter(event=events_list).exists():
-                notify = Notification.objects.get(event=events_list)
-                notify.delete()
-            notify = Notification.objects.create(text=text, level='info', event=events_list)
-            for person in visitors_list:
-                notify.visitor.add(person)
-            notify.save()
+            create_notification(events_list, visitors_list, 'info')
             form.save()
             return redirect('eve_holder:host')
 
@@ -302,16 +295,9 @@ def delete_event(request, pk):
     """
     events_list = Event.objects.get(id=pk)
     visitors_list = Visitor.objects.filter(event=events_list)
-    del_text = f"Event Deleted: {events_list}"
     if request.user.groups.all()[0].name == 'Host':
-        if Notification.objects.filter(event=events_list).exists():
-            notify = Notification.objects.get(level='info', event=events_list)
-            notify.delete()
-        notify = Notification.objects.create(text=del_text, level='warning')
-        for person in visitors_list:
-            notify.visitor.add(person)
+        create_notification(events_list, visitors_list, 'warning')
         events_list.delete()
-        notify.save()
     return redirect('eve_holder:host')
 
 
@@ -475,7 +461,7 @@ def my_account(request):
         get_visitor = Visitor.objects.get(id=visitor_id)
         events_list = get_visitor.event.all()
         events_count = events_list.count()
-        notify = Notification.objects.filter(visitor=get_visitor)
+        notify = Notification.objects.filter(visitor=get_visitor).order_by('-created')
         context = {
             'visitor_registered_events': get_visitor,
             'events_count': events_count,
@@ -519,6 +505,15 @@ def search_event(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Visitor'])
 def close_notification(request, pk):
+    """Close the specified notification for the user, if that notification is
+    the last one delete the notification object.
+
+    Arguments:
+        pk: the primary keys of the notification objects
+
+    Returns:
+        redirect: Redirected to my_account
+    """
     notification = Notification.objects.get(id=pk)
     visitor = Visitor.objects.get(user=request.user)
     notify = NotificationUser.objects.get(notification=notification, visitor=visitor)
@@ -527,3 +522,28 @@ def close_notification(request, pk):
     if not Visitor.objects.filter(notification=notification).exists():
         notification.delete()
     return redirect('eve_holder:my_account')
+
+def create_notification(event: Event, visitors_list, level: str):
+    """Find the specified notification from the event if found delete it.
+    
+    Arguments:
+        event: Event object to filter the notification
+    
+    """
+    if Notification.objects.filter(event=event).exists():
+        notify = Notification.objects.get(level='info', event=event)
+        notify.delete()
+
+    if level == 'info':
+        print("info level")
+        notify = Notification.objects.create(text=f"Event Edited: {event}", level='info', event=event)
+    elif level == 'warning':
+        print("warning level")
+        notify = Notification.objects.create(text=f"Event Deleted: {event}", level='warning')
+    else:
+        raise ValueError("Unknown level of notifications")
+
+    for person in visitors_list:
+        print(f"{person} added")
+        notify.visitor.add(person)
+    notify.save()
