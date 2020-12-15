@@ -17,7 +17,7 @@ body {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    box-shadow: 0 0 20px rgb(0, 0, 0, 0.4);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 #table-card {

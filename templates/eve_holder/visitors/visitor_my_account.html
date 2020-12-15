@@ -10,51 +10,49 @@
 {% block content %}
     <div class="row">
         <div class="col-md-2"></div>
-
         <div class="col-md-4">
-            <div class="card card-body"
-                 style="width: fit-content; margin: 3% auto auto;">
-                <img class="profile-pic" src="{{ request.user.visitor.profile_pic.url }}"
+            <div class="card card-body scroll" style="width: fit-content; margin: 3% auto auto;">
+                <img class="profile-pic" src="{{ visitor.profile_pic.url }}"
                      style="width: 350px;height: 180px" alt="visitor_profile_pic">
                 <hr>
                 <div class="row">
-                    <div class="col-sm-3 col-md-4 col-3">
+                    <div class="col-md-6 col-3">
                         <label>Username: </label>
                     </div>
-                    <div class="col-md-8 col-5">
+                    <div class="col-md-6 col-5">
                         {{ user.username }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3 col-md-4 col-3">
+                    <div class="col-md-6 col-3">
                         <label>First Name: </label>
                     </div>
-                    <div class="col-md-8 col-5">
+                    <div class="col-md-6 col-5">
                         {{ user.first_name }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3 col-md-4 col-3">
+                    <div class="col-md-6 col-3">
                         <label>Last Name: </label>
                     </div>
-                    <div class="col-md-8 col-5">
+                    <div class="col-md-6 col-5">
                         {{ user.last_name }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3 col-md-4 col-3">
+                    <div class="col-md-6 col-3">
                         <label>Email: </label>
                     </div>
-                    <div class="col-md-8 col-5">
+                    <div class="col-md-6 col-5">
                         {{ user.email }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3 col-md-4 col-3">
-                        <label>Phone: </label>
+                    <div class="col-md-6 col-3">
+                        <label>Phone number: </label>
                     </div>
-                    <div class="col-md-8 col-5">
-                        {{ visitors.phone_num }}
+                    <div class="col-md-6 col-5">
+                        {{ visitor.phone_num }}
                     </div>
                 </div>
                 <a class="btn btn-outline-info  btn-sm btn-block"
@@ -63,7 +61,7 @@
                     Account</a>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 card card-body" style="height: 465px; top: 12px">
             {% include 'eve_holder/notifications.html' %}
         </div>
         <div class="col-md-2"></div>

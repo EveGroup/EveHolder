@@ -1,0 +1,18 @@
+{% extends 'eve_holder/main.html' %}
+
+{% block content %}
+    <body>
+
+    <div class="container-delete">
+        <form action="">
+            {% csrf_token %}
+            <div class="text">
+                <p>{{ text }}</p>
+                <input class="btn btn-danger" formmethod="post" type="submit" value="Yes">
+                <a href="{{ previous_page }}" type="submit" class="btn btn-warning">No</a>
+            </div>
+        </form>
+    </div>
+
+    </body>
+{% endblock %}

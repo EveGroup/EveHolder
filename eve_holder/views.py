@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from .decorations import unauthenticated_user, allowed_users, host_only
 from .filters import EventFilter
 from .forms import EventForm, CreateUserForm, EventRegistrationForm, UpdateInformationUserForm, \
-    UpdateInformationVisitorForm, UpdateInformationHostForm
+    UpdateInformationVisitorForm, UpdateInformationHostForm, RegisterForm
 from .models import Visitor, Event, Host, Notification, NotificationUser
 
 
@@ -42,6 +42,7 @@ def register_page(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
+            print("hey")
             user = form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
@@ -231,8 +232,18 @@ def create_event(request):
     get_host = Host.objects.get(id=host_id)
     form = EventForm()
     if request.method == 'POST':
-        form = EventForm(request.POST)
+        form = EventForm(request.POST, request.FILES)
+        # pub_date = form.cleaned_data.get('pub_date')
+        # end_date = form.cleaned_data.get('end_date')
+        # event_date = form.cleaned_data.get('event_date')
+        #
+        # if end_date > pub_date:
+        #     messages.info(request, "End date cannot come before publish date.")
+        # elif event_date >= pub_date:
+        #     messages.info(request, "Event date cannot come before publish date.")
+
         if form.is_valid():
+
             form.save()
             event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
 
@@ -241,9 +252,10 @@ def create_event(request):
             elif not event.check_event_date():
                 messages.info(request, "Event date cannot come before publish date.")
             else:
-                # for person in get_host:
-                form.save()
-                event.event_host.add(get_host)
+                for person in get_host:
+                    form.save()
+                    event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
+                    event.event_host.add(get_host)
                 return redirect('eve_holder:host')
 
     btn = "Create"
@@ -368,9 +380,10 @@ def cancel_event(request, pk_event):
     if request.method == 'POST':
         visitor.event.remove(my_event)
         return redirect('eve_holder:visitor_registered_events')
-    events_list = Event.objects.get(id=pk_event)
-    context = {'item': events_list}
-    return render(request, 'eve_holder/events/event_cancel.html', context)
+    event = Event.objects.get(id=pk_event)
+    text = 'Are you sure you want to cancel " '+event.event_name+'" ?'
+    context = {'text': text}
+    return render(request, 'eve_holder/delete_and_cancel.html', context)
 
 
 @login_required(login_url='login')
@@ -392,11 +405,13 @@ def visitor_update_information(request):
     if request.method == 'POST':
         user_form = UpdateInformationUserForm(request.POST, instance=user)
         user_form.save()
-        visitor_form = UpdateInformationVisitorForm(request.POST, instance=visitor)
-        visitor_form.save()
-        return redirect('eve_holder:visitor_registered_events')
-    context = {'user_form': user_form, 'visitor_form': visitor_form}
-    return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
+        visitor_form = UpdateInformationVisitorForm(request.POST, request.FILES, instance=visitor)
+        if visitor_form.is_valid():
+            visitor_form.save()
+            return redirect('eve_holder:my_account')
+
+    context = {'user_form': user_form, 'form': visitor_form}
+    return render(request, 'eve_holder/update_information.html', context)
 
 
 @login_required(login_url='login')
@@ -418,11 +433,13 @@ def host_update_information(request):
     if request.method == 'POST':
         user_form = UpdateInformationUserForm(request.POST, instance=user)
         user_form.save()
-        host_form = UpdateInformationHostForm(request.POST, instance=get_first_host_name)
-        host_form.save()
-        return redirect('eve_holder:host')
-    context = {'user_form': user_form, 'host_form': host_form}
-    return render(request, 'eve_holder/hosts/host_update_information.html', context)
+        host_form = UpdateInformationHostForm(request.POST, request.FILES, instance=get_first_host_name)
+        if host_form.is_valid():
+            host_form.save()
+            return redirect('eve_holder:my_account')
+            
+    context = {'user_form': user_form, 'form': host_form}
+    return render(request, 'eve_holder/update_information.html', context)
 
 
 @login_required(login_url='login')
@@ -439,7 +456,8 @@ def delete_account(request):
     """
     user = request.user
     previous_page = request.META['HTTP_REFERER']
-    context = {'previous_page': previous_page}
+    text = "Are you sure you want to delete this account ?"
+    context = {'previous_page': previous_page, 'text': text}
     if request.method == 'POST':
         user = User.objects.get(id=user.id)
         if user.groups.filter(name='Host').exists():
@@ -448,7 +466,8 @@ def delete_account(request):
             host_events.delete()
         user.delete()
         return redirect('eve_holder:homepage')
-    return render(request, 'eve_holder/delete_account.html', context)
+
+    return render(request, 'eve_holder/delete_and_cancel.html', context)
 
 
 @login_required(login_url='login')
@@ -462,7 +481,7 @@ def my_account(request):
         events_count = events_list.count()
         notify = Notification.objects.filter(visitor=get_visitor).order_by('-created')
         context = {
-            'visitor_registered_events': get_visitor,
+            'visitor': get_visitor,
             'events_count': events_count,
             'notifications': notify,
         }
