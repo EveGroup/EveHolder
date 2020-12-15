@@ -55,7 +55,6 @@ def register_page(request):
         # which Main model is User
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            print("hey")
             user = form.save()
             # get the cleaned data from the form for creating Visitor and Host objects
             username = form.cleaned_data.get('username')
