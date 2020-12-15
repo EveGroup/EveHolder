@@ -91,18 +91,18 @@
                             or <a href="{% url 'eve_holder:homepage' %}">Back to homepage</a>
                         </div>
                     </div>
-                    <div class="form-row col-md-12">
+                    <div class="form-row col-md-12" style="color: white;">
                         {% for message in messages %}
                             <p id="messages">{{ message }}</p>
                         {% endfor %}
+                        {{ form.errors }}
+                        {{ formset.non_field_errors }}
                     </div>
                     <button type="submit" class="btn-register mt-3 mb-3" name="click" style="">Register</button>
                 </div>
             </div>
         </form>
     </div>
-    {{ form.errors }}
-    {{ formset.non_field_errors }}
 </div>
 </body>
 </html>
