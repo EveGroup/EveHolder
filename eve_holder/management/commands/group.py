@@ -16,10 +16,13 @@ class Command(BaseCommand):
     help = 'Add group of Visitor and Host'
 
     def handle(self, *args, **options):
-        host_perm_names = ['Can add event', 'Can change event', 'Can delete event', 'Can view event', 'Can change host',
-                           'Can view visitor']
-        visitor_perm_names = ['Can add event', 'Can change event', 'Can delete event', 'Can view event',
-                              'Can add session', 'Can change session', 'Can delete session', 'Can view session']
+        host_perm_names = ['Can add event', 'Can change event',
+                           'Can delete event', 'Can view event',
+                           'Can change host', 'Can view visitor']
+        visitor_perm_names = ['Can add event', 'Can change event',
+                              'Can delete event', 'Can view event',
+                              'Can add session', 'Can change session',
+                              'Can delete session', 'Can view session']
         host_permissions = [Permission.objects.get(name=name) for name in host_perm_names]
         visitors_permissions = [Permission.objects.get(name=name) for name in visitor_perm_names]
         group_strategy("Host", host_permissions)

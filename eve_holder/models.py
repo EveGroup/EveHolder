@@ -1,5 +1,5 @@
 """This module contain models to set layout for database."""
-from datetime import timedelta, datetime, date
+from datetime import timedelta
 
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
@@ -28,8 +28,8 @@ class Host(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=20, null=True)
     email = models.EmailField(max_length=30, null=True)
-    phone_num = models.CharField(max_length=20, null=True)
-    profile_pic = models.ImageField(default='avatar.jpg', null=True, blank=True)
+    phone_num = models.PositiveIntegerField(null=True)
+    profile_pic = models.ImageField(default='/profiles/avatar.jpg', null=True, blank=True, upload_to='profiles/')
 
     def __str__(self):
         """Display host's name."""
@@ -57,7 +57,7 @@ class Event(models.Model):
     end_date = models.DateField('ending date', null=True)
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
     event_date = models.DateField('event date', null=True)
-    event_image = models.ImageField(null=True, blank=True, default="/event/b1.jpg")
+    event_image = models.ImageField(null=True, blank=True, default="/event/b1.jpg", upload_to='event/')
 
     def check_pub_date(self):
         """Check register period is valid.
@@ -90,7 +90,7 @@ class Event(models.Model):
         Returns:
              bool: true if now was more than end_date.
         """
-        now = timezone.now()
+        now = timezone.now().date()
         return now > self.end_date
 
     def is_full(self, amount):
@@ -118,10 +118,10 @@ class Visitor(models.Model):
     """
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=150, null=True)
-    phone_num = models.CharField(max_length=100, null=True)
+    phone_num = models.PositiveIntegerField(null=True)
     email = models.EmailField(max_length=100, null=True)
     event = models.ManyToManyField(Event, blank=True)
-    profile_pic = models.ImageField(default='avatar.jpg', null=True, blank=True)
+    profile_pic = models.ImageField(default='/profiles/avatar.jpg', null=True, blank=True)
 
     def __str__(self):
         """Display visitor's name."""
@@ -133,6 +133,7 @@ class Notification(models.Model):
     text = models.TextField(max_length=75, null=True)
     level = models.TextField(max_length=150, null=True)
     visitor = models.ManyToManyField(Visitor, through='NotificationUser')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         """Return Notification's text"""

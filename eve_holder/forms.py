@@ -12,14 +12,14 @@ class EventForm(ModelForm):
         "type": "text",
         "placeholder": "Event Name...",
         "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black;"
-                 "border-radius: 0px"
+                 "border-radius: 0px; border-color: #ffffff; color: #ffffff"
     }))
     event_description = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Event description...",
         "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black;"
-                 "border-radius: 0px"
+                 "border-radius: 0px; border-color: #ffffff; color: #ffffff"
     }))
 
     event_location = forms.CharField(widget=forms.TextInput(attrs={
@@ -27,28 +27,28 @@ class EventForm(ModelForm):
         "type": "text",
         "placeholder": "Event Location...",
         "style": "border: none; outline: none; background: none; line-height: 25px; border-bottom: 1px solid black;"
-                 "border-radius: 0px"
+                 "border-radius: 0px; border-color: #ffffff; color: #ffffff"
     }))
 
     pub_date = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "date",
         "style": "line-height: 25px; margin-top: -10px; font-size: 10px; border: none; outline: none; background: none;"
-                 "border-bottom: 1px solid black; border-radius: 0px"
+                 "border-bottom: 1px solid black; border-radius: 0px; border-color: #ffffff; color: #ffffff"
     }))
 
     end_date = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "date",
         "style": "font-size: 10px; line-height: 25px; margin-top: -10px; border: none; outline: none; background:"
-                 "none; border-bottom: 1px solid black; border-radius: 0px"
+                 "none; border-bottom: 1px solid black; border-radius: 0px;border-color: #ffffff; color: #ffffff"
     }))
 
     event_date = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "date",
         "style": "line-height: 25px; margin-top: -10px; border: none; outline: none; background: none;"
-                 "border-bottom: 1px solid black; border-radius: 0px",
+                 "border-bottom: 1px solid black; border-radius: 0px; border-color: #ffffff; color: #ffffff",
     }))
 
     amount_accepted = forms.CharField(widget=forms.TextInput(attrs={
@@ -56,14 +56,22 @@ class EventForm(ModelForm):
         "type": "text",
         "placeholder": "Amount accepted...",
         "style": "line-height: 25px; margin-top: -10px; border: none; outline: none; background: none;"
-                 "border-bottom: 1px solid black; border-radius: 0px"
+                 "border-bottom: 1px solid black; border-radius: 0px; border-color: #ffffff; color: #ffffff"
     }))
+
+    event_image = forms.ClearableFileInput(attrs={
+        'class': 'form-control',
+        'style': 'color: #ffffff'
+    })
 
     class Meta:
         model = Event
         fields = ['event_name', 'event_description', 'event_location', 'amount_accepted', 'pub_date', 'event_date',
-                  'end_date']
-        # exclude = ['event_host']
+                  'end_date', 'event_image']
+
+
+class RegisterForm(forms.Form):
+    profile_pic = forms.ImageField()
 
 
 class CreateUserForm(UserCreationForm):
@@ -71,37 +79,43 @@ class CreateUserForm(UserCreationForm):
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Enter username...",
-        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 300px'
     }), label="Username: ")
     email = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "email",
         "placeholder": "Enter email...",
-        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 300px'
     }), label="Email: ")
     first_name = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Enter First name...",
-        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 140px'
     }), label="First name: ")
     last_name = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
         "placeholder": "Enter Last name...",
-        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 140px'
     }), label="Last name: ")
     password1 = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "password",
         "placeholder": "Enter Password...",
-        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 300px'
     }), label="Password: ")
     password2 = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "password",
         "placeholder": "Confirm Password...",
-        'style': 'border-color:darkgoldenrod; border-radius: 3px; font-size: 12px; padding: 5px'
+        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
+                 'width: 300px'
     }), label="Password confirm: ")
 
     class Meta:
@@ -113,6 +127,7 @@ class EventRegistrationForm(ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
+        "placeholder": "Username...",
         'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px; margin-left: 2.3%;'
                  'border: none; border-radius: 5px; color: #031b88; text-align: center; height: 30px; '
                  'width: 450px; background-color: rgba(173,186,211,0.4)'
@@ -121,6 +136,7 @@ class EventRegistrationForm(ModelForm):
     email = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "email",
+        "placeholder": "Email...",
         'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px; margin-left: 2.3%;'
                  'border: none; border-radius: 5px; color: #031b88; text-align: center; height: 30px; '
                  'width: 450px; background-color: rgba(173,186,211,0.4)'
@@ -129,6 +145,7 @@ class EventRegistrationForm(ModelForm):
     phone_num = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
+        "placeholder": "Phone number...",
         'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px; margin-left: 2.3%;'
                  'border: none; border-radius: 5px; color: #031b88; text-align: center; height: 30px; '
                  'width: 450px; top: -10px; background-color: rgba(173,186,211,0.4)'
@@ -140,18 +157,72 @@ class EventRegistrationForm(ModelForm):
 
 
 class UpdateInformationUserForm(ModelForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px;'
+                 'border: none; border-radius: 5px; color: #ffffff; text-align: left; height: 30px;'
+                 'top: -10px; background-color: rgba(255, 255, 255,0.1)'
+    }), label="Username: ")
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px;'
+                 'border: none; border-radius: 5px; color: #ffffff; text-align: left; height: 30px;'
+                 'top: -10px; background-color: rgba(255, 255, 255,0.1)'
+    }), label="First name: ")
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px;'
+                 'border: none; border-radius: 5px; color: #ffffff; text-align: left; height: 30px;'
+                 'top: -10px; background-color: rgba(255, 255, 255,0.1)'
+    }), label="Last name: ")
+
+    email = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px;'
+                 'border: none; border-radius: 5px; color: #ffffff; text-align: left; height: 30px;'
+                 'top: -10px; background-color: rgba(255, 255, 255,0.1)'
+    }), label="Email: ")
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name']
+        fields = ['username', 'first_name', 'last_name', 'email']
 
 
 class UpdateInformationVisitorForm(ModelForm):
+
+    phone_num = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "number",
+        "min": '1',
+        'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px;'
+                 'border: none; border-radius: 5px; color: #ffffff; text-align: left; height: 30px;'
+                 'top: -10px; background-color: rgba(255, 255, 255,0.1)'
+    }), label="Phone number: ")
+
+    profile_pic = forms.ImageField()
+
     class Meta:
         model = Visitor
-        fields = ['phone_num', 'email']
+        fields = ['phone_num', 'profile_pic']
 
 
 class UpdateInformationHostForm(ModelForm):
+
+    phone_num = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "input form-control my-3",
+        "type": "text",
+        "min": '1',
+        'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px;'
+                 'border: none; border-radius: 5px; color: #ffffff; text-align: left; height: 30px;'
+                 'top: -10px; background-color: rgba(255, 255, 255,0.1)'
+    }), label="Phone number: ")
+
+    profile_pic = forms.ImageField()
+
     class Meta:
         model = Host
-        fields = ['phone_num', 'email']
+        fields = ['phone_num', 'email', 'profile_pic']

@@ -1,8 +1,8 @@
 {% extends 'eve_holder/main.html' %}
 
 {% block content %}
-<br>
-<body style="background-color: #035aa6">
+    <br>
+    <body style="background-color: #035aa6">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -11,13 +11,14 @@
                     <div class="card-body">
                         <div class="card-title mb-4">
                             <div class="d-flex justify-content-start">
-<!--                                <div class="middle">-->
-<!--                                </div>-->
+                                <!--                                <div class="middle">-->
+                                <!--                                </div>-->
                                 <div class="userData ml-3">
                                     <h1 class="d-block"
-                                        style="font-size: 1.5rem; font-weight: bold; font-family: 'Commissioner', sans-serif">
+                                        style="font-size: 2rem; font-weight: bold; font-family: 'Commissioner', sans-serif">
                                         {{ event.event_name }}</h1>
-                                    <h6 class="d-block" style="font-family: 'Commissioner', sans-serif">Host by: {{ host_name }}
+                                    <h6 class="d-block" style="font-family: 'Commissioner', sans-serif">Host
+                                        by: {{ host_name }}
                                     </h6>
                                 </div>
                             </div>
@@ -101,18 +102,21 @@
                                                 </div>
                                             </div>
                                             {% if  event.event_host.name == host_name %}
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3 col-md-2 col-5">
-                                                <a class="btn btn-sm btn-warning" style="padding-right: 15px; padding-left: 15px"
-                                                   href="{% url 'eve_holder:edit_event' event.id %}">Edit</a>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3 col-md-2 col-5">
+                                                        <a class="btn btn-sm btn-warning"
+                                                           style="padding-right: 15px; padding-left: 15px"
+                                                           href="{% url 'eve_holder:edit_event' event.id %}">Edit</a>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             {% endif %}
 
                                         </div>
-                                        <div class="tab-pane fade" id="picture" role="tabpanel" aria-labelledby="picture-tab">
-                                            <img src="{{ event.event_image.url }}" style="max-width: 100%">
+                                        <div class="tab-pane fade" id="picture" role="tabpanel"
+                                             aria-labelledby="picture-tab">
+                                            <img src="{{ event.event_image.url }}" style="max-width: 100%"
+                                                 alt="event images">
                                         </div>
                                     </div>
                                 </div>
@@ -123,5 +127,5 @@
             </div>
         </div>
     </div>
-</body>
+    </body>
 {% endblock %}

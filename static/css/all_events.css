@@ -13,10 +13,6 @@
     z-index: 2;
 }
 
-.container-fluid {
-    padding: 0;
-}
-
 body {
     font-family: 'Commissioner', sans-serif;
     min-height: 100vh;
@@ -108,10 +104,6 @@ p {
 
 img {
     max-width: 100%;
-}
-
-.back > .host-picture > .streamer {
-    font-size: .9rem;
 }
 
 .host-picture {

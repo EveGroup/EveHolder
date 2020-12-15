@@ -8,10 +8,18 @@ More information, visit our [Homepage](https://github.com/EveGroup/EveHolder/wik
 
 ## Requirements
 
-- Python3.6 or newer
+- Python3.6 or Python3.7
 - pip
 - pipenv
 - postgreSQL 9.6.2 or newer [optional]
+
+Note:
+
+- If you use Python3.8, it'll occur the error.  
+  Read here how to fix: [issues #84](https://github.com/EveGroup/EveHolder/issues/84).
+
+- [Download PostgreSQL Database](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) (Recommend:
+  Postgre12)
 
 ## Setup for EveHolder Web application
 
@@ -19,7 +27,7 @@ Download the code from git using `git clone`. Do the following step to use this 
 
 `python3` refers to the Python 3 command using in Linux and Mac system. For window use `python` or `py`.
 
-1. Check python version (it should be 3.6 or newer).
+1. Check python version (it should be 3.6 or 3.7).
 
    ```bash
    python --version
@@ -37,7 +45,8 @@ Download the code from git using `git clone`. Do the following step to use this 
    pipenv install -r requirements.txt
    ```
 
-4. In the project root directory/mysite, copy `sample.env` and change to `.env`(file name begin with "."). Then edit `.env` and set values of these variables as desired.
+4. In the project root directory/mysite, copy `sample.env` and change to `.env`(file name begin with "."). Then
+   edit `.env` and set values of these variables as desired.
 
    ```env
    SECRET_KEY=any-random-string-will-work
@@ -57,13 +66,13 @@ Download the code from git using `git clone`. Do the following step to use this 
 
    **Use postgreSQL:**
 
-   - At `DATABASE_URL`
+    - At `DATABASE_URL`
 
-     - `postgrespassword` is a password of your postgreSQL that you created when you install the postgreSQL program.
+        - `postgrespassword` is a password of your postgreSQL that you created when you install the postgreSQL program.
 
-     - `port` is a port of your postgreSQL database port.
+        - `port` is a port of your postgreSQL database port.
 
-     - `database_name` is the name of your database that you created.
+        - `database_name` is the name of your database that you created.
 
    For more information about `.env`, see more at [Django-environ](https://django-environ.readthedocs.io/en/latest/).
 
@@ -129,32 +138,44 @@ Download the code from git using `git clone`. Do the following step to use this 
    exit
    ```
 
+## Installation Problem
+
+- Problem with pipenv when using Python3.8 or/and macOS  
+  Follow this instruction: [issues #84](https://github.com/EveGroup/EveHolder/issues/84)
+
 ## Username and password of initial user
 
-This is the sample accounts for login to the application.
+This is the sample accounts for the login to the application.
 
-- For login as visitor: Username: `visitor1` password: `Hackpass`.
-- For login as host: Username: `Host1` password: `Hackpass`.
+- For the login as visitor: Username: `visitor1` password: `Hackpass`.
+- For the login as host: Username: `Host1` password: `Hackpass`.
 
 ## Team Members
 
-| Name | Lastname | Github |
-|:---:|:---:|:---:|
-| Kongtapp | Veerawattananun| [KongtappV](https://github.com/KongtappV) |
-| Metaras | Charoenseang | [metaras](https://github.com/metaras) |
-| Pattarin | Wongwaipanich | [pattarinn](https://github.com/pattarinn) |
-| Vichisorn | Wejsupakul | [james31366](https://github.com/james31366) |
+|   Name    |    Lastname     |                   Github                    |
+| :-------: | :-------------: | :-----------------------------------------: |
+| Kongtapp  | Veerawattananun |  [KongtappV](https://github.com/KongtappV)  |
+|  Metaras  |  Charoenseang   |    [metaras](https://github.com/metaras)    |
+| Pattarin  |  Wongwaipanich  |  [pattarinn](https://github.com/pattarinn)  |
+| Vichisorn |   Wejsupakul    | [james31366](https://github.com/james31366) |
 
 ## Links to docs
 
 - [Requirements](https://github.com/EveGroup/EveHolder/wiki/Requirements)
 - [Vision Statements](https://github.com/EveGroup/EveHolder/wiki/Vision-Statement)
 - [Iteration 1 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-1-Plan)
+  - [Project board](https://github.com/EveGroup/EveHolder/projects/2)
 - [Iteration 2 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-2-Plan)
+  - [Project board](https://github.com/EveGroup/EveHolder/projects/3)
 - [Iteration 3 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-3-Plan)
+  - [Project board](https://github.com/EveGroup/EveHolder/projects/4)
 - [Iteration 4 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-4-Plan)
+  - [Project board](https://github.com/EveGroup/EveHolder/projects/5)
 - [Iteration 5 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-5-Plan)
+  - [Project board](https://github.com/EveGroup/EveHolder/projects/6)
 - [Iteration 6 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-6-Plan)
+  - [Project board](https://github.com/EveGroup/EveHolder/projects/7)
 - [Iteration 7 Plan](https://github.com/EveGroup/EveHolder/wiki/Iteration-7-Plan)
+  - [Project board](https://github.com/EveGroup/EveHolder/projects/8)
 - [Code Review Procedure](https://github.com/EveGroup/EveHolder/wiki/Code-Review-Procedure)
 - [Code Review Checklist](https://github.com/EveGroup/EveHolder/wiki/Code-Review-checklist)

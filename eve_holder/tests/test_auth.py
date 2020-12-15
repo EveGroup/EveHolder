@@ -25,6 +25,3 @@ class AuthenticationTests(TestCase):
         url = reverse('eve_holder:events')
         response = self.client.get(url)
         self.assertContains(response, "You are not authorize to view the page!")
-
-
-

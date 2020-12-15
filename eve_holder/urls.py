@@ -1,28 +1,27 @@
 from django.urls import path
 
+import eve_holder.views
 from . import views
 
 app_name = 'eve_holder'
 urlpatterns = [
-    # authenticate part
-    path('login/', views.login_page, name="login"),
-    path('logout/', views.logout_page, name="logout"),
-    path('register/', views.register_page, name="register"),
-
     # unauthenticated user
     path('', views.homepage, name='homepage'),
 
+    # authenticate part
+    path('login/', eve_holder.views.login_page, name="login"),
+    path('logout/', eve_holder.views.logout_page, name="logout"),
+    path('register/', eve_holder.views.register_page, name="register"),
+
     # visitor part
     path('visitor_registered_events/', views.visitor_registered_events, name="visitor_registered_events"),
-    path('events/', views.events, name="events"),
     path('events/update_information', views.visitor_update_information, name='visitor_update_information'),
+    path('events/', views.events, name="events"),
     path('events/<int:pk_event>/register', views.event_register, name='event_register'),
-    path('events/<int:pk_event>/cancel', views.cancel_event, name='event_cancel'),
     path('close-notification/<int:pk>/', views.close_notification, name='close_notification'),
 
     # host part
     path('host/', views.host, name="host"),
-    path('host/update_information', views.host_update_information, name='host_update_information'),
     # host event
     path('create_event/', views.create_event, name="create_event"),
     path('edit_event/<str:pk>/', views.edit_event, name="edit_event"),
