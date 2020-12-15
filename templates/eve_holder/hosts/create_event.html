@@ -10,16 +10,16 @@
 </head>
 {% block content %}
     <br>
-    <div class="regform">
+    <div class="regform-create">
         <span style="font-size: 16px; font-weight: bold">Create Event Form</span>
     </div>
-    <div class="main">
-        <form action="" method="post">
+    <div class="main-create scroll">
+        <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="row row1">
                 <div class="form-group col-md-4" style="margin-left: 20px">
-                    <label class="col-form-label namecol ">Event Name: </label>
+                    <label class="col-form-label create-label ">Event Name: </label>
                 </div>
                 <div class="form-group col-md-6">
                     {{ form.event_name }}
@@ -28,7 +28,7 @@
 
             <div class="row row1">
                 <div class="form-group col-md-4" style="margin-left: 20px">
-                    <label class="col-form-label namecol ">Description: </label>
+                    <label class="col-form-label create-label ">Description: </label>
                 </div>
                 <div class="form-group col-md-6 " style="margin-top: -10px">
                     {{ form.event_description }}
@@ -37,7 +37,7 @@
 
             <div class="row row1">
                 <div class="form-group col-md-4" style="margin-left: 20px">
-                    <label class="col-form-label namecol ">Location: </label>
+                    <label class="col-form-label create-label ">Location: </label>
                 </div>
                 <div class="form-group col-md-6" style="margin-top: -10px">
                     {{ form.event_location }}
@@ -46,7 +46,7 @@
 
             <div class="row row1">
                 <div class="form-group col-md-4" style="margin-left: 20px">
-                    <label class="col-form-label namecol ">Event Date: </label>
+                    <label class="col-form-label create-label ">Event Date: </label>
                 </div>
                 <div class="form-group col-md-6" style="margin-top: -10px">
                     {{ form.event_date }}
@@ -55,7 +55,7 @@
 
             <div class="row row1">
                 <div class="form-group col-md-4" style="margin-left: 20px">
-                    <label for="" class="col-form-label namecol ">Date: </label>
+                    <label for="" class="col-form-label create-label ">Date: </label>
                 </div>
                 <div class="form-group col-md-3">
                     {{ form.pub_date }}
@@ -69,32 +69,41 @@
 
             <div class="row row1">
                 <div class="form-group col-md-4" style="margin-left: 20px">
-                    <label class="col-form-label namecol ">Event Amount Accept: </label>
+                    <label class="col-form-label create-label ">Event Amount Accept: </label>
                 </div>
                 <div class="form-group col-md-6" style="margin-top: -10px">
                     {{ form.amount_accepted }}
                 </div>
             </div>
 
-            <div class="row" style="margin-top: -20px">
-                <div class="col-md-10" style="margin-left: 40px">
+            <div class="row row1">
+                <div class="form-group col-md-4" style="margin-left: 20px">
+                    <label class="col-form-label create-label ">Event Picture: </label>
+                </div>
+                <div class="form-group col-md-6" style="margin-top: -10px">
+                    {{ form.event_image }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10" style="color: white">
                     {% for message in messages %}
                         <p id="messages">{{ message }}</p>
                     {% endfor %}
                 </div>
+            </div>
 
-                <div class="row" style="margin-top: -20px">
-                    <div class="col-md-10" style="margin-left: 40px">
-                        {% if btn == "Create" %}
-                            <button type="submit" class="btn1 mt-3 mb-3" name="click" style="line-height: 28px">Create
-                                Event
-                            </button>
-                        {% elif btn == "Edit" %}
-                            <button type="submit" class="btn1 mt-3 mb-3" name="click" style="line-height: 28px">Edit
-                                Event
-                            </button>
-                        {% endif %}
-                    </div>
+            <div class="row">
+                <div class="col-md-10">
+                    {% if btn == "Create" %}
+                        <button type="submit" class="btn1 mt-3 mb-3" name="click" style="line-height: 30px">Create
+                            Event
+                        </button>
+                    {% elif btn == "Edit" %}
+                        <button type="submit" class="btn1 mt-3 mb-3" name="click" style="line-height: 30px">Edit
+                            Event
+                        </button>
+                    {% endif %}
                 </div>
             </div>
         </form>

@@ -4,17 +4,12 @@
 }
 
 body {
-    /*background-image: url("../images/account/register.jpg");*/
-    background-position: center;
     max-height: 100%;
     max-width: 100%;
     display: block;
     object-fit: cover;
-}
-
-.image {
-    width: 100%;
-    height: 100%;
+    background: url("../images/account/register.jpg") no-repeat;
+    background-size: cover;
 }
 
 .regform {
@@ -24,7 +19,7 @@ body {
     padding: 10px 0 10px 0;
     text-align: center;
     border-radius: 15px 15px 0 0;
-    margin: 4.5% auto auto;
+    margin: 3.5% auto auto;
 }
 
 .main {
@@ -36,7 +31,7 @@ body {
 }
 
 .row {
-    margin: 4px auto auto;
+    margin: 3px 2px auto auto;
     width: 650px;
     color: white;
     font-weight: bold;
@@ -56,23 +51,24 @@ body {
     font-size: 12px;
 }
 
-.btn-login {
+.frame {
+    font-size: 12px;
+    border-color: darkblue;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.btn-register {
     border: none;
     outline: none;
-    height: 26px;
+    height: 30px;
     width: 400px;
     color: #ffffff;
     background-image: linear-gradient(120deg, #031b88, #2c6ed5);
     font-weight: bold;
     font-size: 14px;
-    margin: auto auto auto 35%;
+    margin: auto auto auto 12%;
     border-radius: 20px;
-}
-
-.btn-login:hover {
-    background-image: linear-gradient(30deg, #2c6ed5, #031b88);
-    border: 1px solid;
-    color: white;
 }
 
 .backtext {

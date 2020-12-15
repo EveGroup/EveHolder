@@ -1,16 +1,16 @@
 """This module contains views of the website."""
-from django.contrib.auth import login, authenticate, logout
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from .decorations import allowed_users, host_only, unauthenticated_user
 from .filters import EventFilter
-from .forms import EventForm, EventRegistrationForm, UpdateInformationUserForm, \
-    UpdateInformationVisitorForm, UpdateInformationHostForm, CreateUserForm
+from .forms import EventForm, CreateUserForm, EventRegistrationForm, UpdateInformationUserForm, \
+    UpdateInformationVisitorForm, UpdateInformationHostForm
 from .models import Visitor, Event, Host, Notification, NotificationUser
 
 
@@ -55,6 +55,7 @@ def register_page(request):
         # which Main model is User
         form = CreateUserForm(request.POST)
         if form.is_valid():
+            print("hey")
             user = form.save()
             # get the cleaned data from the form for creating Visitor and Host objects
             username = form.cleaned_data.get('username')
@@ -178,7 +179,7 @@ def visitor_update_information(request):
         visitor_form.save()
         return redirect('eve_holder:visitor_registered_events')
     context = {'user_form': user_form, 'visitor_form': visitor_form}
-    return render(request, 'eve_holder/visitors/visitor_update_information.html', context)
+    return render(request, 'eve_holder/host_and_visitor/update_information.html', context)
 
 
 @login_required(login_url='eve_holder:login')
@@ -300,10 +301,9 @@ def create_event(request):
 
     form = EventForm()
     if request.method == 'POST':
-        form = EventForm(request.POST)
+        form = EventForm(request.POST, request.FILES)
         if form.is_valid():
             event = form.save()
-
             if not event.check_pub_date():
                 messages.info(request, "End date cannot come before publish date.")
                 event.delete()
@@ -311,8 +311,8 @@ def create_event(request):
                 messages.info(request, "Event date cannot come before publish date.")
                 event.delete()
             else:
-                form.save()
                 event.event_host.add(get_host)
+                event.save()
                 return HttpResponseRedirect(reverse("eve_holder:host"))
 
     btn = "Create"
@@ -340,23 +340,7 @@ def edit_event(request, pk):
         # put the instance from POST inside the form
         form = EventForm(request.POST, instance=events_list)
         if form.is_valid():
-            # create string text for the notification
-            text = f"Event Edited: {events_list}"
-
-            # if there is notification with the same text (same name for event) delete the previous one this is the
-            # part that create the bug that you change the event name and old notification doesn't get delete because
-            # the text is base on current event name.
-            if Notification.objects.filter(text=text).exists():
-                notify = Notification.objects.get(text=text, level='info')
-                notify.delete()
-            # create new notification object
-            notify = Notification.objects.create(text=text, level='info')
-
-            # add each person to the Many to Many relationship one-by-one
-            for person in visitors_list:
-                notify.visitor.add(person)
-
-            notify.save()
+            create_notification(events_list, visitors_list, 'info')
             form.save()
             return redirect('eve_holder:host')
 
@@ -380,27 +364,9 @@ def delete_event(request, pk):
     """
     events_list = Event.objects.get(id=pk)
     visitors_list = Visitor.objects.filter(event=events_list)
-
-    # create the text to check if there's a notification with this text or not
-    del_text = f"Event Deleted: {events_list}"
-    edit_text = f"Event Edited: {events_list}"
-
     if request.user.groups.all()[0].name == 'Host':
-
-        # if there is notification of this event but in 'info' level or edited delete the previous notification
-        if Notification.objects.filter(text=edit_text).exists():
-            notify = Notification.objects.get(text=edit_text, level='info')
-            notify.delete()
-
-        # create new notification with level 'warning'
-        notify = Notification.objects.create(text=del_text, level='warning')
-
-        # add each person to the Many to Many relationship one-by-one
-        for person in visitors_list:
-            notify.visitor.add(person)
-
+        create_notification(events_list, visitors_list, 'warning')
         events_list.delete()
-        notify.save()
     return redirect('eve_holder:host')
 
 
@@ -467,6 +433,86 @@ def event_detail(request, pk):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Visitor'])
+def cancel_event(request, pk_event):
+    """For cancel the event use with visitor's accounts.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk_event: event's id.
+
+    Returns:
+        render: Render the cancel event page with the context.
+
+    """
+    visitor = Visitor.objects.get(user=request.user)
+    my_event = Event.objects.get(id=pk_event)
+    if request.method == 'POST':
+        visitor.event.remove(my_event)
+        return redirect('eve_holder:visitor_registered_events')
+    event = Event.objects.get(id=pk_event)
+    text = 'Are you sure you want to cancel " ' + event.event_name + '" ?'
+    context = {'text': text}
+    return render(request, 'eve_holder/delete_and_cancel.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Visitor'])
+def visitor_update_information(request):
+    """Update the visitor's information.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the update information page with the context.
+
+    """
+    user = request.user
+    visitor = Visitor.objects.get(user=user)
+    visitor_form = UpdateInformationVisitorForm(instance=visitor)
+    user_form = UpdateInformationUserForm(instance=user)
+    if request.method == 'POST':
+        user_form = UpdateInformationUserForm(request.POST, instance=user)
+        user_form.save()
+        visitor_form = UpdateInformationVisitorForm(request.POST, request.FILES, instance=visitor)
+        if visitor_form.is_valid():
+            visitor_form.save()
+            return redirect('eve_holder:my_account')
+
+    context = {'user_form': user_form, 'form': visitor_form}
+    return render(request, 'eve_holder/host_and_visitor/update_information.html', context)
+
+
+@login_required(login_url='login')
+@host_only
+def host_update_information(request):
+    """Update the host's information.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+
+    Returns:
+        render: Render the update information page with the context.
+
+    """
+    user = request.user
+    get_first_host_name = Host.objects.get(user=user)
+    host_form = UpdateInformationHostForm(instance=get_first_host_name)
+    user_form = UpdateInformationUserForm(instance=user)
+    if request.method == 'POST':
+        user_form = UpdateInformationUserForm(request.POST, instance=user)
+        user_form.save()
+        host_form = UpdateInformationHostForm(request.POST, request.FILES, instance=get_first_host_name)
+        if host_form.is_valid():
+            host_form.save()
+            return redirect('eve_holder:my_account')
+
+    context = {'user_form': user_form, 'form': host_form}
+    return render(request, 'eve_holder/host_and_visitor/update_information.html', context)
+
+
+@login_required(login_url='login')
 @allowed_users(['Host', 'Visitor'])
 def delete_account(request):
     """Delete requested account.
@@ -481,7 +527,8 @@ def delete_account(request):
     # get user from the request
     user = request.user
     previous_page = request.META['HTTP_REFERER']
-    context = {'previous_page': previous_page}
+    text = "Are you sure you want to delete this account ?"
+    context = {'previous_page': previous_page, 'text': text}
     if request.method == 'POST':
         # get user again from the same user id?
         user = User.objects.get(id=user.id)
@@ -491,7 +538,8 @@ def delete_account(request):
             host_events.delete()
         user.delete()
         return redirect('eve_holder:homepage')
-    return render(request, 'eve_holder/host_and_visitor/delete_account.html', context)
+
+    return render(request, 'eve_holder/delete_and_cancel.html', context)
 
 
 @login_required(login_url='login')
@@ -505,9 +553,9 @@ def my_account(request):
 
         events_list = visitor.event.all()
         events_count = events_list.count()
-        notify = Notification.objects.filter(visitor=visitor)
+        notify = Notification.objects.filter(visitor=visitor).order_by('-created')
         context = {
-            'visitor_registered_events': visitor,
+            'visitor': visitor,
             'events_count': events_count,
             'notifications': notify,
         }
@@ -537,12 +585,58 @@ def search_event(request):
         redirect: Redirect to homepage.
     """
     requested_events = request.POST['search']
-    previous_page = request.META['HTTP_REFERER']
-    if requested_events != "":
-        filtered_events = Event.objects.filter(event_name__contains=requested_events)
-        if not filtered_events.exists():
-            messages.warning(request, "No result found for \"" + requested_events + "\"")
-        context = {'events': filtered_events, 'requested_events': requested_events}
-        return render(request, 'eve_holder/host_and_visitor/search_event.html', context)
-    messages.warning(request, "Search field is Empty.")
-    return redirect(previous_page)
+    filtered_events = Event.objects.filter(event_name__contains=requested_events)
+    context = {'events': filtered_events, 'requested_events': requested_events}
+    if requested_events == "":
+        context = {'events': filtered_events, 'requested_events': requested_events, 'empty': True}
+    return render(request, 'eve_holder/host_and_visitor/search_event.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Visitor'])
+def close_notification(request, pk):
+    """Close the specified notification for the user.
+
+    Args:
+        request: A HttpRequest object, which contains data about the request.
+        pk: the primary keys of the notification objects
+
+    Returns:
+        redirect: Redirected to my_account
+    """
+    notification = Notification.objects.get(id=pk)
+    visitor = Visitor.objects.get(user=request.user)
+    notify = NotificationUser.objects.get(notification=notification, visitor=visitor)
+    notify.delete()
+    notification.visitor.remove(visitor)
+    if not Visitor.objects.filter(notification=notification).exists():
+        notification.delete()
+    return redirect('eve_holder:my_account')
+
+
+def create_notification(event: Event, visitors_list, level: str):
+    """Create new notification for event and add visitor in notification.
+
+    Args:
+        event: Event object to filter the notification
+        visitors_list: Visitor objects as queryset to add in notification
+        level: string indicated the level of message ["info", "warning"]
+
+    Exceptions:
+        ValueError: raise when get unknown level of notification as arguments
+
+    """
+    if Notification.objects.filter(event=event).exists():
+        notify = Notification.objects.get(level='info', event=event)
+        notify.delete()
+
+    if level == 'info':
+        notify = Notification.objects.create(text=f"Event Edited: {event}", level='info', event=event)
+    elif level == 'warning':
+        notify = Notification.objects.create(text=f"Event Deleted: {event}", level='warning')
+    else:
+        raise ValueError("Unknown level of notifications")
+
+    for person in visitors_list:
+        notify.visitor.add(person)
+    notify.save()

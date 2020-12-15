@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@200&display=swap');
+
+.head-line > h1, .head-line > span {
+    font-family: 'Commissioner', sans-serif;
+    color: white;
+}
+
+.result > div {
+    font-family: 'Commissioner', sans-serif;
+}

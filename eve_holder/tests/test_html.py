@@ -48,11 +48,11 @@ class HtmlTests(TestCase):
         self.assertTemplateUsed(response, 'eve_holder/visitors/visitor_registered_events.html')
 
     def test_render_visitor_update_information_page(self):
-        """Should render eve_holder/visitors/visitor_update_information.html"""
+        """Should render eve_holder/update_information.html"""
         self.client.login(username='visitor', password='testPassword')
         url = reverse('eve_holder:visitor_update_information')
         response = self.client.get(url)
-        self.assertTemplateUsed(response, 'eve_holder/visitors/visitor_update_information.html')
+        self.assertTemplateUsed(response, 'eve_holder/update_information.html')
 
     def test_render_visitor_all_events_page(self):
         """Should render eve_holder/events/events.html"""
@@ -67,6 +67,13 @@ class HtmlTests(TestCase):
         url = reverse('eve_holder:event_register', args=(self.event1_id,))
         response = self.client.get(url)
         self.assertTemplateUsed(response, 'eve_holder/visitors/join_event.html')
+
+    def test_render_visitor_cancel_event_page(self):
+        """Should render eve_holder/delete_and_cancel.html"""
+        self.client.login(username='visitor', password='testPassword')
+        url = reverse('eve_holder:event_cancel', args=(self.event1_id,))
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'eve_holder/delete_and_cancel.html')
 
     # test render for host
     def test_render_host_my_account_page(self):
