@@ -84,24 +84,25 @@
                     {{ form.password2 }}
                 </div>
 
-                <hr>
-                <div class="col-md-12">
-                    <div class="backtext">
-                        Already have an account? <a href="{% url 'eve_holder:login' %}">Login</a>
-                        or <a href="{% url 'eve_holder:homepage' %}">Back to homepage</a>
+                    <hr>
+                    <div class="col-md-12">
+                        <div class="backtext">
+                            Already have an account? <a href="{% url 'eve_holder:login' %}">Login</a>
+                            or <a href="{% url 'eve_holder:homepage' %}">Back to homepage</a>
+                        </div>
                     </div>
+                    <div class="form-row col-md-12" style="color: white;">
+                        {% for message in messages %}
+                            <p id="messages">{{ message }}</p>
+                        {% endfor %}
+                        {{ form.errors }}
+                        {{ formset.non_field_errors }}
+                    </div>
+                    <button type="submit" class="btn-register mt-3 mb-3" name="click" style="">Register</button>
                 </div>
-                <div class="form-row col-md-12">
-                    {% for message in messages %}
-                        <p id="messages">{{ message }}</p>
-                    {% endfor %}
-                </div>
-                <button type="submit" class="btn-register mt-3 mb-3" name="click" style="">Register</button>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
-{{ form.errors }}
-{{ formset.non_field_errors }}
 </body>
 </html>
