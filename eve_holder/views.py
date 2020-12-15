@@ -233,29 +233,17 @@ def create_event(request):
     form = EventForm()
     if request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
-        # pub_date = form.cleaned_data.get('pub_date')
-        # end_date = form.cleaned_data.get('end_date')
-        # event_date = form.cleaned_data.get('event_date')
-        #
-        # if end_date > pub_date:
-        #     messages.info(request, "End date cannot come before publish date.")
-        # elif event_date >= pub_date:
-        #     messages.info(request, "Event date cannot come before publish date.")
-
         if form.is_valid():
-
-            form.save()
-            event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
-
+            event = form.save()
             if not event.check_pub_date():
                 messages.info(request, "End date cannot come before publish date.")
+                event.delete()
             elif not event.check_event_date():
                 messages.info(request, "Event date cannot come before publish date.")
+                event.delete()
             else:
-                for person in get_host:
-                    form.save()
-                    event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
-                    event.event_host.add(get_host)
+                event.event_host.add(get_host)
+                event.save()
                 return redirect('eve_holder:host')
 
     btn = "Create"
