@@ -84,7 +84,6 @@ def login_page(request):
         if user is not None:
             login(request, user)
             group = request.user.groups.all()[0].name
-            print(group)
             if group == 'Host':
                 return redirect('eve_holder:host')
             elif group == 'Visitor':
@@ -283,19 +282,12 @@ def edit_event(request, pk):
     if request.method == 'POST':
         form = EventForm(request.POST, instance=events_list)
         if form.is_valid():
-            text = f"Event Edited: {events_list}"
-            if Notification.objects.filter(text=text).exists():
-                notify = Notification.objects.get(text=text, level='info')
-                notify.delete()
-            notify = Notification.objects.create(text=text, level='info')
-            for person in visitors_list:
-                notify.visitor.add(person)
-            notify.save()
+            create_notification(events_list, visitors_list, 'info')
             form.save()
             return redirect('eve_holder:host')
 
     btn = "Edit"
-    context = {'form': form, 'btn':btn}
+    context = {'form': form, 'btn': btn}
 
     return render(request, 'eve_holder/hosts/create_event.html', context)
 
@@ -314,18 +306,9 @@ def delete_event(request, pk):
     """
     events_list = Event.objects.get(id=pk)
     visitors_list = Visitor.objects.filter(event=events_list)
-    del_text = f"Event Deleted: {events_list}"
-    edit_text = f"Event Edited: {events_list}"
     if request.user.groups.all()[0].name == 'Host':
-        if Notification.objects.filter(text=edit_text).exists():
-            notify = Notification.objects.get(text=edit_text, level='info')
-            notify.delete()
-        notify = Notification.objects.create(text=del_text, level='warning')
-        for person in visitors_list:
-            notify.visitor.add(person)
-        messages.success(request, del_text)
+        create_notification(events_list, visitors_list, 'warning')
         events_list.delete()
-        notify.save()
     return redirect('eve_holder:host')
 
 
@@ -496,7 +479,7 @@ def my_account(request):
         get_visitor = Visitor.objects.get(id=visitor_id)
         events_list = get_visitor.event.all()
         events_count = events_list.count()
-        notify = Notification.objects.filter(visitor=get_visitor)
+        notify = Notification.objects.filter(visitor=get_visitor).order_by('-created')
         context = {
             'visitor': get_visitor,
             'events_count': events_count,
@@ -540,6 +523,14 @@ def search_event(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Visitor'])
 def close_notification(request, pk):
+    """Close the specified notification for the user.
+
+    Arguments:
+        pk: the primary keys of the notification objects
+
+    Returns:
+        redirect: Redirected to my_account
+    """
     notification = Notification.objects.get(id=pk)
     visitor = Visitor.objects.get(user=request.user)
     notify = NotificationUser.objects.get(notification=notification, visitor=visitor)
@@ -549,4 +540,29 @@ def close_notification(request, pk):
         notification.delete()
     return redirect('eve_holder:my_account')
 
+def create_notification(event: Event, visitors_list, level: str):
+    """Create new notification for event and add visitor in notification.
 
+    Arguments:
+        event: Event object to filter the notification
+        visitors_list: Visitor objects as queryset to add in notification
+        level: string indicated the level of message ["info", "warning"]
+
+    Exceptions:
+        ValueError: raise when get unknown level of notification as arguments
+
+    """
+    if Notification.objects.filter(event=event).exists():
+        notify = Notification.objects.get(level='info', event=event)
+        notify.delete()
+
+    if level == 'info':
+        notify = Notification.objects.create(text=f"Event Edited: {event}", level='info', event=event)
+    elif level == 'warning':
+        notify = Notification.objects.create(text=f"Event Deleted: {event}", level='warning')
+    else:
+        raise ValueError("Unknown level of notifications")
+
+    for person in visitors_list:
+        notify.visitor.add(person)
+    notify.save()
