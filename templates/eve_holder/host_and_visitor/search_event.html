@@ -31,11 +31,13 @@
                           </thead>
                           <tbody>
                           {% for event in events %}
+                          {% if event.can_register %}
                             <tr>
                               <th scope="row">{{ event.id }}</th>
                               <td>{{ event.event_name }}</td>
                               <td><a class="btn btn-sm btn-warning" href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
                             </tr>
+                          {% endif %}
                           {% endfor %}
                           </tbody>
                         </table>
