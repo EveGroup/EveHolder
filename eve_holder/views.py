@@ -509,15 +509,11 @@ def search_event(request):
         redirect: Redirect to homepage.
     """
     requested_events = request.POST['search']
-    previous_page = request.META['HTTP_REFERER']
-    if requested_events != "":
-        filtered_events = Event.objects.filter(event_name__contains=requested_events)
-        if not filtered_events.exists():
-            messages.warning(request, "No result found for \"" + requested_events + "\"")
-        context = {'events': filtered_events, 'requested_events': requested_events}
-        return render(request, 'eve_holder/search_event.html', context)
-    messages.warning(request, "Search field is Empty.")
-    return redirect(previous_page)
+    filtered_events = Event.objects.filter(event_name__contains=requested_events)
+    context = {'events': filtered_events, 'requested_events': requested_events}
+    if requested_events == "":
+        context = {'events': filtered_events, 'requested_events': requested_events, 'empty': True}
+    return render(request, 'eve_holder/search_event.html', context)
 
 
 @login_required(login_url='login')
