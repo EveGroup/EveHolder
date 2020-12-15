@@ -1,37 +1,49 @@
 {% extends 'eve_holder/main.html' %}
+{% load static %}
 <html lang="en">
 <body>
 {% block content %}
-
+    <link rel="stylesheet" type="text/css" href="{% static '/css/search.css' %}">
     <br>
 
     {% include 'eve_holder/messages.html' %}
-
-    <h1>{{ requested_events }}</h1>
-    {% if events.count > 1 %}
-        {{ events.count }} results found
+    {% if empty %}
+        <div class="head-line"><h1>Nothing is searched</h1></div>
     {% else %}
-        {{ events.count }} result found
-    {% endif %}
-    {% for event in events %}
-        <div class="row">
-            <div class="col-md">
-                <div class="card card-body">
-                    <table>
-                        <tr>
-                            <th>Event name</th>
-                        </tr>
-
-                        <tr>
-                            <td>{{ event.event_name }}</td>
-                            <td><a class="btn btn-sm btn-primary" href="{% url 'eve_holder:event_detail' event.id %}">View</a>
-                            </td>
-                        </tr>
-                    </table>
+        <div class="head-line"><h1>{{ requested_events }}</h1></div>
+        {% if events.count > 1 %}
+            <div class="head-line"><span>{{ events.count }} results found</span></div>
+        {% else %}
+            <div class="head-line"><span>{{ events.count }} result found</span></div>
+        {% endif %}
+    <br>
+    <div class="result">
+            <div class="row">
+                <div class="col-md">
+                    <div class="card card-body">
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                                <th scope="col">Event ID</th>
+                                  <th scope="col">Event Name</th>
+                                  <th scope="col"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for event in events %}
+                            <tr>
+                              <th scope="row">{{ event.id }}</th>
+                              <td>{{ event.event_name }}</td>
+                              <td><a class="btn btn-sm btn-warning" href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    {% endfor %}
+    {% endif %}
 {% endblock %}
 </body>
 </html>
