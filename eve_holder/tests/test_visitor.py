@@ -1,6 +1,5 @@
 """Module for testing visitor account."""
 
-
 from django.contrib.auth.models import User, Group
 from django.test import TestCase
 from django.urls import reverse
@@ -37,9 +36,6 @@ class VisitorTests(TestCase):
         event_id = Event.objects.get(event_name=self.event1.event_name).id
         self.assertContains(response, "You are not authorize to view the page!")
         url = reverse('eve_holder:delete_event', args=(event_id,))
-        response = self.client.get(url)
-        self.assertContains(response, "You are not authorize to view the page!")
-        url = reverse('eve_holder:host_update_information')
         response = self.client.get(url)
         self.assertContains(response, "You are not authorize to view the page!")
         url = reverse('eve_holder:create_event')
@@ -92,7 +88,8 @@ class VisitorTests(TestCase):
         event = Event.objects.get(event_name='event1')
         url = reverse('eve_holder:events')
         response = self.client.get(url)
-        self.assertQuerysetEqual(response.context['events'], ['<Event: event3>', '<Event: event2>', '<Event: event1>'], ordered=False)
+        self.assertQuerysetEqual(response.context['events'], ['<Event: event3>', '<Event: event2>', '<Event: event1>'],
+                                 ordered=False)
         self.visitor.event.add(event)
         url = reverse('eve_holder:events')
         response = self.client.get(url)
@@ -107,6 +104,7 @@ class VisitorTests(TestCase):
         self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: visitor>'])
         self.visitor.event.remove(event)
         self.assertQuerysetEqual(event.visitor_set.all(), [])
+
     #
 
     def test_events_page_contain_cancelled_event(self):
@@ -139,5 +137,3 @@ class VisitorTests(TestCase):
         self.assertQuerysetEqual(event.visitor_set.all(), ['<Visitor: test_visitor>'])
         user.delete()
         self.assertQuerysetEqual(event.visitor_set.all(), [])
-
-

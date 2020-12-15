@@ -17,7 +17,7 @@
                 <div id="sentence-join">"The only impossible journey is the one you never begin."</div>
                 <div class="author-join">-Tony Robbins-</div>
             </div>
-            <img src="{% static "images/event/join_event.jpg" %}">
+            <img src="{% static "images/event/join_event.jpg" %}" alt="join event image">
         </div>
         <div class="bottom scroll">
             <div class="join-element">
@@ -25,12 +25,12 @@
                     {% csrf_token %}
                     <div class="col-sm-12" style="align-items: center"><h3>{{ event.event_name }}</h3></div>
 
-                        <label class="join-label col-sm-6">Username</label>
-                        {{ form.name }}
-                        <label class="join-label col-sm-6">Email</label>
-                        {{ form.email }}
-                        <label class="join-label col-sm-6">Phone number</label>
-                        {{ form.phone_num }}
+                    <label class="join-label col-sm-6">Username</label>
+                    {{ form.name }}
+                    <label class="join-label col-sm-6">Email</label>
+                    {{ form.email }}
+                    <label class="join-label col-sm-6">Phone number</label>
+                    {{ form.phone_num }}
                     <button type="submit" class="btn-join">Join</button>
                 </form>
             </div>

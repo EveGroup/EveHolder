@@ -41,4 +41,4 @@ class SearchTests(TestCase):
         self.client.login(username='visitor', password='testPassword')
         response = self.client.post(reverse('eve_holder:search_event'), {'search': ''},
                                     HTTP_REFERER=reverse('eve_holder:homepage'))
-        self.assertRedirects(response, reverse('eve_holder:homepage'))
+        self.assertContains(response, "Nothing is searched", status_code=200)

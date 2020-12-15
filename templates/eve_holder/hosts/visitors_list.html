@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" type="text/css" href="{% static '/css/visitors_list.css' %}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <body>    
+    <body>
     <br>
     <div class="row">
         <div class="col-md">
@@ -25,12 +25,12 @@
                                 </div>
                             </div>
                         </div>
-                        <td>
-                            <h4>Event Name: {{ event.event_name }}</h4>
-                            <h6>Host by: {{ event.event_host.first }}</h6>
-                            <h6>Participants: {{visitors_count}}/{{event.amount_accepted}}</h6>
-                        </td>
                     </th>
+                    <td>
+                        <h4>Event Name: {{ event.event_name }}</h4>
+                        <h6>Host by: {{ event.event_host.first }}</h6>
+                        <h6>Participants: {{ visitors_count }}/{{ event.amount_accepted }}</h6>
+                    </td>
                 </table>
             </div>
         </div>
@@ -42,27 +42,27 @@
                 <h3 style="padding-left: 10px;">All Participants/Visitors</h3>
                 <table class="table-content w3-table">
                     <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>PhoneNumber</th>
-                        </tr>
+                    <tr>
+                        <th>id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>PhoneNumber</th>
+                    </tr>
                     </thead>
-                    
+
                     <tbody>
-                        {% for visitor in visitor_registered_events %}
+                    {% for visitor in visitor_registered_events %}
                         <tr>
                             <td></td>
                             <td>{{ visitor.name }}</td>
                             <td>{{ visitor.email }}</td>
                             <td>{{ visitor.phone_num }}</td>
                         </tr>
-                        {% endfor %}
-                        <!--- last table row --->
-                        <tr>
-                            <th colspan="4"></th>
-                        </tr>
+                    {% endfor %}
+                    <!--- last table row --->
+                    <tr>
+                        <th colspan="4"></th>
+                    </tr>
                     </tbody>
                 </table>
             </div>

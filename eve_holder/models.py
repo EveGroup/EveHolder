@@ -1,5 +1,5 @@
 """This module contain models to set layout for database."""
-from datetime import timedelta, datetime, date
+from datetime import timedelta
 
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
@@ -90,7 +90,7 @@ class Event(models.Model):
         Returns:
              bool: true if now was more than end_date.
         """
-        now = timezone.now()
+        now = timezone.now().date()
         return now > self.end_date
 
     def is_full(self, amount):

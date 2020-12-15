@@ -1,5 +1,5 @@
 <div class="col-md">
-    <div class=" scroll" style="height: 260px top: 10%">
+    <div class=" scroll" style="height: 260px; top: 10%">
         <h5>Notifications</h5>
         <hr>
 
@@ -12,7 +12,7 @@
                 </div>
             {% elif notify.level == 'warning' %}
                 <div class="warning w3-animate-opacity w3-round msg-box">
-                    <strong>{{ notify }}</strong> 
+                    <strong>{{ notify }}</strong>
                     <a class="closebtn" href="{% url 'eve_holder:close_notification' notify.id %}"
                        onclick="this.parentElement.style.display='none';">&times;</a>
                 </div>

@@ -16,7 +16,8 @@
                                 <div class="userData ml-3">
                                     <h2 class="d-block"
                                         style="font-size: 2rem; font-weight: bold; font-family: 'Commissioner', sans-serif;">{{ event.event_name }}</h2>
-                                    <h6 class="d-block" style="font-family: 'Commissioner', sans-serif;">Host by: {{ host_name }}
+                                    <h6 class="d-block" style="font-family: 'Commissioner', sans-serif;">Host
+                                        by: {{ host_name }}
                                     </h6>
                                 </div>
                                 <div class="ml-auto">
@@ -134,14 +135,15 @@
                                                 {% else %}
                                                     <div class="row">
                                                     <div class="col-sm-3 col-md-2 col-5">
-                                                        <a class="btn btn-sm btn-danger"
-                                                           href="{% url 'eve_holder:event_cancel' event.id %}">Cancel</a>
+{#                                                        <a class="btn btn-sm btn-danger"#}
+{#                                                           href="{% url 'eve_holder:event_cancel' event.id %}">Cancel</a>#}
                                                     </div>
                                                 {% endif %}
                                             {% endif %}
                                             <div>
                                                 <a class="btn btn-sm btn-secondary"
                                                    href="{% url 'eve_holder:visitor_registered_events' %}">Back</a>
+                                            </div>
                                             </div>
                                             </div>
                                         </div>
@@ -154,7 +156,6 @@
             </div>
         </div>
     </div>
-    </div>
-<br>
+    <br>
 
 {% endblock %}

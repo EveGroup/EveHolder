@@ -1,0 +1,65 @@
+{% extends 'eve_holder/main.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/all_events.css' %}">
+
+    <body>
+    <div class="above">
+        <div class="inspiration-text">
+            <div id="sentence1">"We keep moving forward, opening new doors, and doing new things,</div>
+            <div id="sentence2">because we're curious and curiosity keeps leading us down new paths."</div>
+            <div class="author">-Walt Disney-</div>
+            <div class="section-separator">______</div>
+        </div>
+        <img id="inspire-pic" src="{% static '/images/visitor/cover.jpg' %}" alt="event_inspiration_picture">
+    </div>
+    <div class="event-cards">
+
+        {% for event in events %}
+            {% if event.can_register %}
+                <div class="event-container" id="event-container">
+                    <div class="event">
+                        <div class="front">
+                            {% if event.event_image %}
+                                <img class="thumbnail" src="{{ event.event_image.url }}" alt="event's picture">
+                            {% else %}
+                                <img class="thumbnail" src="{% static 'images/homepage/block2.jpg' %}"
+                                     alt="event's picture">
+                            {% endif %}
+                            <h4 class="event-name">{{ event.event_name }}</h4>
+                            <div class="stats">
+                                <p class="host-name">by {{ event.event_host.all.0 }}</p>
+                                <div class="host-picture">
+                                    <img src="{{ event.event_host.all.0.profile_pic.url }}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="event-info">
+                                {% if event.amount_accepted is not None %}
+                                    <p class="amount">{{ event.amount_accepted }}<span>limit</span></p>
+                                {% else %}
+                                    <p class="amount">-<span>limit</span></p>
+                                {% endif %}
+                                <p class="amount">{{ event.visitor_set.all.count }}<span>now</span></p>
+                            </div>
+                            <div class="short-description">
+                                <p class="event-description">Event Day: {{ event.event_date }}</p>
+                                {% if event.event_location is not None %}
+                                    <p class="event-description">Location: {{ event.event_location }}</p>
+                                {% else %}
+                                    <p class="event-description">Location: tbc.</p>
+                                {% endif %}
+                            </div>
+                            <a class="more-detail" href="{% url 'eve_holder:event_detail'  event.id %}">See more
+                                detail</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    </body>
+
+{% endblock %}

@@ -67,15 +67,8 @@ body {
     background-image: linear-gradient(120deg, #031b88, #2c6ed5);
     font-weight: bold;
     font-size: 14px;
-    margin: auto;
-    margin-left: 12%;
+    margin: auto auto auto 12%;
     border-radius: 20px;
-}
-
-.btn-login:hover {
-    background-image: linear-gradient(30deg, #2c6ed5, #031b88);
-    border: 1px solid;
-    color: white;
 }
 
 .backtext {
