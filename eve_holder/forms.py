@@ -196,7 +196,8 @@ class UpdateInformationVisitorForm(ModelForm):
 
     phone_num = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
-        "type": "text",
+        "type": "number",
+        "min": '1',
         'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px;'
                  'border: none; border-radius: 5px; color: #ffffff; text-align: left; height: 30px;'
                  'top: -10px; background-color: rgba(255, 255, 255,0.1)'
@@ -214,6 +215,7 @@ class UpdateInformationHostForm(ModelForm):
     phone_num = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
+        "min": '1',
         'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px;'
                  'border: none; border-radius: 5px; color: #ffffff; text-align: left; height: 30px;'
                  'top: -10px; background-color: rgba(255, 255, 255,0.1)'

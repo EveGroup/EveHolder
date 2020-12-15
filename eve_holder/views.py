@@ -42,6 +42,7 @@ def register_page(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
+            print("hey")
             user = form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
@@ -233,9 +234,17 @@ def create_event(request):
     form = EventForm()
     if request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
-        print("error")
-        print(form.errors)
+        # pub_date = form.cleaned_data.get('pub_date')
+        # end_date = form.cleaned_data.get('end_date')
+        # event_date = form.cleaned_data.get('event_date')
+        #
+        # if end_date > pub_date:
+        #     messages.info(request, "End date cannot come before publish date.")
+        # elif event_date >= pub_date:
+        #     messages.info(request, "Event date cannot come before publish date.")
+
         if form.is_valid():
+
             form.save()
             event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
 
@@ -244,9 +253,10 @@ def create_event(request):
             elif not event.check_event_date():
                 messages.info(request, "Event date cannot come before publish date.")
             else:
-                # for person in get_host:
-                form.save()
-                event.event_host.add(get_host)
+                for person in get_host:
+                    form.save()
+                    event = Event.objects.get(event_name=form.cleaned_data.get('event_name'))
+                    event.event_host.add(get_host)
                 return redirect('eve_holder:host')
 
     btn = "Create"
@@ -386,12 +396,11 @@ def cancel_event(request, pk_event):
     my_event = Event.objects.get(id=pk_event)
     if request.method == 'POST':
         visitor.event.remove(my_event)
-        # messages.success(request, "Event Cancel Successfully")
         return redirect('eve_holder:visitor_registered_events')
     event = Event.objects.get(id=pk_event)
     text = 'Are you sure you want to cancel " '+event.event_name+'" ?'
     context = {'text': text}
-    return render(request, 'eve_holder/delete_account.html', context)
+    return render(request, 'eve_holder/delete_and_cancel.html', context)
 
 
 @login_required(login_url='login')
@@ -468,7 +477,6 @@ def delete_account(request):
     context = {'previous_page': previous_page, 'text': text}
     if request.method == 'POST':
         user = User.objects.get(id=user.id)
-        # messages.success(request, f"Account Deleted ({user.username})")
         if user.groups.filter(name='Host').exists():
             host = Host.objects.get(user=user)
             host_events = host.event_set.all()
@@ -476,7 +484,7 @@ def delete_account(request):
         user.delete()
         return redirect('eve_holder:homepage')
 
-    return render(request, 'eve_holder/delete_account.html', context)
+    return render(request, 'eve_holder/delete_and_cancel.html', context)
 
 
 @login_required(login_url='login')

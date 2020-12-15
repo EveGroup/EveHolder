@@ -28,7 +28,7 @@ class Host(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=20, null=True)
     email = models.EmailField(max_length=30, null=True)
-    phone_num = models.CharField(max_length=20, null=True)
+    phone_num = models.PositiveIntegerField(max_length=12, null=True)
     profile_pic = models.ImageField(default='/profiles/avatar.jpg', null=True, blank=True, upload_to='profiles/')
 
     def __str__(self):
@@ -118,7 +118,7 @@ class Visitor(models.Model):
     """
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=150, null=True)
-    phone_num = models.CharField(max_length=100, null=True)
+    phone_num = models.PositiveIntegerField(max_length=12, null=True)
     email = models.EmailField(max_length=100, null=True)
     event = models.ManyToManyField(Event, blank=True)
     profile_pic = models.ImageField(default='avatar.jpg', null=True, blank=True)
