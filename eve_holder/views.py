@@ -83,7 +83,6 @@ def login_page(request):
         if user is not None:
             login(request, user)
             group = request.user.groups.all()[0].name
-            print(group)
             if group == 'Host':
                 return redirect('eve_holder:host')
             elif group == 'Visitor':
