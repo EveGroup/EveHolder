@@ -2,64 +2,68 @@ version: 2.1 # use CircleCI 2.1
 
 jobs: # A basic unit of work in a run
   build: # runs not using Workflows must have a `build` job as entry point
-    # directory where steps are run
-    working_directory: ~/eve-holder
+
     docker: # run the steps with Docker
+
       # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
       - image: circleci/python:3.7.9
-        auth:
-          username: $DOCKERHUB_USERNAME  # please add your docker username in circle ci project settings
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-        environment: # environment variables for primary container
-          PIPENV_VENV_IN_PROJECT: true
-          DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
-          AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-          AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-          AWS_STORAGE_BUCKET_NAME: $AWS_STORAGE_BUCKET_NAME
-      # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
-      - image: circleci/postgres:9.6.2
-        auth:
-          username: $DOCKERHUB_USERNAME  # please add your docker username in circle ci project settings
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-        environment: # environment variables for the Postgres container.
-          POSTGRES_USER: root
-          POSTGRES_DB: circle_test
+      auth:
+      username: $DOCKERHUB_USERNAME  # please add your docker username in circle ci project settings
+      password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+      environment: # environment variables for primary container
+      PIPENV_VENV_IN_PROJECT: true
+      DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_STORAGE_BUCKET_NAME: $AWS_STORAGE_BUCKET_NAME
+
+        # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
+        - image: circleci/postgres:9.6.2
+      auth:
+      username: $DOCKERHUB_USERNAME  # please add your docker username in circle ci project settings
+      password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+      environment: # environment variables for the Postgres container.
+      POSTGRES_USER: root
+      POSTGRES_DB: circle_test
+
+    # directory where steps are run
+    working_directory: ~/eve-holder
 
     steps: # steps that comprise the `build` job
       - checkout # check out source code to working directory
       - run:
-          name: Pre CI
-          command: |
-            sudo chown -R circleci:circleci /usr/local/bin
-            sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
-      - restore_cache: # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run:
-          name: Ensuring installed dependencies
-          command: |
-            sudo pip install pipenv
-            pipenv install -r requirements.txt
-      - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-          paths:
-            - "venv"
-      - run:
-          name: Migrating models to the database
-          command: |
-            pipenv run python manage.py makemigrations
-            pipenv run python manage.py makemigrations eve_holder
-            pipenv run python manage.py migrate
-      - run:
-          name: Run test
-          command: |
-            pipenv run python manage.py group
-            pipenv run coverage run manage.py test --noinput
-      - run:
-          name: Send to codecov
-          command: |
-            pipenv run bash <(curl -s https://codecov.io/bash)
-      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: test-results
-      - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-          path: test-results
-          destination: tr1
+      name: Pre CI
+      command: |
+        sudo chown -R circleci:circleci /usr/local/bin
+        sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
+        - restore_cache: # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+      key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+             - run:
+      name: Ensuring installed dependencies
+      command: |
+        sudo pip install pipenv
+        pipenv install -r requirements.txt
+        - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
+      key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+      paths:
+        - "venv"
+        - run:
+      name: Migrating models to the database
+      command: |
+        pipenv run python manage.py makemigrations
+        pipenv run python manage.py makemigrations eve_holder
+        pipenv run python manage.py migrate
+        - run:
+      name: Run test
+      command: |
+        pipenv run python manage.py group
+        pipenv run coverage run manage.py test --noinput
+        - run:
+      name: Send to codecov
+      command: |
+        pipenv run bash <(curl -s https://codecov.io/bash)
+        - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+      path: test-results
+              - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+      path: test-results
+      destination: tr1
