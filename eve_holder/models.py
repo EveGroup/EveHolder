@@ -29,7 +29,7 @@ class Host(models.Model):
     name = models.CharField(max_length=20, null=True)
     email = models.EmailField(max_length=30, null=True)
     phone_num = models.PositiveIntegerField(null=True)
-    profile_pic = models.ImageField(default='/profiles/avatar.jpg', null=True, blank=True, upload_to='profiles/')
+    profile_pic = models.ImageField(default='images/profiles/avatar.jpg', null=True, blank=True, upload_to='profiles/')
 
     def __str__(self):
         """Display host's name."""
@@ -57,7 +57,7 @@ class Event(models.Model):
     end_date = models.DateField('ending date', null=True)
     amount_accepted = models.PositiveIntegerField(null=True, validators=[MinValueValidator(1)], default=5)
     event_date = models.DateField('event date', null=True)
-    event_image = models.ImageField(null=True, blank=True, default="/event/b1.jpg", upload_to='event/')
+    event_image = models.ImageField(null=True, blank=True, default="images/event/b1.jpg", upload_to='event/')
 
     def check_pub_date(self):
         """Check register period is valid.
