@@ -72,7 +72,7 @@ def register_page(request):
                 Visitor.objects.create(user=user, name=username, email=email, phone_num=phone_num)
                 return redirect('eve_holder:visitor_registered_events')
             elif group_name == 'Host':
-                Host.objects.create(user=user, name=username, email=email)
+                Host.objects.create(user=user, name=username, email=email, phone_num=phone_num)
                 return redirect('eve_holder:host')
 
     context = {'form': form}
