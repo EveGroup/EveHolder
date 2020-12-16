@@ -121,7 +121,7 @@ class Visitor(models.Model):
     phone_num = models.PositiveIntegerField(null=True)
     email = models.EmailField(max_length=100, null=True)
     event = models.ManyToManyField(Event, blank=True)
-    profile_pic = models.ImageField(default='/profiles/avatar.jpg', null=True, blank=True)
+    profile_pic = models.ImageField(default='images/profiles/avatar.jpg', null=True, blank=True)
 
     def __str__(self):
         """Display visitor's name."""
