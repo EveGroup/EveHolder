@@ -23,6 +23,7 @@ urlpatterns = [
 
     # host part
     path('host/', views.host, name="host"),
+    path('host/update_information', views.host_update_information, name='host_update_information'),
     # host event
     path('create_event/', views.create_event, name="create_event"),
     path('edit_event/<str:pk>/', views.edit_event, name="edit_event"),

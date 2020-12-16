@@ -157,13 +157,6 @@ class EventRegistrationForm(ModelForm):
 
 
 class UpdateInformationUserForm(ModelForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        "class": "input form-control my-3",
-        "type": "text",
-        'style': 'font-size: 16px; padding: 5px; display: inline-block; margin-top: -5px;'
-                 'border: none; border-radius: 5px; color: #ffffff; text-align: left; height: 30px;'
-                 'top: -10px; background-color: rgba(255, 255, 255,0.1)'
-    }), label="Username: ")
     first_name = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",
@@ -189,7 +182,7 @@ class UpdateInformationUserForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['first_name', 'last_name', 'email']
 
 
 class UpdateInformationVisitorForm(ModelForm):
