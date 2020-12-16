@@ -25,7 +25,7 @@
                     {% csrf_token %}
                     <div class="col-sm-12" style="align-items: center"><h3>{{ event.event_name }}</h3></div>
 
-                    <label class="join-label col-sm-6">Username</label>
+                    <label class="join-label col-sm-6">Name to be used in the event</label>
                     {{ form.name }}
                     <label class="join-label col-sm-6">Email</label>
                     {{ form.email }}
