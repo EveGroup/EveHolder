@@ -23,7 +23,7 @@
         <form method="POST" action="" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="main scroll">
-                <div calss="col-md-12">
+                <div class="col-md-12">
                     <div class="row">
                         <div class="form-group col-md-4 col-3">
                             <label for="" class="col-form-label namecol toppad">Name: </label>
@@ -95,14 +95,16 @@
                         {% for message in messages %}
                             <p id="messages">{{ message }}</p>
                         {% endfor %}
+                        <div style="color: white">
+                        {{ form.errors }}
+                        {{ formset.non_field_errors }}
+                        </div>
                     </div>
                     <button type="submit" class="btn-register mt-3 mb-3" name="click" style="">Register</button>
                 </div>
             </div>
         </form>
     </div>
-    {{ form.errors }}
-    {{ formset.non_field_errors }}
 </div>
 </body>
 </html>
