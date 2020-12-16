@@ -20,88 +20,89 @@
         <h3>Register Form</h3>
     </div>
     <!-- <div class="main"> -->
-    <form method="POST" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="main scroll">
-            <div class="col-md-12">
-                <div class="row">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="main scroll">
+                <div calss="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-4 col-3">
+                            <label for="" class="col-form-label namecol toppad">Name: </label>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            {{ form.first_name }}
+                            <label for="" class="namesm">First Name</label>
+                        </div>
+                        <div class="form-group col-md-3 ">
+                            {{ form.last_name }}
+                            <label class="namesm" style="top: 2px">Last Name</label>
+                        </div>
+                    </div>
+
                     <div class="form-group col-md-4 col-3">
-                        <label for="" class="col-form-label namecol toppad">Name: </label>
+                        <label class="col-form-label namecol">Username: </label>
                     </div>
-                    <div class="form-group col-md-3 ">
-                        {{ form.first_name }}
-                        <label for="" class="namesm">First Name</label>
+                    <div class="form-group col-md-6 col-6">
+                        {{ form.username }}
                     </div>
-                    <div class="form-group col-md-3 ">
-                        {{ form.last_name }}
-                        <label class="namesm" style="top: 2px">Last Name</label>
+
+                    <div class="form-group col-md-4 col-3">
+                        <label class="col-form-label namecol">Email: </label>
                     </div>
-                </div>
-
-                <div class="form-group col-md-4 col-3">
-                    <label class="col-form-label namecol">Username: </label>
-                </div>
-                <div class="form-group col-md-6 col-6">
-                    {{ form.username }}
-                </div>
-
-                <div class="form-group col-md-4 col-3">
-                    <label class="col-form-label namecol">Email: </label>
-                </div>
-                <div class="form-group col-md-6 col-6">
-                    {{ form.email }}
-                </div>
-
-                <div class="form-group col-md-4 col-3">
-                    <label class="col-form-label namecol">Phone: </label>
-                </div>
-                <div class="form-group col-md-6 col-6">
-                    <input type="number" min="1" class="form-control my-3 frame" name="phone_number"
-                           placeholder="Enter your Phone number here...">
-                </div>
-
-                <div class="form-group col-md-4 col-3">
-                    <label class="col-form-label namecol">Usertype: </label>
-                </div>
-                <div class="form-group col-md-6 col-6">
-                    <select class=" form-control my-3 frame" name="type">
-                        <option value="Visitor">Visitor</option>
-                        <option value="Host">Host</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-md-4 col-3">
-                    <label class="col-form-label namecol">Password: </label>
-                </div>
-                <div class="form-group col-md-6 col-6">
-                    {{ form.password1 }}
-                </div>
-
-                <div class="form-group col-md-4 col-3">
-                    <label class="col-form-label namecol">Confirm Password: </label>
-                </div>
-                <div class="form-group col-md-6 col-6">
-                    {{ form.password2 }}
-                </div>
-
-                <hr>
-                <div class="col-md-12">
-                    <div class="backtext">
-                        Already have an account? <a href="{% url 'eve_holder:login' %}">Login</a>
-                        or <a href="{% url 'eve_holder:homepage' %}">Back to homepage</a>
+                    <div class="form-group col-md-6 col-6">
+                        {{ form.email }}
                     </div>
+
+                    <div class="form-group col-md-4 col-3">
+                        <label class="col-form-label namecol">Phone: </label>
+                    </div>
+                    <div class="form-group col-md-6 col-6">
+                        <input type="number" min="1" class="form-control my-3 frame" name="phone_number"
+                            placeholder="Enter your Phone number here...">
+                    </div>
+
+                    <div class="form-group col-md-4 col-3">
+                        <label class="col-form-label namecol">Usertype: </label>
+                    </div>
+                    <div class="form-group col-md-6 col-6">
+                        <select class=" form-control my-3 frame" name="type">
+                            <option value="Visitor">Visitor</option>
+                            <option value="Host">Host</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-4 col-3">
+                        <label class="col-form-label namecol">Password: </label>
+                    </div>
+                    <div class="form-group col-md-6 col-6">
+                        {{ form.password1 }}
+                    </div>
+
+                    <div class="form-group col-md-4 col-3">
+                        <label class="col-form-label namecol">Confirm Password: </label>
+                    </div>
+                    <div class="form-group col-md-6 col-6">
+                        {{ form.password2 }}
+                    </div>
+
+                    <hr>
+                    <div class="col-md-12">
+                        <div class="backtext">
+                            Already have an account? <a href="{% url 'eve_holder:login' %}">Login</a>
+                            or <a href="{% url 'eve_holder:homepage' %}">Back to homepage</a>
+                        </div>
+                    </div>
+                    <div class="form-row col-md-12">
+                        {% for message in messages %}
+                            <p id="messages">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn-register mt-3 mb-3" name="click" style="">Register</button>
                 </div>
-                <div class="form-row col-md-12" style="color: white;">
-                    {% for message in messages %}
-                        <p id="messages">{{ message }}</p>
-                    {% endfor %}
-                    {{ form.errors }}
-                    {{ formset.non_field_errors }}
-                </div>
-                <button type="submit" class="btn-register mt-3 mb-3" name="click" style="">Register</button>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+    {{ form.errors }}
+    {{ formset.non_field_errors }}
 </div>
 </body>
 </html>
