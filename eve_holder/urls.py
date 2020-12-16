@@ -19,6 +19,7 @@ urlpatterns = [
     path('events/', views.events, name="events"),
     path('events/<int:pk_event>/register', views.event_register, name='event_register'),
     path('close-notification/<int:pk>/', views.close_notification, name='close_notification'),
+    path('events/<int:pk_event>/cancel', views.cancel_event, name='event_cancel'),
 
     # host part
     path('host/', views.host, name="host"),

@@ -68,12 +68,12 @@ class HtmlTests(TestCase):
         response = self.client.get(url)
         self.assertTemplateUsed(response, 'eve_holder/visitors/join_event.html')
 
-    # def test_render_visitor_cancel_event_page(self):
-    #     """Should render eve_holder/delete_and_cancel.html"""
-    #     self.client.login(username='visitor', password='testPassword')
-    #     url = reverse('eve_holder:event_cancel', args=(self.event1_id,))
-    #     response = self.client.get(url)
-    #     self.assertTemplateUsed(response, 'eve_holder/delete_and_cancel.html')
+    def test_render_visitor_cancel_event_page(self):
+        """Should render eve_holder/delete_and_cancel.html"""
+        self.client.login(username='visitor', password='testPassword')
+        url = reverse('eve_holder:event_cancel', args=(self.event1_id,))
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'eve_holder/delete_and_cancel.html')
 
     # test render for host
     def test_render_host_my_account_page(self):
