@@ -206,9 +206,9 @@ body {
 
 /* update account style */
 
-#update-header{
+#update-header {
     width: 580px;
-    background-image: linear-gradient(180deg,#0b153d, #20396d);
+    background-image: linear-gradient(180deg, #0b153d, #20396d);
     border-radius: 3px 3px 0 0;
     color: #ffffff;
     padding: 10px 0 10px 0;

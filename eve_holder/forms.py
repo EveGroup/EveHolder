@@ -186,7 +186,6 @@ class UpdateInformationUserForm(ModelForm):
 
 
 class UpdateInformationVisitorForm(ModelForm):
-
     phone_num = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "number",
@@ -204,7 +203,6 @@ class UpdateInformationVisitorForm(ModelForm):
 
 
 class UpdateInformationHostForm(ModelForm):
-
     phone_num = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
         "type": "text",

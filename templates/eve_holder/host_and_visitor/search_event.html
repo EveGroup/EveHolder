@@ -16,30 +16,31 @@
         {% else %}
             <div class="head-line"><span>{{ events.count }} result found</span></div>
         {% endif %}
-    <br>
-    <div class="result">
+        <br>
+        <div class="result">
             <div class="row">
                 <div class="col-md">
                     <div class="card card-body">
                         <table class="table table-hover">
-                          <thead>
+                            <thead>
                             <tr>
                                 <th scope="col">Event ID</th>
-                                  <th scope="col">Event Name</th>
-                                  <th scope="col"></th>
+                                <th scope="col">Event Name</th>
+                                <th scope="col"></th>
                             </tr>
-                          </thead>
-                          <tbody>
-                          {% for event in events %}
-                          {% if event.can_register %}
-                            <tr>
-                              <th scope="row">{{ event.id }}</th>
-                              <td>{{ event.event_name }}</td>
-                              <td><a class="btn btn-sm btn-warning" href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
-                            </tr>
-                          {% endif %}
-                          {% endfor %}
-                          </tbody>
+                            </thead>
+                            <tbody>
+                            {% for event in events %}
+                                {% if event.can_register %}
+                                    <tr>
+                                        <th scope="row">{{ event.id }}</th>
+                                        <td>{{ event.event_name }}</td>
+                                        <td><a class="btn btn-sm btn-warning"
+                                               href="{% url 'eve_holder:event_detail' event.id %}">View</a></td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
                         </table>
                     </div>
                 </div>
