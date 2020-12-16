@@ -23,7 +23,7 @@
         <form method="POST" action="" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="main scroll">
-                <div class="col-md-12">
+                <div calss="col-md-12">
                     <div class="row">
                         <div class="form-group col-md-4 col-3">
                             <label for="" class="col-form-label namecol toppad">Name: </label>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-group col-md-6 col-6">
                         <input type="number" min="1" class="form-control my-3 frame" name="phone_number"
-                            placeholder="Enter your phone number here...">
+                            placeholder="Enter your Phone number here...">
                     </div>
 
                     <div class="form-group col-md-4 col-3">
@@ -95,10 +95,8 @@
                         {% for message in messages %}
                             <p id="messages">{{ message }}</p>
                         {% endfor %}
-                        <div style="color: white">
                         {{ form.errors }}
                         {{ formset.non_field_errors }}
-                        </div>
                     </div>
                     <button type="submit" class="btn-register mt-3 mb-3" name="click" style="">Register</button>
                 </div>
