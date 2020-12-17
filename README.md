@@ -179,3 +179,4 @@ This is the sample accounts for the login to the application.
     - [Project board](https://github.com/EveGroup/EveHolder/projects/8)
 - [Code Review Procedure](https://github.com/EveGroup/EveHolder/wiki/Code-Review-Procedure)
 - [Code Review Checklist](https://github.com/EveGroup/EveHolder/wiki/Code-Review-checklist)
+- [Presentation slide](https://docs.google.com/presentation/d/1SJUa7aaOuGhnvCN3nhPSgHTk1zMABUyi4yAbcUXGlzU/edit?usp=sharing)
