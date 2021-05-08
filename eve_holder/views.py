@@ -77,7 +77,7 @@ def register_page(request):
 
     context = {'form': form}
 
-    return render(request, 'eve_holder/accounts/register.html', context)
+    return render(request, 'eve_holder/accounts/signup.html', context)
 
 
 @unauthenticated_user
@@ -434,7 +434,7 @@ def event_detail(request, pk):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Visitor'])
 def cancel_event(request, pk_event):
-    """For cancel the event use with visitor's accounts.
+    """For cancel the event use with visitor's old_accounts.
 
     Args:
         request: A HttpRequest object, which contains data about the request.

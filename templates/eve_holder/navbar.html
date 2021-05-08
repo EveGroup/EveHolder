@@ -5,7 +5,9 @@
 <div class="modal bs-logout-modal-sm">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
+            <div class="modal-header">
+                <h4>Logout <i class="fa fa-lock"></i></h4>
+            </div>
             <div class="modal-body">
                 <i class="fa fa-question-circle">Are you sure you want to log-off?</i>
             </div>
@@ -33,16 +35,13 @@
                 </li>
             {% elif user.groups.all.0.name == "Host" %}
                 <a class="nav-link" href="{% url 'eve_holder:create_event' %}">Create Event</a>
-                <a class="nav-link" href="{% url 'eve_holder:host' %}">My Events</a>
-            {% else %}
+                <a class="nav-link" href="{% url 'eve_holder:host' %}">My Events</a> {% else %}
                 <li class="nav-item active">
-                <a class="nav-link" href="{% url 'eve_holder:homepage' %}">Homepage</a>
-            {% endif %}
+                <a class="nav-link" href="{% url 'eve_holder:homepage' %}">Homepage</a> {% endif %}
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true"
-                   aria-expanded="false">
+                   aria-haspopup="true" aria-expanded="false">
                     {{ request.user }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -57,8 +56,8 @@
 
         <form class="form-inline my-2 my-lg-0" action="{% url 'eve_holder:search_event' %}" method="post">
             {% csrf_token %}
-            <input class="form-control mr-sm-2" type="search" placeholder="Search by event name" aria-label="Search" name="search"
-                   style="font-family: 'Commissioner', sans-serif;">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search by event name" aria-label="Search"
+                   name="search" style="font-family: 'Commissioner', sans-serif;">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
                     style="font-family: 'Commissioner', sans-serif;">Search
             </button>
