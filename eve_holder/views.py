@@ -434,7 +434,7 @@ def event_detail(request, pk):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Visitor'])
 def cancel_event(request, pk_event):
-    """For cancel the event use with visitor's old_accounts.
+    """For cancel the event use with visitor's accounts_old.
 
     Args:
         request: A HttpRequest object, which contains data about the request.

@@ -5,7 +5,6 @@ from django.forms import ModelForm
 
 from .models import *
 
-
 class EventForm(ModelForm):
     event_name = forms.CharField(widget=forms.TextInput(attrs={
         "class": "input form-control my-3",
