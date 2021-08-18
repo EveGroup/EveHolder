@@ -77,7 +77,7 @@ def register_page(request):
 
     context = {'form': form}
 
-    return render(request, 'eve_holder/accounts/signup.html', context)
+    return render(request, 'eve_holder/accounts/register.html', context)
 
 
 @unauthenticated_user

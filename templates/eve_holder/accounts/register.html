@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign Up - Cyber Ware</title>
+    <title>Register - EveHolder</title>
     <link href="../static/css/auth.css" rel="stylesheet">
 </head>
 <body>
@@ -13,23 +13,27 @@
             <h1 class="form__title">Create Account</h1>
             <div class="form__message form__message--error"></div>
             <div class="form__input-group">
-                <input autofocus class="form__input" id="email" placeholder="Email Address" type="text">
+                {{ form.username }}
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
-                <input autofocus class="form__input" id="firstname" placeholder="Firstname" type="text">
+                {{ form.email }}
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
-                <input autofocus class="form__input" id="surname" placeholder="Surname" type="text">
+                {{ form.first_name }}
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
-                <input autofocus class="form__input" id="password1" placeholder="Password" type="password">
+                {{ form.last_name }}
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
-                <input autofocus class="form__input" id="password2" placeholder="Confirm Password" type="password">
+                {{ form.password1 }}
+                <div class="form__input-error-message"></div>
+            </div>
+            <div class="form__input-group">
+                {{ form.password2 }}
                 <div class="form__input-error-message"></div>
             </div>
             <button class="form__button" type="submit" id="nextToMoreInfo">Next</button>
@@ -66,6 +70,6 @@
         </div>
     </form>
 </div>
-<script src="../static/js/signup.js"></script>
+<script src="{% static "js/signup.js" %}"></script>
 </body>
 </html>

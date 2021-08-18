@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'eve_holder.apps.EveHolderConfig',
     'crispy_forms',
-
+    'rest_framework',
     'storages',
 
 ]

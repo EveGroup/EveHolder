@@ -1,9 +1,11 @@
 """Module for creating forms."""
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import User
 from django.forms import ModelForm
 
 from .models import *
+
 
 class EventForm(ModelForm):
     event_name = forms.CharField(widget=forms.TextInput(attrs={
@@ -75,47 +77,47 @@ class RegisterForm(forms.Form):
 
 class CreateUserForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        "class": "input form-control my-3",
-        "type": "text",
-        "placeholder": "Enter username...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
-                 'width: 300px'
-    }), label="Username: ")
+        "autofocus": True,
+        "class": "form__input",
+        "id": "username",
+        "placeholder": "Username",
+        "type": "text"
+    }))
     email = forms.CharField(widget=forms.TextInput(attrs={
-        "class": "input form-control my-3",
-        "type": "email",
-        "placeholder": "Enter email...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
-                 'width: 300px'
+        "autofocus": True,
+        "class": "form__input",
+        "id": "email",
+        "placeholder": "Email Address",
+        "type": "text"
     }), label="Email: ")
     first_name = forms.CharField(widget=forms.TextInput(attrs={
-        "class": "input form-control my-3",
-        "type": "text",
-        "placeholder": "Enter First name...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
-                 'width: 140px'
-    }), label="First name: ")
+        "autofocus": True,
+        "class": "form__input",
+        "id": "first_name",
+        "placeholder": "First Name",
+        "type": "text"
+    }))
     last_name = forms.CharField(widget=forms.TextInput(attrs={
-        "class": "input form-control my-3",
-        "type": "text",
-        "placeholder": "Enter Last name...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
-                 'width: 140px'
-    }), label="Last name: ")
+        "autofocus": True,
+        "class": "form__input",
+        "id": "last_name",
+        "placeholder": "Last Name",
+        "type": "text"
+    }))
     password1 = forms.CharField(widget=forms.TextInput(attrs={
-        "class": "input form-control my-3",
-        "type": "password",
-        "placeholder": "Enter Password...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
-                 'width: 300px'
-    }), label="Password: ")
+        "autofocus": True,
+        "class": "form__input",
+        "id": "password1",
+        "placeholder": "Password",
+        "type": "text"
+    }))
     password2 = forms.CharField(widget=forms.TextInput(attrs={
-        "class": "input form-control my-3",
-        "type": "password",
-        "placeholder": "Confirm Password...",
-        'style': 'border-color:darkblue; border-radius: 3px; font-size: 12px; padding: 5px;'
-                 'width: 300px'
-    }), label="Password confirm: ")
+        "autofocus": True,
+        "class": "form__input",
+        "id": "password2",
+        "placeholder": "Confirm Password",
+        "type": "text"
+    }))
 
     class Meta:
         model = User

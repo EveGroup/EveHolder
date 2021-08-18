@@ -18,31 +18,10 @@ function clearInputError(inputElement) {
 
 let result;
 
-async function signupData(email, firstname, surname, password, job, bloodType, sn) {
-    await fetch('http://158.108.182.10:3000/signup_post', {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            email: email,
-            firstname: firstname,
-            surname: surname,
-            password: password,
-            job: job,
-            bloodType: bloodType,
-            sn: sn
-        }),
-    })
-        .then((response) => response.json())
-        .then(value => {
-            result = value.result
-        })
-        .catch(reason => console.log("error", reason));
-}
-
 function successfullySignup() {
     document.getElementById("email").value = "";
-    document.getElementById("firstname").value = "";
-    document.getElementById("surname").value = "";
+    document.getElementById("first_name").value = "";
+    document.getElementById("last_name").value = "";
     document.getElementById("password1").value = "";
     document.getElementById("password2").value = "";
     document.getElementById("blood type").value = "";
@@ -60,14 +39,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     createAccountForm.addEventListener("submit", evt => {
         evt.preventDefault();
+        let username = document.getElementById("username").value;
         let email = document.getElementById("email").value;
-        let firstname = document.getElementById("firstname").value;
-        let surname = document.getElementById("surname").value;
+        let first_name = document.getElementById("first_name").value;
+        let last_name = document.getElementById("last_name").value;
         let password = document.getElementById("password1").value;
         let bloodType = document.getElementById("blood type").value;
         let job = document.getElementById("jobs").value;
         let sn = document.getElementById("cyberWareSN").value;
-        signupData(email, firstname, surname, password, job, bloodType, sn).then(() => {
+        signupData(username, email, first_name, last_name, password, job, bloodType, sn).then(() => {
             if (result === "This serial number is not exist!" || result === "This serial number is already signed up!")
                 setInputError(document.getElementById("cyberWareSN"), result);
             else if (result === "This email is already signed up!") {

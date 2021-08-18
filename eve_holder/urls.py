@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 import eve_holder.views
 from . import views
@@ -37,4 +37,5 @@ urlpatterns = [
     path('delete_account/', views.delete_account, name='delete_account'),
     path('account/', views.my_account, name='my_account'),
     path('search/', views.search_event, name='search_event'),
+    path('api-auth/', include('rest_framework.urls'))
 ]
