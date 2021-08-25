@@ -146,3 +146,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 django_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
